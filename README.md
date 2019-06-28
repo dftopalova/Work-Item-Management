@@ -1,4 +1,15 @@
-OOP Work Item Management
+# OOP Work Item Management
 
--Deniza Topalova
--Krastan Stoyanov
+
+Repository for **current**:
+* OOP teamwork project
+
+
+**Project members**
+| Name               | Handle		 	  | Role permission |
+| :-----------------:| :----------------- | ----------------|
+| Deniza Topalova    | @                  | Maintainer
+| Krastan Stoyanov   | @kycenstein	 	  | Maintainer	    |
+| Nadya Atanasova    | @nadyaA		 	  | Reporter	    |
+| Petar Raykov	     | @petar-raykov      | Reporter	    |
+
