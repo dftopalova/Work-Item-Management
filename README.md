@@ -6,10 +6,10 @@ Repository for **current**:
 
 
 **Project members**
-| Name               | Handle		 	  | Role permission |
-| :-----------------:| :----------------- | ----------------|
-| Deniza Topalova    | @dtopalova         | Maintainer      |
-| Krastan Stoyanov   | @kycenstein	 	  | Maintainer	    |
-| Nadya Atanasova    | @nadyaA		 	  | Reporter	    |
-| Petar Raykov	     | @petar-raykov      | Reporter	    |
 
+|       Name       	|     Handle    	| Role_Permission 	|
+|:----------------:	|:-------------:	|:---------------:	|
+| Deniza_Topalova  	| @dtopalova    	| Maintaner       	|
+| Krastan_Stoyanov 	| @kycenstein   	| Maintaner       	|
+| Nadya_Atanasova  	| @nadyaA       	| Reporter        	|
+| Petar_Raykov     	| @petar-raykov 	| Reporter        	|
