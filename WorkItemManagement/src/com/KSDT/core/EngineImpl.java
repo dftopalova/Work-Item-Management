@@ -41,7 +41,8 @@ public class EngineImpl implements Engine {
                 processCommand(commandAsString);
 
             } catch (Exception exception) {
-                writer.writeLine(exception.getMessage() != null && !exception.getMessage().isEmpty() ? exception.getMessage() : exception.toString());
+                writer.writeLine(exception.getMessage() != null && !exception.getMessage().isEmpty()
+                        ? exception.getMessage() : exception.toString());
             }
         }
     }
@@ -52,7 +53,7 @@ public class EngineImpl implements Engine {
         }
 
         String commandName = commandParser.parseCommand(commandAsString);
-        Command command = commandFactory.createCommand(commandAsString, workItemFactory, workItemRepository);
+        Command command = commandFactory.createCommand(commandName, workItemFactory, workItemRepository);
         List<String> parameters = commandParser.parseParameters(commandAsString);
         String executionResults = command.execute(parameters);
         writer.writeLine(executionResults);

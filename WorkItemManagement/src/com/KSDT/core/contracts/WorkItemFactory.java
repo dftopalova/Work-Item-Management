@@ -1,11 +1,13 @@
 package com.KSDT.core.contracts;
 
 
+import com.KSDT.models.contracts.Team;
+
 public interface WorkItemFactory {
 
 //    TODO Change code down below
 //
-//    Company createCompany(String name, String registrationNumber);
+    Team createTeam(String name);
 //
 //    Table createTable(String model, String materialType, double price, double height, double length, double width);
 //
