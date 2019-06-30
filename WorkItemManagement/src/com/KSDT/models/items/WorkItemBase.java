@@ -16,16 +16,14 @@ public class WorkItemBase implements WorkItem {
 
     private String title;
     private StatusType status;
-    private List<String> comments;
+    private List<String> comments; //possibly Map because it needs author to every comment
     private List<String> history;
 
-    public WorkItemBase(String title, StatusType status, List<String> comments, List<String> history) {
-
+    public WorkItemBase(String title, StatusType status) {
         setTitle(title);
         setStatus(status);
-        comments = new ArrayList<String>();
-        history = new ArrayList<String>();
-
+        this.comments = new ArrayList<String>();
+        this.history = new ArrayList<String>();
     }
 
     private void setTitle(String title) {
@@ -42,21 +40,21 @@ public class WorkItemBase implements WorkItem {
 
     @Override
     public String getTitle() {
-        return null;
+        return title;
     }
 
     @Override
     public StatusType getStatus() {
-        return null;
+        return status;
     }
 
     @Override
     public List<String> getComments() {
-        return null;
+        return new ArrayList<String>(comments);
     }
 
     @Override
     public List<String> getHistory() {
-        return null;
+        return new ArrayList<String>(history);
     }
 }
