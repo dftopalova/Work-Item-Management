@@ -1,4 +1,4 @@
-package com.telerikacademy.furniture.core.contracts;
+package com.KSDT.core.contracts;
 
 public interface Engine {
     void start();

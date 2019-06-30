@@ -1,7 +1,7 @@
 package com.KSDT.core.contracts;
 
 
-public interface FurnitureFactory {
+public interface WorkItemFactory {
 
 //    TODO Change code down below
 //
