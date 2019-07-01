@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TeamImpl implements Team {
-
-
     private String name;
     private Map<String, Person> members;
     private Map<String, Board> boards;
@@ -39,5 +37,11 @@ public class TeamImpl implements Team {
     @Override
     public Map<String, Board> getBoards() {
         return new HashMap<>(boards);
+    }
+
+    @Override
+    public void addPerson(String name, Person person) {
+        members.put(name, person);
+
     }
 }

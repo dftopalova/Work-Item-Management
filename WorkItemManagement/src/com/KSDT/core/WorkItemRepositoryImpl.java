@@ -37,6 +37,16 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
+    public void addPerson(String name, Person person) {
+        this.persons.put(name, person);
+    }
+
+    @Override
+    public Map<String, Person> getPersons() {
+        return new HashMap<>(persons);
+    }
+
+    @Override
     public void addWorkItem(String name, WorkItem workItem) {
         this.workItems.put(name, workItem);
     }
