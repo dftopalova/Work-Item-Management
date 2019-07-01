@@ -13,6 +13,7 @@ public class BoardImpl implements Board {
     private static final int BOARD_NAME_MIN_LENGTH = 5;
 
     private String name;
+//    TODO CHANGE List<WorkItem> to Map<String, WorkItem> !!
     private List<WorkItem> workItems;
     private List<String> history;
 

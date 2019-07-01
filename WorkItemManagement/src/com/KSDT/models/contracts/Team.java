@@ -11,4 +11,6 @@ public interface Team {
 
     void addPerson(String name, Person person);
 
+    void addBoard(String name, Board board);
+
 }

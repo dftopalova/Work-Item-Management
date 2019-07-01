@@ -12,8 +12,6 @@ public class WorkItemBase implements WorkItem {
     private static final int TITLE_MAX_LENGTH = 50;
     private static final int TITLE_MIN_LENGTH = 10;
 
-//    TODO ID must be set in repository MAP - ID int key
-
     private String title;
     private StatusType status;
     private List<String> comments; //possibly Map because it needs author to every comment

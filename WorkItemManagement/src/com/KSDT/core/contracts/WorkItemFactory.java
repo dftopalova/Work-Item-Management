@@ -3,6 +3,9 @@ package com.KSDT.core.contracts;
 
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
+import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.enums.SeverityType;
+import com.KSDT.models.enums.StatusType;
 
 public interface WorkItemFactory {
 
@@ -11,6 +14,8 @@ public interface WorkItemFactory {
     Team createTeam(String name);
 
     Person createPerson(String name);
+
+    WorkItem createBug(String title, StatusType status, String stepsToReproduce, SeverityType severity);
 //
 //    Table createTable(String model, String materialType, double price, double height, double length, double width);
 //

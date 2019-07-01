@@ -42,6 +42,10 @@ public class TeamImpl implements Team {
     @Override
     public void addPerson(String name, Person person) {
         members.put(name, person);
+    }
 
+    @Override
+    public void addBoard(String name, Board board) {
+        this.boards.put(name, board);
     }
 }

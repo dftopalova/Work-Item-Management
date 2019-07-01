@@ -1,9 +1,7 @@
 package com.KSDT.core.factories;
 
 import com.KSDT.commands.contracts.Command;
-import com.KSDT.commands.creation.AddPersonCommand;
-import com.KSDT.commands.creation.CreatePersonCommand;
-import com.KSDT.commands.creation.CreateTeamCommand;
+import com.KSDT.commands.creation.*;
 import com.KSDT.commands.enums.CommandType;
 import com.KSDT.core.contracts.CommandFactory;
 import com.KSDT.core.contracts.WorkItemFactory;
@@ -22,6 +20,10 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new CreatePersonCommand(repository, factory);
             case ADDPERSON:
                 return new AddPersonCommand(repository, factory);
+            case CREATEBOARDINTEAM:
+                return new CreateBoardInTeamCommand(repository, factory);
+            case CREATEBUGINBOARD:
+                return new CreateBugInBoard(repository, factory);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

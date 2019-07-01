@@ -4,6 +4,9 @@ public enum CommandType {
 //    TODO List all commands in ALLCAPS
     CREATETEAM,
     CREATEPERSON,
-    ADDPERSON;
+    CREATEBOARDINTEAM,
+    ADDPERSON,
+    CREATEBUGINBOARD;
+
 
 }

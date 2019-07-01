@@ -9,5 +9,4 @@ public interface WorkItem {
     StatusType getStatus();
     List<String> getComments();
     List<String> getHistory();
-
 }

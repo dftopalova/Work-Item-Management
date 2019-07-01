@@ -7,6 +7,8 @@ import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BugImpl extends WorkItemBase implements Bug {
@@ -14,17 +16,19 @@ public class BugImpl extends WorkItemBase implements Bug {
     private SeverityType severity;
     private Person assignee;
 
-    public BugImpl(String title, StatusType status, List<String> stepsToReproduce, SeverityType severity, Person assignee) {
+    public BugImpl(String title, StatusType status, String stepsToReproduce, SeverityType severity) {
         super(title, status);
         setStepsToReproduce(stepsToReproduce);
-        setAssignee(assignee);
         setSeverity(severity);
     }
 
-    private void setStepsToReproduce(List<String> stepsToReproduce) {
+    private void setStepsToReproduce(String stepsToReproduce) {
         ValidationHelper.nullCheck(stepsToReproduce);
+        String[] stepsList = stepsToReproduce.trim().split("/");
+
+
 //        TODO fix LIST logic
-        this.stepsToReproduce = stepsToReproduce;
+        this.stepsToReproduce = Collections.singletonList(stepsToReproduce);
     }
 
     private void setSeverity(SeverityType severity) {
@@ -39,7 +43,7 @@ public class BugImpl extends WorkItemBase implements Bug {
 
     @Override
     public List<String> getStepsToReproduce() {
-        return new ArrayList<String>(stepsToReproduce);
+        return new ArrayList<>(stepsToReproduce);
     }
 
     @Override
