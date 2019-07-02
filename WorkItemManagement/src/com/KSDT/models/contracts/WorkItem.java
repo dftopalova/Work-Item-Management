@@ -10,4 +10,5 @@ public interface WorkItem {
     List<String> getComments();
     List<String> getHistory();
     String getDescription();
+    String getType();
 }

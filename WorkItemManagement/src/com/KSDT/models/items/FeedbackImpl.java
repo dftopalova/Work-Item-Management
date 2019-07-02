@@ -21,6 +21,10 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     }
 
 
+    @Override
+    public String getType() {
+        return "FEED_";
+    }
 
     @Override
     public String getDescription() {

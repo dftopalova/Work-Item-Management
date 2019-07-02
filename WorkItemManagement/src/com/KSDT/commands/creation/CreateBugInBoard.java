@@ -15,6 +15,7 @@ import static com.KSDT.commands.CommandConstants.*;
 
 public class CreateBugInBoard implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
+    public static final String WORK_ITEM_TYPE = "BUG_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -36,7 +37,6 @@ public class CreateBugInBoard implements Command {
         validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
-
 
 
         Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
@@ -73,10 +73,10 @@ public class CreateBugInBoard implements Command {
             teamName = parameters.get(0);
             boardToAddName = parameters.get(1);
             bugNameToBeAdded = parameters.get(2);
-            status = StatusType.valueOf(parameters.get(3));
+            status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
             description = parameters.get(4);
             stepsToReproduce = parameters.get(5);
-            severity = SeverityType.valueOf(parameters.get(6));
+            severity = SeverityType.valueOf(parameters.get(6).toUpperCase());
 
         } catch (Exception e) {
             throw new IllegalArgumentException("");

@@ -38,6 +38,11 @@ public class StoryImpl extends WorkItemBase implements Story {
     }
 
     @Override
+    public String getType() {
+        return "STORY_";
+    }
+
+    @Override
     public String getDescription() {
         return null;
     }

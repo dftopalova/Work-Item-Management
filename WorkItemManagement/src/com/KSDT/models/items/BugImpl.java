@@ -54,4 +54,9 @@ public class BugImpl extends WorkItemBase implements Bug {
     public Person getAssignee() {
         return assignee;
     }
+
+    @Override
+    public String getType() {
+        return "BUG_";
+    }
 }
