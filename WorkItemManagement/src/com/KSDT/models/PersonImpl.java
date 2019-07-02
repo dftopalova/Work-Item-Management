@@ -22,14 +22,11 @@ public class PersonImpl implements Person {
         this.workItems = new ArrayList<>();
     }
 
-    //TODO Persons must be in MAP with key String-name because name must be unique in application
     public void setName(String name) {
         ValidationHelper.nullCheck(name);
         ValidationHelper.lengthCheck(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH, NAME_LENGTH_EXCEPTION);
         this.name = name;
     }
-
-
 
     @Override
     public String getName() {

@@ -14,7 +14,6 @@ import java.util.Map;
 public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<String, Team> teams;
     private Map<String, Person> persons;
-//    private Map<String, WorkItem> workItems;
     private List<WorkItem> workItems;
     private List<Board> boards;
 

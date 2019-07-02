@@ -79,7 +79,7 @@ public class CreateBugInBoard implements Command {
             severity = SeverityType.valueOf(parameters.get(6).toUpperCase());
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
         }
     }
