@@ -17,7 +17,7 @@ public class CommandConstants {
     public static final String PERSON_CREATED = "Person with ID %s was created.";
     public static final String PERSON_ADDED_TO_TEAM = "Person with ID %s was added to %s team.";
     public static final String BOARD_ADDED_TO_TEAM = "Board with ID %s was added to %s team.";
-    public static final String BUG_ADDED_TO_TEAM = "Bug with ID %s was added to %s team.";
+    public static final String BUG_ADDED_TO_BOARD = "Bug with ID %s was added to %s board.";
 
 
 }

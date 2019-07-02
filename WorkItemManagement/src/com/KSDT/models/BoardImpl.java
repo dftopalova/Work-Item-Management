@@ -5,7 +5,9 @@ import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BoardImpl implements Board {
     private static final String BOARD_NAME_LENGTH_EXCEPTION = "Board name must be between 5 and 10 symbols";
@@ -14,12 +16,12 @@ public class BoardImpl implements Board {
 
     private String name;
 //    TODO CHANGE List<WorkItem> to Map<String, WorkItem> !!
-    private List<WorkItem> workItems;
+    private Map<String, WorkItem> workItems;
     private List<String> history;
 
     public BoardImpl(String name) {
         setName(name);
-        this.workItems = new ArrayList<>();
+        this.workItems = new HashMap<>();
         this.history = new ArrayList<>();
     }
 
@@ -30,13 +32,20 @@ public class BoardImpl implements Board {
     }
 
     @Override
+    public void addWorkItem(String name, WorkItem workItem) {
+        ValidationHelper.nullCheck(name);
+        ValidationHelper.nullCheck(workItem);
+        workItems.put(name, workItem);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
 
     @Override
-    public List<WorkItem> getWorkItem() {
-        return new ArrayList<>(workItems);
+    public Map<String, WorkItem> getWorkItem() {
+        return new HashMap<>(workItems);
     }
 
     @Override

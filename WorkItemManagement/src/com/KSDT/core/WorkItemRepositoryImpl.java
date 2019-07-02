@@ -19,6 +19,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
         this.teams = new HashMap<>();
         this.workItems = new HashMap<>();
         this.persons = new HashMap<>();
+        this.boards = new HashMap<>();
     }
 
 //    TODO type methods connected with persons - add remove etc

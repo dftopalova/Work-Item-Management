@@ -34,7 +34,8 @@ public class CreateBoardInTeamCommand implements Command {
 
 
         Team team = repository.getTeams().get(teamToAddName);
-        Board board = new BoardImpl(boardNameToBeAdded);
+        Board board = factory.createBoard(boardNameToBeAdded);
+
         team.addBoard(boardNameToBeAdded, board);
         repository.addBoard(boardNameToBeAdded, board);
 

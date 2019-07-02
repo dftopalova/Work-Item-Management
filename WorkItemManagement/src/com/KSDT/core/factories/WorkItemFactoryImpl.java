@@ -1,8 +1,10 @@
 package com.KSDT.core.factories;
 
 import com.KSDT.core.contracts.WorkItemFactory;
+import com.KSDT.models.BoardImpl;
 import com.KSDT.models.PersonImpl;
 import com.KSDT.models.TeamImpl;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
@@ -26,6 +28,11 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
     @Override
     public WorkItem createBug(String title, StatusType status, String stepsToReproduce, SeverityType severity) {
         return new BugImpl(title, status, stepsToReproduce, severity);
+    }
+
+    @Override
+    public Board createBoard(String name) {
+        return new BoardImpl(name);
     }
 
 
