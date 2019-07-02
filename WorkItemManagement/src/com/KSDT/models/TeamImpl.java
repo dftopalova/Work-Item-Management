@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TeamImpl implements Team {
+
     private String name;
     private Map<String, Person> members;
     private Map<String, Board> boards;

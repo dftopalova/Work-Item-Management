@@ -11,15 +11,21 @@ public class WorkItemBase implements WorkItem {
     private static final String TITLE_LENGTH_EXCEPTION = "Title must be between 10 and 50 symbols";
     private static final int TITLE_MAX_LENGTH = 50;
     private static final int TITLE_MIN_LENGTH = 10;
+    private static final String DESCRIPTION_LENGTH_EXCEPTION = "Description must be between 10 and 500 symbols!";
+    private static final int DESCRIPTION_LENGTH_MAX = 500;
+    private static final int DESCRIPTION_LENGTH_MIN = 10;
+
 
     private String title;
     private StatusType status;
+    private String description;
     private List<String> comments; //possibly Map because it needs author to every comment
     private List<String> history;
 
-    public WorkItemBase(String title, StatusType status) {
+    public WorkItemBase(String title, StatusType status, String description) {
         setTitle(title);
         setStatus(status);
+        setDescription(description);
         this.comments = new ArrayList<String>();
         this.history = new ArrayList<String>();
     }
@@ -35,6 +41,13 @@ public class WorkItemBase implements WorkItem {
         this.status = status;
     }
 // TODO implement methods - change status etc
+
+    private void setDescription(String description) {
+        ValidationHelper.nullCheck(description);
+        ValidationHelper.lengthCheck(description, DESCRIPTION_LENGTH_MIN, DESCRIPTION_LENGTH_MAX, DESCRIPTION_LENGTH_EXCEPTION);
+        this.description = description;
+
+    }
 
     @Override
     public String getTitle() {
@@ -54,5 +67,10 @@ public class WorkItemBase implements WorkItem {
     @Override
     public List<String> getHistory() {
         return new ArrayList<String>(history);
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
     }
 }

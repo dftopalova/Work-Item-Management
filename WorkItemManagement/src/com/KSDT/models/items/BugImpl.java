@@ -16,8 +16,8 @@ public class BugImpl extends WorkItemBase implements Bug {
     private SeverityType severity;
     private Person assignee;
 
-    public BugImpl(String title, StatusType status, String stepsToReproduce, SeverityType severity) {
-        super(title, status);
+    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, SeverityType severity) {
+        super(title, status, description);
         setStepsToReproduce(stepsToReproduce);
         setSeverity(severity);
     }

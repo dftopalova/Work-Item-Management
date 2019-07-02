@@ -21,6 +21,7 @@ public class CreateBugInBoard implements Command {
     private String bugNameToBeAdded;
     private String boardToAddName;
     private StatusType status;
+    private String description;
     private String stepsToReproduce;
     private SeverityType severity;
 
@@ -36,7 +37,7 @@ public class CreateBugInBoard implements Command {
         validateParameters();
 
         Board board = repository.getBoards().get(boardToAddName);
-        WorkItem bug = factory.createBug(boardToAddName, status, stepsToReproduce, severity);
+        WorkItem bug = factory.createBug(boardToAddName, status, description, stepsToReproduce, severity);
         board.addWorkItem(bugNameToBeAdded, bug); // FIX TODO In BoardImpl
 
         return String.format(BUG_ADDED_TO_BOARD, bugNameToBeAdded, boardToAddName);
@@ -60,9 +61,10 @@ public class CreateBugInBoard implements Command {
         try {
             boardToAddName = parameters.get(0);
             bugNameToBeAdded = parameters.get(1);
-            status = StatusType.valueOf(parameters.get(2)); //
-            stepsToReproduce = parameters.get(3);
-            severity = SeverityType.valueOf(parameters.get(4));
+            description = parameters.get(2);
+            status = StatusType.valueOf(parameters.get(3)); //
+            stepsToReproduce = parameters.get(4);
+            severity = SeverityType.valueOf(parameters.get(5));
 
         } catch (Exception e) {
             throw new IllegalArgumentException("");

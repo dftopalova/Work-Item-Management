@@ -11,6 +11,12 @@ public enum StatusType {
     FEED_SCHEDULED,
     FEED_DONE;
 
+
+//    public StatusType fromString(String str) {
+//
+//
+//    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
