@@ -3,7 +3,6 @@ package com.KSDT.commands.creation;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
-import com.KSDT.models.BoardImpl;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Team;
 
@@ -37,7 +36,8 @@ public class CreateBoardInTeamCommand implements Command {
         Board board = factory.createBoard(boardNameToBeAdded);
 
         team.addBoard(boardNameToBeAdded, board);
-        repository.addBoard(boardNameToBeAdded, board);
+        repository.addBoard(board);
+//        repository.addBoard(boardNameToBeAdded, board);
 
         return String.format(BOARD_ADDED_TO_TEAM, boardNameToBeAdded, teamToAddName);
     }

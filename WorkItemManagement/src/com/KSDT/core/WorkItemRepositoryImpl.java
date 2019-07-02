@@ -6,23 +6,23 @@ import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<String, Team> teams;
     private Map<String, Person> persons;
     private Map<String, WorkItem> workItems;
-    private Map<String, Board> boards;
+    private List<Board> boards;
 
     public WorkItemRepositoryImpl() {
         this.teams = new HashMap<>();
         this.workItems = new HashMap<>();
         this.persons = new HashMap<>();
-        this.boards = new HashMap<>();
+        this.boards = new ArrayList<>();
     }
-
-//    TODO type methods connected with persons - add remove etc
 
     @Override
     public Map<String, Team> getTeams() {
@@ -40,8 +40,8 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
-    public Map<String, Board> getBoards() {
-        return new HashMap<>(boards);
+    public List<Board> getBoards() {
+        return new ArrayList<>(boards);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
-    public void addBoard(String name, Board board) {
-        this.boards.put(name, board);
+    public void addBoard( Board board) {
+        this.boards.add(board);
     }
 
     @Override

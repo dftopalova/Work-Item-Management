@@ -5,6 +5,7 @@ import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
 
+import java.util.List;
 import java.util.Map;
 
 public interface WorkItemRepository {
@@ -15,7 +16,8 @@ public interface WorkItemRepository {
 
     Map<String, Person> getPersons();
 
-    Map<String, Board> getBoards();
+    List<Board> getBoards();
+//    Map<String, Board> getBoards();
 
     void addTeam(String name, Team team);
 
@@ -23,7 +25,9 @@ public interface WorkItemRepository {
 
     void addPerson(String name, Person person);
 
-    void addBoard(String name, Board board);
+    void addBoard(Board board);
+//    void addBoard(String name, Board board);
+
 
 //
 }

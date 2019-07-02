@@ -14,10 +14,11 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class CreateBugInBoard implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String teamName;
     private String bugNameToBeAdded;
     private String boardToAddName;
     private StatusType status;
@@ -36,8 +37,10 @@ public class CreateBugInBoard implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getBoards().get(boardToAddName);
-        WorkItem bug = factory.createBug(boardToAddName, status, description, stepsToReproduce, severity);
+
+
+        Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
+        WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, severity);
         board.addWorkItem(bugNameToBeAdded, bug); // FIX TODO In BoardImpl
 
         return String.format(BUG_ADDED_TO_BOARD, bugNameToBeAdded, boardToAddName);
@@ -51,7 +54,7 @@ public class CreateBugInBoard implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().containsKey(boardToAddName)) {
+        if (!repository.getTeams().get(teamName).getBoards().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }
     }
@@ -59,12 +62,13 @@ public class CreateBugInBoard implements Command {
 
     private void parseParameters(List<String> parameters) {
         try {
-            boardToAddName = parameters.get(0);
-            bugNameToBeAdded = parameters.get(1);
-            description = parameters.get(2);
-            status = StatusType.valueOf(parameters.get(3)); //
-            stepsToReproduce = parameters.get(4);
-            severity = SeverityType.valueOf(parameters.get(5));
+            teamName = parameters.get(0);
+            boardToAddName = parameters.get(1);
+            bugNameToBeAdded = parameters.get(2);
+            status = StatusType.valueOf(parameters.get(3));
+            description = parameters.get(4);
+            stepsToReproduce = parameters.get(5);
+            severity = SeverityType.valueOf(parameters.get(6));
 
         } catch (Exception e) {
             throw new IllegalArgumentException("");
