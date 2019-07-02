@@ -14,12 +14,13 @@ import java.util.Map;
 public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<String, Team> teams;
     private Map<String, Person> persons;
-    private Map<String, WorkItem> workItems;
+//    private Map<String, WorkItem> workItems;
+    private List<WorkItem> workItems;
     private List<Board> boards;
 
     public WorkItemRepositoryImpl() {
         this.teams = new HashMap<>();
-        this.workItems = new HashMap<>();
+        this.workItems = new ArrayList<>();
         this.persons = new HashMap<>();
         this.boards = new ArrayList<>();
     }
@@ -30,8 +31,8 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
-    public Map<String, WorkItem> getWorkItems() {
-        return new HashMap<>(workItems);
+    public List<WorkItem> getWorkItems() {
+        return new ArrayList<>(workItems);
     }
 
     @Override
@@ -60,8 +61,8 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
-    public void addWorkItem(String name, WorkItem workItem) {
-        this.workItems.put(name, workItem);
+    public void addWorkItem(WorkItem workItem) {
+        this.workItems.add(workItem);
     }
 
 

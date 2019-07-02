@@ -41,7 +41,8 @@ public class CreateBugInBoard implements Command {
 
         Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
         WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, severity);
-        board.addWorkItem(bugNameToBeAdded, bug); // FIX TODO In BoardImpl
+        repository.addWorkItem(bug);
+        board.addWorkItem(bugNameToBeAdded, bug);
 
         return String.format(BUG_ADDED_TO_BOARD, bugNameToBeAdded, boardToAddName);
     }

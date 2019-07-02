@@ -13,7 +13,6 @@ public class CommandConstants {
 
     //Success messages
     public static final String TEAM_CREATED = "Team with ID %s was created.";
-    public static final String BOARD_CREATED = "Board with ID %s was created.";
     public static final String PERSON_CREATED = "Person with ID %s was created.";
     public static final String PERSON_ADDED_TO_TEAM = "Person with ID %s was added to %s team.";
     public static final String BOARD_ADDED_TO_TEAM = "Board with ID %s was added to %s team.";
