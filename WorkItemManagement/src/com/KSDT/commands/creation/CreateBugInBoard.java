@@ -15,7 +15,7 @@ import static com.KSDT.commands.CommandConstants.*;
 
 public class CreateBugInBoard implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
-    public static final String WORK_ITEM_TYPE = "BUG_";
+    private static final String WORK_ITEM_TYPE = "BUG_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 

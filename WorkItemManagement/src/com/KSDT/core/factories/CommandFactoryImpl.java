@@ -24,6 +24,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new CreateBoardInTeamCommand(repository, factory);
             case CREATEBUGINBOARD:
                 return new CreateBugInBoard(repository, factory);
+            case CREATESTORYINBOARD:
+                return new CreateStoryInBoard(repository,factory);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

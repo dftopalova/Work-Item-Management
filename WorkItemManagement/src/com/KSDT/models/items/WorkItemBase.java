@@ -19,7 +19,7 @@ public abstract class WorkItemBase implements WorkItem {
     private String title;
     private StatusType status;
     private String description;
-    private List<String> comments; //possibly Map because it needs author to every comment
+    private List<String> comments; // Pair<Person, String>
     private List<String> history;
 
     public  WorkItemBase(String title, StatusType status, String description) {

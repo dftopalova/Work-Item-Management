@@ -8,9 +8,12 @@ import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
+import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.BugImpl;
+import com.KSDT.models.items.StoryImpl;
 
 public class WorkItemFactoryImpl implements WorkItemFactory {
 
@@ -28,6 +31,16 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
     @Override
     public WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce, SeverityType severity) {
         return new BugImpl(title, status, description, stepsToReproduce, severity);
+    }
+
+    @Override
+    public WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size, Person assignee) {
+        return new StoryImpl(title,status,description,priority,size,assignee);
+    }
+
+    @Override
+    public WorkItem createFeedback(String title, StatusType status, String description, int rating) {
+        return null;
     }
 
     @Override
