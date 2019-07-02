@@ -20,8 +20,6 @@ public class StoryImpl extends WorkItemBase implements Story {
         setAssignee(assignee);
     }
 
-
-
     private void setPriority(PriorityType priority) {
         ValidationHelper.nullCheck(priority);
         this.priority = priority;
@@ -43,22 +41,17 @@ public class StoryImpl extends WorkItemBase implements Story {
     }
 
     @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public PriorityType getPriority() {
-        return null;
+        return priority;
     }
 
     @Override
     public SizeType getSize() {
-        return null;
+        return size;
     }
 
     @Override
     public Person getAssignee() {
-        return null;
+        return assignee;
     }
 }

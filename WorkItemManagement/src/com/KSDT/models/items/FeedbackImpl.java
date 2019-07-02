@@ -15,7 +15,7 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     }
 
     private void setRating(int rating) {
-        ValidationHelper.nullCheck(rating);
+        ValidationHelper.nullCheck(rating); // ??
         ValidationHelper.positiveCheck(rating);
         this.rating = rating;
     }
@@ -27,12 +27,7 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     }
 
     @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public int getRating() {
-        return 0;
+        return rating;
     }
 }
