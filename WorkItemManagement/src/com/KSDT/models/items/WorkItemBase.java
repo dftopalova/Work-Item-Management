@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
@@ -47,6 +48,12 @@ public abstract class WorkItemBase implements WorkItem {
         ValidationHelper.lengthCheck(description, DESCRIPTION_LENGTH_MIN, DESCRIPTION_LENGTH_MAX, DESCRIPTION_LENGTH_EXCEPTION);
         this.description = description;
 
+    }
+
+    @Override
+    public void changeStatus(StatusType oldStatus, StatusType newStatus) {
+        HistoryHelper.collectChange(status, newStatus);
+        setStatus(newStatus);
     }
 
     public abstract String getType();

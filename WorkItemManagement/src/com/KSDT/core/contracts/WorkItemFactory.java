@@ -25,9 +25,6 @@ public interface WorkItemFactory {
     WorkItem createFeedback(String title, StatusType status, String description, int rating);
 
     Board createBoard(String name);
-//
-//    Table createTable(String model, String materialType, double price, double height, double length, double width);
-//
-//    Chair createChair(String type, String model, String material, double price, double height, int numberOfLegs);
+
 
 }

@@ -1,6 +1,8 @@
 package com.KSDT;
 
 import com.KSDT.core.EngineImpl;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.enums.StatusType;
 
 public class Main {
 
@@ -8,6 +10,9 @@ public class Main {
 
 
         EngineImpl engine = new EngineImpl();
+        StatusType statusType = StatusType.BUG_ACTIVE;
+        StatusType newstatusType = StatusType.BUG_FIXED;
+        System.out.println(HistoryHelper.collectChange(statusType, newstatusType   ));
         engine.start();
     }
 }

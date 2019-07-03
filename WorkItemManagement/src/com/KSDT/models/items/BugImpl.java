@@ -26,7 +26,8 @@ public class BugImpl extends WorkItemBase implements Bug {
         ValidationHelper.nullCheck(stepsToReproduce);
         String[] stepsList = stepsToReproduce.trim().split("/");
 
-        this.stepsToReproduce = Collections.singletonList(stepsToReproduce);
+        this.stepsToReproduce = Arrays.asList(stepsList);
+//        this.stepsToReproduce = Collections.singletonList(stepsToReproduce);
         //TODO CHECK singleton
     }
 
