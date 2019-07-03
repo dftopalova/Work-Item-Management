@@ -47,7 +47,7 @@ public class ChangeStatusCommand implements Command {
         if (repository.getWorkItems().size() <= workItemId) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
-        if (repository.getWorkItems().get(workItemId).getStatus() == newStatus) {
+        if (repository.getWorkItems().get(workItemId).getStatus().equals(newStatus)) {
             throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
         }
     }

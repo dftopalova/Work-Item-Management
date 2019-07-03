@@ -6,6 +6,7 @@ import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class WorkItemBase implements WorkItem {
@@ -49,12 +50,9 @@ public abstract class WorkItemBase implements WorkItem {
 
     }
 
-// TODO implement methods - change status etc
-
-
     @Override
     public void changeStatus(StatusType newStatus) {
-        HistoryHelper.collectChange(this.status, newStatus);
+        history.add(HistoryHelper.collectChange(this.status, newStatus));
         setStatus(newStatus);
     }
 
