@@ -52,8 +52,15 @@ public abstract class WorkItemBase implements WorkItem {
 
     @Override
     public void changeStatus(StatusType newStatus) {
+        ValidationHelper.nullCheck(newStatus);
         history.add(HistoryHelper.collectChange(this.status, newStatus));
         setStatus(newStatus);
+    }
+
+    @Override
+    public void addComment(String comment) {
+        ValidationHelper.nullCheck(comment);
+        comments.add(comment);
     }
 
     public abstract String getType();

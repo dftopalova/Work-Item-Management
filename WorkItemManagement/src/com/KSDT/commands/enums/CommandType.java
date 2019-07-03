@@ -8,6 +8,7 @@ public enum CommandType {
     ADDPERSON,
     CREATEBUGINBOARD,
     CREATESTORYINBOARD,
-    CHANGESTATUS;
+    CHANGESTATUS,
+    ADDCOMMENT;
 
 }

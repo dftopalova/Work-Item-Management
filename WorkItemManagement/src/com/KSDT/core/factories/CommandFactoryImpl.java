@@ -28,6 +28,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new CreateStoryInBoard(repository,factory);
             case CHANGESTATUS:
                 return new ChangeStatusCommand(repository, factory);
+            case ADDCOMMENT:
+                return new AddPersonCommand(repository, factory);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

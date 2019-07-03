@@ -3,24 +3,27 @@ package com.KSDT.commands.creation;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.WorkItem;
-import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.KSDT.commands.CommandConstants.*;
 
-public class ChangeStatusCommand implements Command {
+public class AddCommentCommand implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
-    private String WORK_ITEM_TYPE;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
     private int boardId;
     private String workItemId;
-    private StatusType newStatus;
+    private String comment;
 
-    public ChangeStatusCommand(WorkItemRepository repository, WorkItemFactory factory) {
+
+    public AddCommentCommand(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
         this.factory = factory;
     }
@@ -28,14 +31,14 @@ public class ChangeStatusCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         validateInput(parameters);
-//        validateParameters();
         parseParameters(parameters);
-        validateStatus();
+        validateParameters();
 
-        WorkItem workItem = repository.getBoards().get(boardId).getWorkItems().get(workItemId);
-        String oldStatus = workItem.getStatus().toString();
-        workItem.changeStatus(newStatus);
-        return String.format(STATUS_SUCCESSFULLY_CHANGED, workItemId, oldStatus, newStatus.toString());
+        Board board = repository.getBoards().get(boardId);
+        WorkItem workItem = board.getWorkItem(workItemId);
+        workItem.addComment(comment);
+
+        return String.format(COMMENT_SUCCESSFULLY_ADDED, comment, workItemId);
     }
 
 
@@ -46,34 +49,27 @@ public class ChangeStatusCommand implements Command {
     }
 
     private void validateParameters() {
+        if (repository.getBoards().size() <= boardId) {
+            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
+        }
         if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
-        }
-    }
-
-    private void validateStatus() {
-        if (repository.getBoards().get(boardId).getWorkItems().get(workItemId).getStatus().equals(newStatus)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
-            workItemId = String.valueOf(parameters.get(1));
-            validateParameters();
-
-
-            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
-//            String workItemClassSimpleName =  repository.getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
-            WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length()-4).concat("_");
-            newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
-
-
+            workItemId = parameters.get(1);
+            List<String> fullComment = IntStream.range(2, parameters.size())
+                        .a;
+//            TODO FIX collect stream
+            comment = parameters.get(2);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
         }
     }
+
 
 }

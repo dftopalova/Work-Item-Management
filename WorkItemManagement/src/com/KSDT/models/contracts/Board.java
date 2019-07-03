@@ -6,7 +6,10 @@ import java.util.Map;
 public interface Board {
     String getName();
 
-    Map<String, WorkItem> getWorkItem();
+    Map<String, WorkItem> getWorkItems();
+
+//    TODO implement method getWorkItem !
+    WorkItem getWorkItem(String name);
 
     List<String> getHistory();
 

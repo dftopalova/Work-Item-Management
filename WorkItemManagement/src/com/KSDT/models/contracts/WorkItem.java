@@ -6,10 +6,18 @@ import java.util.List;
 
 public interface WorkItem {
     String getTitle();
+
     StatusType getStatus();
+
     List<String> getComments();
+
     List<String> getHistory();
+
     String getDescription();
+
     String getType();
+
     void changeStatus(StatusType newStatus);
+
+    void addComment(String comment);
 }
