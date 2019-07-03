@@ -34,8 +34,8 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
     }
 
     @Override
-    public WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size, Person assignee) {
-        return new StoryImpl(title,status,description,priority,size,assignee);
+    public WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size) {
+        return new StoryImpl(title,status,description,priority,size);
     }
 
     @Override

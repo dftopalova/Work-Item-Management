@@ -17,7 +17,7 @@ import static com.KSDT.commands.CommandConstants.*;
 
 public class CreateStoryInBoard implements Command {
 
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 8;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private static final String WORK_ITEM_TYPE = "STORY_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
@@ -29,7 +29,6 @@ public class CreateStoryInBoard implements Command {
     private String description;
     private PriorityType priority;
     private SizeType size;
-    private Person assignee;
 
     public CreateStoryInBoard(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository=repository;
@@ -43,7 +42,7 @@ public class CreateStoryInBoard implements Command {
         validateParameters();
 
         Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
-        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority,size,assignee);
+        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority,size);
         repository.addWorkItem(story);
         board.addWorkItem(storyNameToBeAdded, story);
         return String.format(STORY_ADDED_TO_BOARD, storyNameToBeAdded, boardToAddName);
@@ -70,7 +69,6 @@ public class CreateStoryInBoard implements Command {
             description = parameters.get(4);
             priority = PriorityType.valueOf(parameters.get(5).toUpperCase());
             size = SizeType.valueOf(parameters.get(6).toUpperCase());
-            assignee=repository.getPersons().get(parameters.get(7)); // TODO check if it is correct
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

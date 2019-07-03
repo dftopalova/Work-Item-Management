@@ -20,7 +20,7 @@ public interface WorkItemFactory {
 
     WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce, SeverityType severity);
 
-    WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size, Person assignee);
+    WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size);
 
     WorkItem createFeedback(String title, StatusType status, String description, int rating);
 

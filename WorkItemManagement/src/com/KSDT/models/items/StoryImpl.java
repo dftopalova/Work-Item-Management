@@ -13,11 +13,10 @@ public class StoryImpl extends WorkItemBase implements Story {
     private SizeType size;
     private Person assignee;
 
-    public StoryImpl(String title, StatusType status, String description, PriorityType priority, SizeType size, Person assignee) {
+    public StoryImpl(String title, StatusType status, String description, PriorityType priority, SizeType size) {
         super(title, status, description);
         setPriority(priority);
         setSize(size);
-        setAssignee(assignee);
     }
 
     private void setPriority(PriorityType priority) {
