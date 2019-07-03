@@ -11,12 +11,13 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class ChangeStatusCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
     private String WORK_ITEM_TYPE;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
-    private int workItemId;
+    private int boardId;
+    private String workItemId;
     private StatusType newStatus;
 
     public ChangeStatusCommand(WorkItemRepository repository, WorkItemFactory factory) {
@@ -26,11 +27,12 @@ public class ChangeStatusCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        validateParameters();
         validateInput(parameters);
+//        validateParameters();
         parseParameters(parameters);
+        validateStatus();
 
-        WorkItem workItem = repository.getWorkItems().get(workItemId);
+        WorkItem workItem = repository.getBoards().get(boardId).getWorkItem().get(workItemId);
         String oldStatus = workItem.getStatus().toString();
         workItem.changeStatus(newStatus);
         return String.format(STATUS_SUCCESSFULLY_CHANGED, workItemId, oldStatus, newStatus.toString());
@@ -44,20 +46,30 @@ public class ChangeStatusCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getWorkItems().size() <= workItemId) {
+        if (!repository.getBoards().get(boardId).getWorkItem().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
-        if (repository.getWorkItems().get(workItemId).getStatus().equals(newStatus)) {
+    }
+
+    private void validateStatus() {
+        if (repository.getBoards().get(boardId).getWorkItem().get(workItemId).getStatus().equals(newStatus)) {
             throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
-            String workItemClassSimpleName =  repository.getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
+            boardId = Integer.valueOf(parameters.get(0));
+            workItemId = String.valueOf(parameters.get(1));
+            validateParameters();
+
+
+            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItem().get(workItemId).getClass().getSimpleName().toUpperCase();
+//            String workItemClassSimpleName =  repository.getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
             WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length()-4).concat("_");
-            workItemId = Integer.valueOf(parameters.get(0));
-            newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(1).toUpperCase()));
+            newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
+
+
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
