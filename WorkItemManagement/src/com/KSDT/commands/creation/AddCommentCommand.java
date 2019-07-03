@@ -61,7 +61,7 @@ public class AddCommentCommand implements Command {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = parameters.get(1);
-            List<String> fullComment = parameters.stream().collect(Collectors.joining( ));
+//            List<String> fullComment = parameters.stream().collect(Collectors.joining( ));
 //            TODO FIX collect stream
             comment = parameters.get(2);
         } catch (Exception e) {

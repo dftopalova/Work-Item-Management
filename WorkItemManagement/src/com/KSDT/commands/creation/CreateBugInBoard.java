@@ -51,7 +51,7 @@ public class CreateBugInBoard implements Command {
 //                .get();
 
 
-        return String.format(BUG_ADDED_TO_BOARD, bugNameToBeAdded, boardToAddName);
+        return String.format(BUG_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
 
 

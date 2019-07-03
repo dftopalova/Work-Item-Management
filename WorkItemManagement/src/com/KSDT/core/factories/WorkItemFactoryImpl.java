@@ -13,6 +13,7 @@ import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.BugImpl;
+import com.KSDT.models.items.FeedbackImpl;
 import com.KSDT.models.items.StoryImpl;
 
 public class WorkItemFactoryImpl implements WorkItemFactory {
@@ -40,7 +41,7 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
 
     @Override
     public WorkItem createFeedback(String title, StatusType status, String description, int rating) {
-        return null;
+        return new FeedbackImpl(title,status,description,rating);
     }
 
     @Override

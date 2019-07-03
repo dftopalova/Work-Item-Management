@@ -5,30 +5,27 @@ import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.WorkItem;
-import com.KSDT.models.enums.PriorityType;
-import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
 import static com.KSDT.commands.CommandConstants.*;
 
-public class CreateStoryInBoard implements Command {
+public class CreateFeedbackInBoard implements Command {
 
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
-    private static final String WORK_ITEM_TYPE = "STORY_";
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
+    private static final String WORK_ITEM_TYPE = "FEED_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
     private String teamName;
     private String boardToAddName;
-    private String storyNameToBeAdded;
+    private String feedbackToBeAdded;
     private StatusType status;
     private String description;
-    private PriorityType priority;
-    private SizeType size;
+    private int rating;
 
-    public CreateStoryInBoard(WorkItemRepository repository, WorkItemFactory factory) {
+    public CreateFeedbackInBoard(WorkItemRepository repository,WorkItemFactory factory) {
         this.repository=repository;
         this.factory=factory;
     }
@@ -40,10 +37,10 @@ public class CreateStoryInBoard implements Command {
         validateParameters();
 
         Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
-        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority,size);
-        repository.addWorkItem(story);
-        board.addWorkItem(storyNameToBeAdded, story);
-        return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
+        WorkItem feedback = factory.createFeedback(feedbackToBeAdded, status, description, rating);
+        repository.addWorkItem(feedback);
+        board.addWorkItem(feedbackToBeAdded, feedback);
+        return String.format(FEEDBACK_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
 
     private void validateInput(List<String> parameters) {
@@ -62,11 +59,10 @@ public class CreateStoryInBoard implements Command {
         try {
             teamName = parameters.get(0);
             boardToAddName = parameters.get(1);
-            storyNameToBeAdded = parameters.get(2);
+            feedbackToBeAdded = parameters.get(2);
             status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
             description = parameters.get(4);
-            priority = PriorityType.valueOf(parameters.get(5).toUpperCase());
-            size = SizeType.valueOf(parameters.get(6).toUpperCase());
+            rating=Integer.parseInt(parameters.get(5));
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

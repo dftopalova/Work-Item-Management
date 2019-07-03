@@ -64,5 +64,4 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
         this.workItems.add(workItem);
     }
 
-
 }

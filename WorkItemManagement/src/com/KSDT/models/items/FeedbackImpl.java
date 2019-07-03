@@ -15,7 +15,6 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     }
 
     private void setRating(int rating) {
-        ValidationHelper.nullCheck(rating); // ??
         ValidationHelper.positiveCheck(rating);
         this.rating = rating;
     }
