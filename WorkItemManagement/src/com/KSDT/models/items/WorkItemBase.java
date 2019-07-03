@@ -41,7 +41,6 @@ public abstract class WorkItemBase implements WorkItem {
         ValidationHelper.nullCheck(status);
         this.status = status;
     }
-// TODO implement methods - change status etc
 
     private void setDescription(String description) {
         ValidationHelper.nullCheck(description);
@@ -50,9 +49,12 @@ public abstract class WorkItemBase implements WorkItem {
 
     }
 
+// TODO implement methods - change status etc
+
+
     @Override
-    public void changeStatus(StatusType oldStatus, StatusType newStatus) {
-        HistoryHelper.collectChange(status, newStatus);
+    public void changeStatus(StatusType newStatus) {
+        HistoryHelper.collectChange(this.status, newStatus);
         setStatus(newStatus);
     }
 

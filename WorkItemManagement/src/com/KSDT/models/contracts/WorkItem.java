@@ -11,5 +11,5 @@ public interface WorkItem {
     List<String> getHistory();
     String getDescription();
     String getType();
-    void changeStatus(StatusType oldStatus, StatusType newStatus);
+    void changeStatus(StatusType newStatus);
 }

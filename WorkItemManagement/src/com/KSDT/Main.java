@@ -10,9 +10,9 @@ public class Main {
 
 
         EngineImpl engine = new EngineImpl();
-        StatusType statusType = StatusType.BUG_ACTIVE;
-        StatusType newstatusType = StatusType.BUG_FIXED;
-        System.out.println(HistoryHelper.collectChange(statusType, newstatusType   ));
+//        StatusType statusType = StatusType.BUG_ACTIVE;
+//        StatusType newstatusType = StatusType.BUG_FIXED;
+//        System.out.println(HistoryHelper.collectChange(statusType, newstatusType   ));
         engine.start();
     }
 }
