@@ -30,7 +30,7 @@ public class AddCommentCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        validateInput(parameters);
+//        validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
 
@@ -61,9 +61,11 @@ public class AddCommentCommand implements Command {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = parameters.get(1);
-//            List<String> fullComment = parameters.stream().collect(Collectors.joining( ));
+            List<String> fullComment = parameters.stream().collect(Collectors.toList());
+            fullComment.remove(0);
+            fullComment.remove(0);
 //            TODO FIX collect stream
-            comment = parameters.get(2);
+            comment = fullComment.toString().replaceAll(",", " ");
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
