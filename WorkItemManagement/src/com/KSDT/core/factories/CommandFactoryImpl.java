@@ -2,10 +2,7 @@ package com.KSDT.core.factories;
 
 import com.KSDT.commands.addition.AddCommentCommand;
 import com.KSDT.commands.addition.AddPersonCommand;
-import com.KSDT.commands.change.ChangeBugPriorityCommand;
-import com.KSDT.commands.change.ChangeBugSeverityCommand;
-import com.KSDT.commands.change.ChangePriorityCommand;
-import com.KSDT.commands.change.ChangeStatusCommand;
+import com.KSDT.commands.change.*;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.*;
 import com.KSDT.commands.enums.CommandType;
@@ -42,6 +39,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ChangeBugPriorityCommand(repository, factory);
             case CHANGEBUGSEVERITY:
                 return new ChangeBugSeverityCommand(repository, factory);
+            case CHANGESTORYSIZE:
+                return new ChangeStorySize(repository, factory);
             case CHANGEPRIORITY:
                 return new ChangePriorityCommand(repository, factory);
         }
