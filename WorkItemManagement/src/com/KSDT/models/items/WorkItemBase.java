@@ -72,7 +72,6 @@ public abstract class WorkItemBase implements WorkItem {
 
     public abstract String getType();
 
-//    public abstract PriorityType getPriority();
 
     @Override
     public String getTitle() {

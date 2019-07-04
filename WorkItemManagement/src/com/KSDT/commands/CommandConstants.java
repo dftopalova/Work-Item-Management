@@ -12,6 +12,9 @@ public class CommandConstants {
     public static final String BOARD_ALREADY_EXISTS = "! Board with ID %s in team %s already exists.";
     public static final String WORK_ITEM_STATUS_SAME = "! Work item with ID %s has the same status.";
     public static final String WORK_ITEM_PRIORITY_SAME = "! Work item with ID %s has the same priority.";
+    public static final String WRONG_WORK_ITEM_TYPE = "! Work item type %s doesn't exist.";
+    public static final String FEEDBACK_DOESNT_CONTAIN_PRIORITY = "! Feedback doesn't contain priority field.";
+
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
     //Success messages

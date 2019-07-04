@@ -1,44 +1,41 @@
-package com.KSDT.commands.creation;
+package com.KSDT.commands.change;
 
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
-import com.KSDT.models.contracts.Board;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.Story;
+import com.KSDT.models.enums.PriorityType;
 
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.KSDT.commands.CommandConstants.*;
 
-public class AddCommentCommand implements Command {
+public class ChangeStoryPriorityCommand implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
     private int boardId;
     private String workItemId;
-    private String comment;
+    private PriorityType newPriority;
 
 
-    public AddCommentCommand(WorkItemRepository repository, WorkItemFactory factory) {
+    public ChangeStoryPriorityCommand(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
         this.factory = factory;
     }
 
     @Override
     public String execute(List<String> parameters) {
-//        validateInput(parameters);
+        validateInput(parameters);
         parseParameters(parameters);
-        validateParameters();
 
-        Board board = repository.getBoards().get(boardId);
-        WorkItem workItem = board.getWorkItem(workItemId);
-        workItem.addComment(comment);
+        Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        PriorityType oldPriority = story.getPriority();
+        validatePriority(oldPriority, newPriority);
 
-        return String.format(COMMENT_SUCCESSFULLY_ADDED, comment, workItemId);
+        story.changePriority(newPriority);
+        return String.format(PRIORITY_SUCCESSFULLY_CHANGED, workItemId, oldPriority, newPriority);
     }
 
 
@@ -49,28 +46,28 @@ public class AddCommentCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getBoards().size() <= boardId) {
-            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
-        }
         if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
+        }
+    }
+
+    private void validatePriority(PriorityType oldPriority, PriorityType newPriority) {
+        if (oldPriority.equals(newPriority)) {
+            throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
-            workItemId = parameters.get(1);
-            List<String> fullComment = parameters.stream().collect(Collectors.toList());
-            fullComment.remove(0);
-            fullComment.remove(0);
-//            TODO FIX collect stream
-            comment = fullComment.toString().replaceAll(",", " ");
+            workItemId = String.valueOf(parameters.get(1));
+            newPriority = PriorityType.valueOf(parameters.get(2).toUpperCase());
+            validateParameters();
+
+
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
         }
     }
-
-
 }

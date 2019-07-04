@@ -9,4 +9,6 @@ public interface Story  {
     SizeType getSize();
 
     Person getAssignee();
+
+    void changePriority(PriorityType newPriority);
 }

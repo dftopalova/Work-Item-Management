@@ -1,26 +1,27 @@
-package com.KSDT.commands.creation;
+package com.KSDT.commands.change;
 
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.Bug;
+import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
 import static com.KSDT.commands.CommandConstants.*;
 
-public class ChangeStatusCommand implements Command {
+public class ChangeBugPriorityCommand implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
-    private String WORK_ITEM_TYPE;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
     private int boardId;
     private String workItemId;
-    private StatusType newStatus;
+    private PriorityType newPriority;
 
-    public ChangeStatusCommand(WorkItemRepository repository, WorkItemFactory factory) {
+
+    public ChangeBugPriorityCommand(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
         this.factory = factory;
     }
@@ -29,14 +30,14 @@ public class ChangeStatusCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
-        validateStatus();
 
-        WorkItem workItem = repository.getBoards().get(boardId).getWorkItems().get(workItemId);
-        String oldStatus = workItem.getStatus().toString();
-        workItem.changeStatus(newStatus);
-        return String.format(STATUS_SUCCESSFULLY_CHANGED, workItemId, oldStatus, newStatus.toString());
+        Bug bug = (Bug) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        PriorityType oldPriority = bug.getPriority();
+        validatePriority(oldPriority, newPriority);
+
+        bug.changePriority(newPriority);
+        return String.format(PRIORITY_SUCCESSFULLY_CHANGED, workItemId, oldPriority, newPriority);
     }
-
 
     private void validateInput(List<String> parameters) {
         if (parameters.size() != EXPECTED_NUMBER_OF_ARGUMENTS) {
@@ -50,9 +51,9 @@ public class ChangeStatusCommand implements Command {
         }
     }
 
-    private void validateStatus() {
-        if (repository.getBoards().get(boardId).getWorkItems().get(workItemId).getStatus().equals(newStatus)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
+    private void validatePriority(PriorityType oldPriority, PriorityType newPriority) {
+        if (oldPriority.equals(newPriority)) {
+            throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
         }
     }
 
@@ -60,13 +61,8 @@ public class ChangeStatusCommand implements Command {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
+            newPriority = PriorityType.valueOf(parameters.get(2).toUpperCase());
             validateParameters();
-
-
-            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
-//            String workItemClassSimpleName =  repository.getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
-            WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length()-4).concat("_");
-            newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
 
 
         } catch (Exception e) {
@@ -74,5 +70,6 @@ public class ChangeStatusCommand implements Command {
 //            TODO EXCEPTION
         }
     }
+
 
 }

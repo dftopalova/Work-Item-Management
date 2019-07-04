@@ -1,4 +1,4 @@
-package com.KSDT.commands.creation;
+package com.KSDT.commands.addition;
 
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;

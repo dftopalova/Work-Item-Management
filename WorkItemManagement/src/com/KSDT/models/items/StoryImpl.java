@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
@@ -52,5 +53,12 @@ public class StoryImpl extends WorkItemBase implements Story {
     @Override
     public Person getAssignee() {
         return assignee;
+    }
+
+    @Override
+    public void changePriority(PriorityType newPriority) {
+        ValidationHelper.nullCheck(newPriority);
+        addToHistory(HistoryHelper.collectChange(getPriority(), newPriority));
+        setPriority(newPriority);
     }
 }

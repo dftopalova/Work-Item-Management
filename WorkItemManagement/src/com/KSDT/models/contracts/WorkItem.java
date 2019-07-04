@@ -24,5 +24,4 @@ public interface WorkItem {
 
     void addToHistory(String change);
 
-//    PriorityType getPriority();
 }
