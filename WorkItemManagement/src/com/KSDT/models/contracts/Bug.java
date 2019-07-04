@@ -17,4 +17,6 @@ public interface Bug extends WorkItem {
 
     void changePriority(PriorityType newPriority);
 
+    void changeSeverity(SeverityType newSeverity);
+
 }

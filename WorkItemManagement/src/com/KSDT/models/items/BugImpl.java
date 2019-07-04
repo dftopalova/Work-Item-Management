@@ -80,6 +80,13 @@ public class BugImpl extends WorkItemBase implements Bug {
     }
 
     @Override
+    public void changeSeverity(SeverityType newSeverity) {
+        ValidationHelper.nullCheck(newSeverity);
+        addToHistory(HistoryHelper.collectChange(getSeverity(), newSeverity));
+        setSeverity(newSeverity);
+    }
+
+    @Override
     public String getType() {
         return "BUG_";
     }
