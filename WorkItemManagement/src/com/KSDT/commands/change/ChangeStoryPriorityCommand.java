@@ -46,7 +46,7 @@ public class ChangeStoryPriorityCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
+        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
     }

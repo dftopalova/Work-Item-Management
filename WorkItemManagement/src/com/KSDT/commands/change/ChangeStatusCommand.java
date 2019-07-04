@@ -31,7 +31,7 @@ public class ChangeStatusCommand implements Command {
         parseParameters(parameters);
         validateStatus();
 
-        WorkItem workItem = repository.getBoards().get(boardId).getWorkItems().get(workItemId);
+        WorkItem workItem = repository.getBoards().get(boardId).getWorkItem(workItemId);
         String oldStatus = workItem.getStatus().toString();
         workItem.changeStatus(newStatus);
         return String.format(STATUS_SUCCESSFULLY_CHANGED, workItemId, oldStatus, newStatus.toString());
@@ -45,13 +45,13 @@ public class ChangeStatusCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
+        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
     }
 
     private void validateStatus() {
-        if (repository.getBoards().get(boardId).getWorkItems().get(workItemId).getStatus().equals(newStatus)) {
+        if (repository.getBoards().get(boardId).getWorkItemsList().get(workItemId).getStatus().equals(newStatus)) {
             throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
         }
     }
@@ -63,8 +63,8 @@ public class ChangeStatusCommand implements Command {
             validateParameters();
 
 
-            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
-//            String workItemClassSimpleName =  repository.getWorkItems().get(workItemId).getClass().getSimpleName().toUpperCase();
+            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItem(workItemId).getClass().getSimpleName().toUpperCase();
+//            String workItemClassSimpleName =  repository.getWorkItemsList().get(workItemId).getClass().getSimpleName().toUpperCase();
             WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length()-4).concat("_");
             newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
 

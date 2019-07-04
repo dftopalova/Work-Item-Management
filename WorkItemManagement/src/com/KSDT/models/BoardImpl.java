@@ -44,7 +44,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public Map<String, WorkItem> getWorkItems() {
+    public Map<String, WorkItem> getWorkItemsList() {
         return new HashMap<>(workItems);
     }
 

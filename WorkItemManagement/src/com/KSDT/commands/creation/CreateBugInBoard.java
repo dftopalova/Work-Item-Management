@@ -47,7 +47,7 @@ public class CreateBugInBoard implements Command {
         board.addWorkItem(bugNameToBeAdded, bug);
 
 //      TODO - logic for finding exact name match for workitem
-//        WorkItem findTest = repository.getWorkItems().stream()
+//        WorkItem findTest = repository.getWorkItemsList().stream()
 //                .filter(e -> e.getTitle().equals(bugNameToBeAdded))
 //                .findFirst()
 //                .get();

@@ -5,7 +5,6 @@ import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.enums.PriorityType;
-import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class ChangeBugPriorityCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
+        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
     }

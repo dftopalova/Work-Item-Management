@@ -7,9 +7,7 @@ import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.KSDT.commands.CommandConstants.*;
 
@@ -52,7 +50,7 @@ public class AddCommentCommand implements Command {
         if (repository.getBoards().size() <= boardId) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
         }
-        if (!repository.getBoards().get(boardId).getWorkItems().containsKey(workItemId)) {
+        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
     }
