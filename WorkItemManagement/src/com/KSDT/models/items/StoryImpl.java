@@ -65,7 +65,9 @@ public class StoryImpl extends WorkItemBase implements Story {
     @Override
     public void changeSize(SizeType newSize) {
         ValidationHelper.nullCheck(newSize);
-        addComment(HistoryHelper.collectChange(getSize(), newSize));
+        addToHistory(HistoryHelper.collectChange(getSize(), newSize));
         setSize(newSize);
     }
+
+
 }

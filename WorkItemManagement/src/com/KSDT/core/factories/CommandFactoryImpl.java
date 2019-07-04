@@ -40,7 +40,9 @@ public class CommandFactoryImpl implements CommandFactory {
             case CHANGEBUGSEVERITY:
                 return new ChangeBugSeverityCommand(repository, factory);
             case CHANGESTORYSIZE:
-                return new ChangeStorySize(repository, factory);
+                return new ChangeStorySizeCommand(repository, factory);
+            case CHANGEFEEDBACKRATING:
+                return new ChangeFeedRatingCommand(repository, factory);
             case CHANGEPRIORITY:
                 return new ChangePriorityCommand(repository, factory);
         }

@@ -12,6 +12,7 @@ public class CommandConstants {
     public static final String BOARD_ALREADY_EXISTS = "! Board with ID %s in team %s already exists.";
     public static final String WORK_ITEM_STATUS_SAME = "! Work item with ID %s has the same status.";
     public static final String WORK_ITEM_PRIORITY_SAME = "! Work item with ID %s has the same priority.";
+    public static final String WORK_ITEM_RATING_SAME = "! Work item with ID %s has the same rating.";
     public static final String WORK_ITEM_SEVERITY_SAME = "! Work item with ID %s has the same severity.";
     public static final String WORK_ITEM_SIZE_SAME = "! Work item with ID %s has the same size.";
     public static final String WRONG_WORK_ITEM_TYPE = "! Work item type %s doesn't exist.";
@@ -30,6 +31,7 @@ public class CommandConstants {
     public static final String STATUS_SUCCESSFULLY_CHANGED = "Status of work item with ID %s was changed from %s to %s.";
     public static final String PRIORITY_SUCCESSFULLY_CHANGED = "Priority of work item with ID %s was changed from %s to %s.";
     public static final String SIZE_SUCCESSFULLY_CHANGED = "Size of work item with ID %s was changed from %s to %s.";
+    public static final String RATING_SUCCESSFULLY_CHANGED = "Rating of work item with ID %s was changed from %s to %s.";
     public static final String SEVERITY_SUCCESSFULLY_CHANGED = "Severity of work item with ID %s was changed from %s to %s.";
     public static final String COMMENT_SUCCESSFULLY_ADDED = "Comment ' %s ' successfully added to work item with ID %s .";
 

@@ -13,4 +13,5 @@ public interface Story  {
     void changePriority(PriorityType newPriority);
 
     void changeSize(SizeType newSize);
+
 }

@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Feedback;
 import com.KSDT.models.enums.StatusType;
@@ -28,5 +29,12 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     @Override
     public int getRating() {
         return rating;
+    }
+
+    @Override
+    public void changeRating(int newRating) {
+        ValidationHelper.positiveCheck(newRating);
+        addToHistory(HistoryHelper.collectChange(getRating(), newRating));
+        setRating(newRating);
     }
 }

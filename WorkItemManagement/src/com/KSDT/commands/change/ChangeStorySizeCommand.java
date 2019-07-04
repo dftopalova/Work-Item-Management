@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.KSDT.commands.CommandConstants.*;
 
-public class ChangeStorySize implements Command {
+public class ChangeStorySizeCommand implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
@@ -20,7 +20,7 @@ public class ChangeStorySize implements Command {
     private String workItemId;
     private SizeType newSize;
 
-    public ChangeStorySize(WorkItemRepository repository, WorkItemFactory factory) {
+    public ChangeStorySizeCommand(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
         this.factory = factory;
     }
