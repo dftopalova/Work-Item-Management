@@ -18,7 +18,7 @@ public interface WorkItemFactory {
 
     Person createPerson(String name);
 
-    WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce, SeverityType severity);
+    WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce,PriorityType priority, SeverityType severity);
 
     WorkItem createStory(String title, StatusType status, String description, PriorityType priority, SizeType size);
 

@@ -1,8 +1,10 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
+import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
 
@@ -12,13 +14,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class BugImpl extends WorkItemBase implements Bug {
+
+
     private List<String> stepsToReproduce;
     private SeverityType severity;
     private Person assignee;
+    private PriorityType priority;
 
-    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, SeverityType severity) { // missing Person assignee
+    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, PriorityType priority, SeverityType severity) { // missing Person assignee
         super(title, status, description);
         setStepsToReproduce(stepsToReproduce);
+        setPriority(priority);
         setSeverity(severity);
     }
 
@@ -41,6 +47,11 @@ public class BugImpl extends WorkItemBase implements Bug {
         this.assignee = assignee;
     }
 
+    public void setPriority(PriorityType priority) {
+        ValidationHelper.nullCheck(priority);
+        this.priority = priority;
+    }
+
     @Override
     public List<String> getStepsToReproduce() {
         return new ArrayList<>(stepsToReproduce);
@@ -54,6 +65,18 @@ public class BugImpl extends WorkItemBase implements Bug {
     @Override
     public Person getAssignee() {
         return assignee;
+    }
+
+    @Override
+    public PriorityType getPriority() {
+        return priority;
+    }
+
+    @Override
+    public void changePriority(PriorityType newPriority) {
+        ValidationHelper.nullCheck(newPriority);
+        addToHistory(HistoryHelper.collectChange(getPriority(), newPriority));
+        setPriority(newPriority);
     }
 
     @Override

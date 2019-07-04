@@ -30,8 +30,8 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
     }
 
     @Override
-    public WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce, SeverityType severity) {
-        return new BugImpl(title, status, description, stepsToReproduce, severity);
+    public WorkItem createBug(String title, StatusType status, String description, String stepsToReproduce,PriorityType priority, SeverityType severity) {
+        return new BugImpl(title, status, description, stepsToReproduce,priority, severity);
     }
 
     @Override

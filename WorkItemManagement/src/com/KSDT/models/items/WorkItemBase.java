@@ -3,6 +3,7 @@ package com.KSDT.models.items;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
@@ -63,7 +64,15 @@ public abstract class WorkItemBase implements WorkItem {
         comments.add(comment);
     }
 
+    @Override
+    public void addToHistory(String change) {
+        ValidationHelper.nullCheck(change);
+        history.add(change);
+    }
+
     public abstract String getType();
+
+//    public abstract PriorityType getPriority();
 
     @Override
     public String getTitle() {

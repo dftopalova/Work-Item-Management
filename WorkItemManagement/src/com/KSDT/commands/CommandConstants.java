@@ -11,6 +11,7 @@ public class CommandConstants {
     public static final String INVALID_WORK_ITEM = "! Work item with ID %s doesn't exist.";
     public static final String BOARD_ALREADY_EXISTS = "! Board with ID %s in team %s already exists.";
     public static final String WORK_ITEM_STATUS_SAME = "! Work item with ID %s has the same status.";
+    public static final String WORK_ITEM_PRIORITY_SAME = "! Work item with ID %s has the same priority.";
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
     //Success messages
@@ -22,6 +23,7 @@ public class CommandConstants {
     public static final String STORY_ADDED_TO_BOARD = "Story with ID %s was added to %s board.";
     public static final String FEEDBACK_ADDED_TO_BOARD = "Feedback with ID %s was added to %s board.";
     public static final String STATUS_SUCCESSFULLY_CHANGED = "Status of work item with ID %s was changed from %s to %s.";
+    public static final String PRIORITY_SUCCESSFULLY_CHANGED = "Priority of work item with ID %s was changed from %s to %s.";
     public static final String COMMENT_SUCCESSFULLY_ADDED = "Comment ' %s ' successfully added to work item with ID %s .";
 
 

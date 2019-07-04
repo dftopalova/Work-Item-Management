@@ -5,6 +5,7 @@ import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.BugImpl;
@@ -14,7 +15,7 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class CreateBugInBoard implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 8;
     private static final String WORK_ITEM_TYPE = "BUG_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
@@ -25,6 +26,7 @@ public class CreateBugInBoard implements Command {
     private StatusType status;
     private String description;
     private String stepsToReproduce;
+    private PriorityType priority;
     private SeverityType severity;
 
     public CreateBugInBoard(WorkItemRepository repository, WorkItemFactory factory) {
@@ -40,7 +42,7 @@ public class CreateBugInBoard implements Command {
 
 
         Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
-        WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, severity);
+        WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, priority, severity);
         repository.addWorkItem(bug);
         board.addWorkItem(bugNameToBeAdded, bug);
 
@@ -76,7 +78,8 @@ public class CreateBugInBoard implements Command {
             status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
             description = parameters.get(4);
             stepsToReproduce = parameters.get(5);
-            severity = SeverityType.valueOf(parameters.get(6).toUpperCase());
+            priority = PriorityType.valueOf(parameters.get(6).toUpperCase());
+            severity = SeverityType.valueOf(parameters.get(7).toUpperCase());
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

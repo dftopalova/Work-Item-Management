@@ -32,6 +32,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ChangeStatusCommand(repository, factory);
             case ADDCOMMENT:
                 return new AddCommentCommand(repository, factory);
+            case CHANGEBUGPRIORITY:
+                return new ChangeBugPriorityCommand(repository, factory);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }
