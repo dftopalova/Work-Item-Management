@@ -7,7 +7,6 @@ import com.KSDT.models.enums.StatusType;
 
 public class FeedbackImpl extends WorkItemBase implements Feedback {
 
-
     private int rating;
 
     public FeedbackImpl(String title, StatusType status, String description, int rating) {
@@ -36,5 +35,11 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
         ValidationHelper.positiveCheck(newRating);
         addToHistory(HistoryHelper.collectChange(getRating(), newRating));
         setRating(newRating);
+    }
+
+    @Override
+    public String additionalInfo() {
+        return String.format("Rating: %d\n" +
+                "=*=*=*=*=\n",getRating());
     }
 }

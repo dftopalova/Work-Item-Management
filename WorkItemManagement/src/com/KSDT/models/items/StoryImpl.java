@@ -69,5 +69,14 @@ public class StoryImpl extends WorkItemBase implements Story {
         setSize(newSize);
     }
 
-
+    @Override
+    public String additionalInfo() {
+        StringBuilder strBuilder =new StringBuilder();
+        strBuilder.append(String.format(
+                "Priority: %s" +
+                        "Size: %s" +
+                        "Assignee: %s\n" +
+                        "=*=*=*=*=\n",getPriority(), getSize(), getAssignee()));
+        return strBuilder.toString();
+    }
 }

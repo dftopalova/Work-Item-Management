@@ -5,6 +5,7 @@ import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PersonImpl implements Person {
@@ -41,5 +42,16 @@ public class PersonImpl implements Person {
     @Override
     public List<WorkItem> getWorkItems() {
         return new ArrayList<>(workItems);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder strBuilder=new StringBuilder();
+        strBuilder.append(String.format("Person %s`s info:\n",getName()));
+
+        workItems.stream().forEach(item->strBuilder.append(item).append("\n"));
+        history.stream().forEach(statement->strBuilder.append(statement).append("\n"));
+
+        return strBuilder.toString();
     }
 }

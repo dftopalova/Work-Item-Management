@@ -15,13 +15,12 @@ import java.util.List;
 
 public class BugImpl extends WorkItemBase implements Bug {
 
-
     private List<String> stepsToReproduce;
     private SeverityType severity;
     private Person assignee;
     private PriorityType priority;
 
-    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, PriorityType priority, SeverityType severity) { // missing Person assignee
+    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, PriorityType priority, SeverityType severity) {
         super(title, status, description);
         setStepsToReproduce(stepsToReproduce);
         setPriority(priority);
@@ -89,5 +88,17 @@ public class BugImpl extends WorkItemBase implements Bug {
     @Override
     public String getType() {
         return "BUG_";
+    }
+
+    @Override
+    public String additionalInfo() {
+        StringBuilder strBuilder =new StringBuilder();
+        strBuilder.append(String.format(
+                "Steps to reproduce: %s" +
+                "Severity: %s" +
+                "Priority: %s" +
+                "Assignee: %s\n" +
+                        "=*=*=*=*=\n", getStepsToReproduce(),getSeverity(),getPriority(),getAssignee()));
+        return strBuilder.toString();
     }
 }

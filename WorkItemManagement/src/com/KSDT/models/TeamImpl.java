@@ -49,4 +49,18 @@ public class TeamImpl implements Team {
     public void addBoard(String name, Board board) {
         this.boards.put(name, board);
     }
+
+    @Override
+    public String toString(){
+        StringBuilder strBuilder=new StringBuilder();
+        strBuilder.append(String.format("Team %s`s info:\n",getName()));
+
+        members.entrySet().forEach(member->
+            strBuilder.append(member.getKey() + " " + member.getValue()+"\n"));
+
+        boards.entrySet().forEach(board->
+                strBuilder.append(board.getKey() + " " + board.getValue()+"\n"));
+
+        return strBuilder.toString();
+    }
 }

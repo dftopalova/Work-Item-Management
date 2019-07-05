@@ -57,4 +57,15 @@ public class BoardImpl implements Board {
     public List<String> getHistory() {
         return new ArrayList<>(history);
     }
+
+    @Override
+    public String toString(){
+        StringBuilder strBuilder=new StringBuilder();
+        strBuilder.append(String.format("Board %s info:\n",getName()));
+
+        workItems.entrySet().forEach(entry-> strBuilder.append(entry.getKey() + " " + entry.getValue()+"\n"));
+        history.stream().forEach(statement->strBuilder.append(statement).append("\n"));
+
+        return strBuilder.toString();
+    }
 }

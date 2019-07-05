@@ -97,4 +97,25 @@ public abstract class WorkItemBase implements WorkItem {
     public String getDescription() {
         return description;
     }
+
+    protected abstract String additionalInfo();
+
+    private String getWorkItemType(){
+        return this.getClass().getSimpleName().replace("Impl","");
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder strBuilder =new StringBuilder();
+        strBuilder.append(String.format(
+                "%s info:" +
+                "Title: %s" +
+                "Status: %s" +
+                "Description: %s" +
+                "Comments: %s" +
+                "History: %s" +
+                "%s",
+                getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(),getHistory(),additionalInfo()));
+        return strBuilder.toString();
+    }
 }
