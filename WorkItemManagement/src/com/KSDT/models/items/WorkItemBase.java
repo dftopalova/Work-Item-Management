@@ -1,7 +1,9 @@
 package com.KSDT.models.items;
 
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;
+import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
@@ -22,6 +24,7 @@ public abstract class WorkItemBase implements WorkItem {
     private String title;
     private StatusType status;
     private String description;
+    private List<Pair<Person, String>> commentPair;
     private List<String> comments; // Pair<Person, String>
     private List<String> history;
 
@@ -29,9 +32,11 @@ public abstract class WorkItemBase implements WorkItem {
         setTitle(title);
         setStatus(status);
         setDescription(description);
+        this.commentPair = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.history = new ArrayList<>();
     }
+
 
     private void setTitle(String title) {
         ValidationHelper.nullCheck(title);
@@ -59,9 +64,10 @@ public abstract class WorkItemBase implements WorkItem {
     }
 
     @Override
-    public void addComment(String comment) {
+    public void addComment(Person person, String comment) {
         ValidationHelper.nullCheck(comment);
-        comments.add(comment);
+        ValidationHelper.nullCheck(person);
+        commentPair.add(Pair.create(person, comment));
     }
 
     @Override
@@ -85,7 +91,7 @@ public abstract class WorkItemBase implements WorkItem {
 
     @Override
     public List<String> getComments() {
-        return new ArrayList<>(comments);
+//        return new ArrayList<>(commentPair);
     }
 
     @Override

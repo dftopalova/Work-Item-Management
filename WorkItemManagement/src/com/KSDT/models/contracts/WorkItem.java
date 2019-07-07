@@ -20,7 +20,7 @@ public interface WorkItem {
 
     void changeStatus(StatusType newStatus);
 
-    void addComment(String comment);
+    void addComment(Person person, String comment);
 
     void addToHistory(String change);
 
