@@ -90,8 +90,8 @@ public abstract class WorkItemBase implements WorkItem {
     }
 
     @Override
-    public List<String> getComments() {
-//        return new ArrayList<>(commentPair);
+    public List<Pair<Person, String>> getComments() {
+        return new ArrayList<>(commentPair);
     }
 
     @Override
@@ -123,5 +123,6 @@ public abstract class WorkItemBase implements WorkItem {
                 "%s",
                 getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(),getHistory(),additionalInfo()));
         return strBuilder.toString();
+//        TODO Fix comments
     }
 }

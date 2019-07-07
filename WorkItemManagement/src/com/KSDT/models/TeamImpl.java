@@ -20,6 +20,12 @@ public class TeamImpl implements Team {
         this.boards = new HashMap<>();
     }
 
+    public TeamImpl(Team team) {   //Copy constructor - defense / https://stackoverflow.com/questions/869033/how-do-i-copy-an-object-in-java /
+        this.name = team.getName();
+        this.members = team.getMembersList();
+        this.boards = team.getBoardsList();
+    }
+
     public void setName(String name) {
         ValidationHelper.nullCheck(name);
         this.name = name;
@@ -31,13 +37,23 @@ public class TeamImpl implements Team {
     }
 
     @Override
-    public Map<String, Person> getMembers() {
+    public Map<String, Person> getMembersList() {
         return new HashMap<>(members);
     }
 
     @Override
-    public Map<String, Board> getBoards() {
+    public Person getMember(String name) {
+        return members.get(name);
+    }
+
+    @Override
+    public Map<String, Board> getBoardsList() {
         return new HashMap<>(boards);
+    }
+
+    @Override
+    public Board getBoard(String boardName) {
+        return boards.get(boardName);
     }
 
     @Override

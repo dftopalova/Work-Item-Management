@@ -8,7 +8,6 @@ import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
-import com.KSDT.models.items.BugImpl;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class CreateBugInBoard implements Command {
         validateParameters();
 
 
-        Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
+        Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
         WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, priority, severity);
         repository.addWorkItem(bug);
         board.addWorkItem(bugNameToBeAdded, bug);
@@ -64,7 +63,7 @@ public class CreateBugInBoard implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getTeams().get(teamName).getBoards().containsKey(boardToAddName)) {
+        if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }
     }

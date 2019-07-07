@@ -1,5 +1,6 @@
 package com.KSDT.models.contracts;
 
+import com.KSDT.models.common.Pair;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
 
@@ -10,7 +11,7 @@ public interface WorkItem {
 
     StatusType getStatus();
 
-    List<String> getComments();
+    List<Pair<Person, String>> getComments();
 
     List<String> getHistory();
 

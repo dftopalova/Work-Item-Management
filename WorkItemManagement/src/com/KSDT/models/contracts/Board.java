@@ -8,8 +8,9 @@ public interface Board {
 
     Map<String, WorkItem> getWorkItemsList();
 
-//    TODO implement method getWorkItem !
     WorkItem getWorkItem(String name);
+
+    Team getTeamOwner();
 
     List<String> getHistory();
 

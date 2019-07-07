@@ -5,9 +5,13 @@ import java.util.Map;
 public interface Team {
     String getName();
 
-    Map<String, Person> getMembers();
+    Map<String, Person> getMembersList();
 
-    Map<String, Board> getBoards();
+    Person getMember(String name);
+
+    Map<String, Board> getBoardsList();
+
+    Board getBoard(String boardName);
 
     void addPerson(String name, Person person);
 

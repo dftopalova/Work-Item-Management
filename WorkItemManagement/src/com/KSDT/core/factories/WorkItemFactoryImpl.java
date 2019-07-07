@@ -45,8 +45,8 @@ public class WorkItemFactoryImpl implements WorkItemFactory {
     }
 
     @Override
-    public Board createBoard(String name) {
-        return new BoardImpl(name);
+    public Board createBoard(String name, Team ownerTeam) {
+        return new BoardImpl(name, ownerTeam);
     }
 
 

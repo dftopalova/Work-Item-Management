@@ -7,6 +7,7 @@ public class CommandConstants {
     public static final String INVALID_NUMBER_OF_ARGUMENTS = "! Invalid number of arguments. Expected: %d, Received: %d";
     public static final String INVALID_TEAM = "! Team with ID %s doesn't exist.";
     public static final String INVALID_PERSON = "! Person with ID %s doesn't exist.";
+    public static final String PERSON_NOT_IN_TEAM = "! Person with ID %s is not in team %s, owner of board with ID %d.";
     public static final String INVALID_BOARD = "! Board with ID %s doesn't exist.";
     public static final String INVALID_WORK_ITEM = "! Work item with ID %s doesn't exist.";
     public static final String BOARD_ALREADY_EXISTS = "! Board with ID %s in team %s already exists.";

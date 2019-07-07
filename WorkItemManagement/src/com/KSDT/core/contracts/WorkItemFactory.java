@@ -24,7 +24,7 @@ public interface WorkItemFactory {
 
     WorkItem createFeedback(String title, StatusType status, String description, int rating);
 
-    Board createBoard(String name);
+    Board createBoard(String name, Team ownerTeam);
 
 
 

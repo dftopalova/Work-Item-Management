@@ -33,7 +33,7 @@ public class CreateBoardInTeamCommand implements Command {
 
 
         Team team = repository.getTeams().get(teamToAddName);
-        Board board = factory.createBoard(boardNameToBeAdded);
+        Board board = factory.createBoard(boardNameToBeAdded, team);
 
         team.addBoard(boardNameToBeAdded, board);
         repository.addBoard(board);
@@ -53,7 +53,7 @@ public class CreateBoardInTeamCommand implements Command {
         if (!repository.getTeams().containsKey(teamToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_TEAM, teamToAddName));
         }
-        if (repository.getTeams().get(teamToAddName).getBoards().containsKey(boardNameToBeAdded)) {
+        if (repository.getTeams().get(teamToAddName).getBoardsList().containsKey(boardNameToBeAdded)) {
             throw new IllegalArgumentException(String.format(BOARD_ALREADY_EXISTS, boardNameToBeAdded, teamToAddName));
         }
     }

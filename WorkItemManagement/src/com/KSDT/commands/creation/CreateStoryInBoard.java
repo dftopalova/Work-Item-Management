@@ -39,7 +39,7 @@ public class CreateStoryInBoard implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getTeams().get(teamName).getBoards().get(boardToAddName);
+        Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
         WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority,size);
         repository.addWorkItem(story);
         board.addWorkItem(storyNameToBeAdded, story);
@@ -53,7 +53,7 @@ public class CreateStoryInBoard implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getTeams().get(teamName).getBoards().containsKey(boardToAddName)) {
+        if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }
     }
