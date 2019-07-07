@@ -115,11 +115,17 @@ public abstract class WorkItemBase implements WorkItem {
         StringBuilder strBuilder =new StringBuilder();
         strBuilder.append(String.format(
                 "%s info:" +
+                        System.lineSeparator() +
                 "Title: %s" +
+                        System.lineSeparator() +
                 "Status: %s" +
+                        System.lineSeparator() +
                 "Description: %s" +
+                        System.lineSeparator() +
                 "Comments: %s" +
+                        System.lineSeparator() +
                 "History: %s" +
+                        System.lineSeparator() +
                 "%s",
                 getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(),getHistory(),additionalInfo()));
         return strBuilder.toString();

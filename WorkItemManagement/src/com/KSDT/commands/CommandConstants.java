@@ -16,8 +16,11 @@ public class CommandConstants {
     public static final String WORK_ITEM_RATING_SAME = "! Work item with ID %s has the same rating.";
     public static final String WORK_ITEM_SEVERITY_SAME = "! Work item with ID %s has the same severity.";
     public static final String WORK_ITEM_SIZE_SAME = "! Work item with ID %s has the same size.";
+    public static final String WORK_ITEM_NOT_STORY = "! Work item with id %s is not Story.";
     public static final String WRONG_WORK_ITEM_TYPE = "! Work item type %s doesn't exist.";
     public static final String FEEDBACK_DOESNT_CONTAIN_PRIORITY = "! Feedback doesn't contain priority field.";
+    public static final String NO_REGISTERED_PERSONS_MESSAGE = "! There are no registered persons.";
+    public static final String NO_CREATED_TEAMS_MESSAGE = "! No created teams." ;
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
@@ -36,5 +39,7 @@ public class CommandConstants {
     public static final String SEVERITY_SUCCESSFULLY_CHANGED = "Severity of work item with ID %s was changed from %s to %s.";
     public static final String COMMENT_SUCCESSFULLY_ADDED = "Comment ' %s ' successfully added to work item with ID %s .";
 
+
+    public static final String JOIN_DELIMITER = "####################";
 
 }

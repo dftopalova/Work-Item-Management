@@ -74,8 +74,11 @@ public class StoryImpl extends WorkItemBase implements Story {
         StringBuilder strBuilder =new StringBuilder();
         strBuilder.append(String.format(
                 "Priority: %s" +
+                        System.lineSeparator() +
                         "Size: %s" +
-                        "Assignee: %s\n" +
+                        System.lineSeparator() +
+                        "Assignee: %s" +
+                        System.lineSeparator() +
                         "=*=*=*=*=\n",getPriority(), getSize(), getAssignee()));
         return strBuilder.toString();
     }

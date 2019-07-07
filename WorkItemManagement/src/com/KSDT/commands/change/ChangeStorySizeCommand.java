@@ -30,6 +30,11 @@ public class ChangeStorySizeCommand implements Command {
         parseParameters(parameters);
 
         Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        // check if cast is successfull
+        if(story==null){
+            return String.format(WORK_ITEM_NOT_STORY,workItemId);
+        }
+
         SizeType oldSize = story.getSize();
         validateSize(oldSize, newSize);
 

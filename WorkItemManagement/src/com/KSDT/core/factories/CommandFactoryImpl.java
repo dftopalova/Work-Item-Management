@@ -6,6 +6,8 @@ import com.KSDT.commands.change.*;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.*;
 import com.KSDT.commands.enums.CommandType;
+import com.KSDT.commands.listing.ShowAllPeopleCommand;
+import com.KSDT.commands.listing.ShowAllTeamsCommand;
 import com.KSDT.core.contracts.CommandFactory;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
@@ -41,6 +43,10 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ChangeFeedRatingCommand(repository, factory);
             case CHANGEPRIORITY:
                 return new ChangePriorityCommand(repository, factory);
+            case SHOWALLPEOPLE:
+                return new ShowAllPeopleCommand(repository,factory);
+            case SHOWALLTEAMS:
+                return new ShowAllTeamsCommand(repository,factory);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

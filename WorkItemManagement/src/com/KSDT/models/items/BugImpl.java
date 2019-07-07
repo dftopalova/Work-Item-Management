@@ -95,9 +95,13 @@ public class BugImpl extends WorkItemBase implements Bug {
         StringBuilder strBuilder =new StringBuilder();
         strBuilder.append(String.format(
                 "Steps to reproduce: %s" +
+                        System.lineSeparator() +
                 "Severity: %s" +
+                        System.lineSeparator() +
                 "Priority: %s" +
-                "Assignee: %s\n" +
+                        System.lineSeparator() +
+                "Assignee: %s" +
+                        System.lineSeparator() +
                         "=*=*=*=*=\n", getStepsToReproduce(),getSeverity(),getPriority(),getAssignee()));
         return strBuilder.toString();
     }
