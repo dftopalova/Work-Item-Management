@@ -35,18 +35,17 @@ public abstract class WorkItemBase implements WorkItem {
 
 
     private void setTitle(String title) {
-        ValidationHelper.nullCheck(title);
+        ValidationHelper.emptyStringCheck(title);
         ValidationHelper.lengthCheck(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH, TITLE_LENGTH_EXCEPTION);
         this.title = title;
     }
 
     private void setStatus(StatusType status) {
-        ValidationHelper.nullCheck(status);
         this.status = status;
     }
 
     private void setDescription(String description) {
-        ValidationHelper.nullCheck(description);
+        ValidationHelper.emptyStringCheck(description);
         ValidationHelper.lengthCheck(description, DESCRIPTION_LENGTH_MIN, DESCRIPTION_LENGTH_MAX, DESCRIPTION_LENGTH_EXCEPTION);
         this.description = description;
 
@@ -54,7 +53,6 @@ public abstract class WorkItemBase implements WorkItem {
 
     @Override
     public void changeStatus(Person person, StatusType newStatus) {
-        ValidationHelper.nullCheck(newStatus);
         historyPairs.add(Pair.create(person, HistoryHelper.collectChange(this.status, newStatus)));
         person.addToPersonHistory(String.format("Person %s changed status to work item %s.",person.getName(),this.getTitle()));
         setStatus(newStatus);
@@ -62,15 +60,14 @@ public abstract class WorkItemBase implements WorkItem {
 
     @Override
     public void addComment(Person person, String comment) {
-        ValidationHelper.nullCheck(comment);
-        ValidationHelper.nullCheck(person);
+        ValidationHelper.emptyStringCheck(comment);
         commentPairs.add(Pair.create(person, comment));
         person.addToPersonHistory(String.format("Person %s added a comment to work item %s.",person.getName(),this.getTitle()));
     }
 
     @Override
     public void addToHistory(Person person, String change) {
-        ValidationHelper.nullCheck(change);
+        ValidationHelper.emptyStringCheck(change);
         historyPairs.add(Pair.create(person, change));
     }
 

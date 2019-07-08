@@ -28,20 +28,18 @@ public class BoardImpl implements Board {
     }
 
     private void setOwner(Team owner) {
-        ValidationHelper.nullCheck(owner);
         this.owner = owner;
     }
 
     private void setName(String name) {
+        ValidationHelper.emptyStringCheck(name);
         ValidationHelper.lengthCheck(name, BOARD_NAME_MIN_LENGTH, BOARD_NAME_MAX_LENGTH, BOARD_NAME_LENGTH_EXCEPTION);
-        ValidationHelper.nullCheck(name);
         this.name = name;
     }
 
     @Override
     public void addWorkItem(String name, WorkItem workItem) {
-        ValidationHelper.nullCheck(name);
-        ValidationHelper.nullCheck(workItem);
+        ValidationHelper.emptyStringCheck(name);
         workItems.put(name, workItem);
     }
 

@@ -24,7 +24,7 @@ public class PersonImpl implements Person {
     }
 
     public void setName(String name) {
-        ValidationHelper.nullCheck(name);
+        ValidationHelper.emptyStringCheck(name);
         ValidationHelper.lengthCheck(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH, NAME_LENGTH_EXCEPTION);
         this.name = name;
     }

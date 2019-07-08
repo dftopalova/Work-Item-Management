@@ -27,7 +27,7 @@ public class TeamImpl implements Team {
     }
 
     public void setName(String name) {
-        ValidationHelper.nullCheck(name);
+        ValidationHelper.emptyStringCheck(name);
         this.name = name;
     }
 

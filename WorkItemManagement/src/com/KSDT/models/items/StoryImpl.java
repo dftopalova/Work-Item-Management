@@ -21,17 +21,14 @@ public class StoryImpl extends WorkItemBase implements Story {
     }
 
     private void setPriority(PriorityType priority) {
-        ValidationHelper.nullCheck(priority);
         this.priority = priority;
     }
 
     private void setSize(SizeType size) {
-        ValidationHelper.nullCheck(size);
         this.size = size;
     }
 
     private void setAssignee(Person assignee) {
-        ValidationHelper.nullCheck(assignee);
         this.assignee = assignee;
     }
 
@@ -57,9 +54,7 @@ public class StoryImpl extends WorkItemBase implements Story {
 
     @Override
     public void changePriority(Person person, PriorityType newPriority) {
-        ValidationHelper.nullCheck(newPriority);
         String change = HistoryHelper.collectChange(getPriority(), newPriority);
-
         addToHistory(person, change);
         person.addToPersonHistory(change);
         setPriority(newPriority);
@@ -67,7 +62,6 @@ public class StoryImpl extends WorkItemBase implements Story {
 
     @Override
     public void changeSize(Person person, SizeType newSize) {
-        ValidationHelper.nullCheck(newSize);
         String change = HistoryHelper.collectChange(getSize(), newSize);
 
         addToHistory(person, change);

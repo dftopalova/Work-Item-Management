@@ -7,6 +7,7 @@ public class ValidationHelper {
     private static final String EXACT_SYMBOLS_LENGTH_MESSAGE = "Text length cannot be less than %d symbols.";
     private static final String NULL_OBJECT_MESSAGE = "Object cannot be null.";
     private static final String NEGATIVE_NUMBER_MESSAGE = "Number cannot be negative";
+    private static final String EMPTY_STRING_MESSAGE = "String cannot be empty.";
 
     public static <E> void nullCheck(E obj) {
         if (obj == null) {
@@ -45,9 +46,9 @@ public class ValidationHelper {
         }
     }
 
-    public static void nullCheck(String str) {
-        if (str == null) {
-            throw new IllegalArgumentException(NULL_OBJECT_MESSAGE);
+    public static void emptyStringCheck(String str) {
+        if (str.isEmpty()) {
+            throw new IllegalArgumentException(EMPTY_STRING_MESSAGE);
         }
     }
 

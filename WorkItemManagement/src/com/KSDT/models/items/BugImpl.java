@@ -29,7 +29,7 @@ public class BugImpl extends WorkItemBase implements Bug {
     }
 
     private void setStepsToReproduce(String stepsToReproduce) {
-        ValidationHelper.nullCheck(stepsToReproduce);
+        ValidationHelper.emptyStringCheck(stepsToReproduce);
         String[] stepsList = stepsToReproduce.trim().split("/");
 
         this.stepsToReproduce = Arrays.asList(stepsList);
@@ -38,17 +38,14 @@ public class BugImpl extends WorkItemBase implements Bug {
     }
 
     private void setSeverity(SeverityType severity) {
-        ValidationHelper.nullCheck(severity);
         this.severity = severity;
     }
 
     private void setAssignee(Person assignee) {
-        ValidationHelper.nullCheck(assignee);
         this.assignee = assignee;
     }
 
     public void setPriority(PriorityType priority) {
-        ValidationHelper.nullCheck(priority);
         this.priority = priority;
     }
 
@@ -74,7 +71,6 @@ public class BugImpl extends WorkItemBase implements Bug {
 
     @Override
     public void changePriority(Person person, PriorityType newPriority) {
-        ValidationHelper.nullCheck(newPriority);
         String change = HistoryHelper.collectChange(getPriority(), newPriority);
 
         addToHistory(person, change );
@@ -84,7 +80,6 @@ public class BugImpl extends WorkItemBase implements Bug {
 
     @Override
     public void changeSeverity(Person person, SeverityType newSeverity) {
-        ValidationHelper.nullCheck(newSeverity);
         String change = HistoryHelper.collectChange(getSeverity(), newSeverity);
 
         addToHistory(person, change);
