@@ -109,7 +109,9 @@ public class BugImpl extends WorkItemBase implements Bug {
                         System.lineSeparator() +
                 "Assignee: %s" +
                         System.lineSeparator() +
-                        "=*=*=*=*=\n", getStepsToReproduce(),getSeverity(),getPriority(),getAssignee()));
+                        "=*=*=*=*="+
+                System.lineSeparator()
+                , getStepsToReproduce(),getSeverity(),getPriority(),getAssignee()));
         return strBuilder.toString();
     }
 }

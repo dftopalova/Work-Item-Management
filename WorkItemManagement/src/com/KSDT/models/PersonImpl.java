@@ -50,12 +50,12 @@ public class PersonImpl implements Person {
     }
 
     @Override
-    public String toString(){
-        StringBuilder strBuilder=new StringBuilder();
-        strBuilder.append(String.format("Person %s`s info:\n",getName()));
+    public String toString() {
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append(String.format("Person %s`s info:" + System.lineSeparator(), getName()));
 
-        workItems.stream().forEach(item->strBuilder.append(item).append("\n"));
-        history.stream().forEach(statement->strBuilder.append(statement).append("\n"));
+        workItems.stream().forEach(item -> strBuilder.append(item).append(System.lineSeparator()));
+        history.stream().forEach(statement -> strBuilder.append(statement).append(System.lineSeparator()));
 
         return strBuilder.toString();
     }

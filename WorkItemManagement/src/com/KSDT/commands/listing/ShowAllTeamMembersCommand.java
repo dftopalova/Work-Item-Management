@@ -1,7 +1,6 @@
 package com.KSDT.commands.listing;
 
 import com.KSDT.commands.contracts.Command;
-import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import java.util.List;
 import java.util.Set;

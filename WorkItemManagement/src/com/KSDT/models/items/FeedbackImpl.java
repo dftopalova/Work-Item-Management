@@ -45,6 +45,7 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     public String additionalInfo() {
         return String.format("Rating: %d" +
                 System.lineSeparator() +
-                "=*=*=*=*=\n",getRating());
+                "=*=*=*=*="+System.lineSeparator()
+                ,getRating());
     }
 }

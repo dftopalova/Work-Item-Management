@@ -71,12 +71,18 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public String toString(){
-        StringBuilder strBuilder=new StringBuilder();
-        strBuilder.append(String.format("Board %s info:\n",getName()));
-
-        workItems.entrySet().forEach(entry-> strBuilder.append(entry.getKey() + " " + entry.getValue()+"\n"));
-        history.stream().forEach(statement->strBuilder.append(statement).append("\n"));
+    public String toString() {
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append(String.format("Board %s info:" +
+                        System.lineSeparator() +
+                        "Team Owner: %s" +
+                        System.lineSeparator(),
+                getName(), getTeamOwner().getName()));
+        strBuilder.append("Work items in board: " + System.lineSeparator());
+        workItems.keySet().forEach(entry -> strBuilder.append(entry + " "));
+        strBuilder.append(System.lineSeparator());
+        strBuilder.append("History:" + System.lineSeparator());
+        history.stream().forEach(statement -> strBuilder.append(statement).append(System.lineSeparator()));
 
         return strBuilder.toString();
     }

@@ -22,6 +22,7 @@ public class CommandConstants {
     public static final String NO_REGISTERED_PERSONS_MESSAGE = "! There are no registered persons.";
     public static final String NO_CREATED_TEAMS_MESSAGE = "! No created teams." ;
     public static final String NO_MEMBERS_IN_TEAM_ERROR = "! There are no members in team %s.";
+    public static final String NO_BOARDS_IN_TEAM_ERROR = "! There are no boards assigned to team %s.";
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 

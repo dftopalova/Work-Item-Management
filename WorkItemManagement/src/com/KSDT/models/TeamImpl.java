@@ -67,15 +67,15 @@ public class TeamImpl implements Team {
     }
 
     @Override
-    public String toString(){
-        StringBuilder strBuilder=new StringBuilder();
-        strBuilder.append(String.format("Team %s`s info:\n",getName()));
+    public String toString() {
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append(String.format("Team %s`s info:" + System.lineSeparator(), getName()));
 
-        members.entrySet().forEach(member->
-            strBuilder.append(member.getKey() + " " + member.getValue()+"\n"));
+        members.entrySet().forEach(member ->
+                strBuilder.append(member.getKey() + " " + member.getValue() + System.lineSeparator()));
 
-        boards.entrySet().forEach(board->
-                strBuilder.append(board.getKey() + " " + board.getValue()+"\n"));
+        boards.entrySet().forEach(board ->
+                strBuilder.append(board.getKey() + " " + board.getValue() + System.lineSeparator()));
 
         return strBuilder.toString();
     }

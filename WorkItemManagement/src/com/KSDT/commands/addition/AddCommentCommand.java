@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class AddCommentCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 43;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -30,7 +30,7 @@ public class AddCommentCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-//        validateInput(parameters);
+        validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
 
@@ -44,7 +44,7 @@ public class AddCommentCommand implements Command {
 
 
     private void validateInput(List<String> parameters) {
-        if (parameters.size() != EXPECTED_NUMBER_OF_ARGUMENTS) {
+        if (parameters.size() < EXPECTED_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(String.format(INVALID_NUMBER_OF_ARGUMENTS, EXPECTED_NUMBER_OF_ARGUMENTS, parameters.size()));
         }
     }

@@ -85,7 +85,8 @@ public class StoryImpl extends WorkItemBase implements Story {
                         System.lineSeparator() +
                         "Assignee: %s" +
                         System.lineSeparator() +
-                        "=*=*=*=*=\n",getPriority(), getSize(), getAssignee()));
+                        "=*=*=*=*="+System.lineSeparator()
+                ,getPriority(), getSize(), getAssignee()));
         return strBuilder.toString();
     }
 }
