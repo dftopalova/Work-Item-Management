@@ -6,10 +6,7 @@ import com.KSDT.commands.change.*;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.*;
 import com.KSDT.commands.enums.CommandType;
-import com.KSDT.commands.listing.ShowAllPeopleCommand;
-import com.KSDT.commands.listing.ShowAllTeamBoardsCommand;
-import com.KSDT.commands.listing.ShowAllTeamMembersCommand;
-import com.KSDT.commands.listing.ShowAllTeamsCommand;
+import com.KSDT.commands.listing.*;
 import com.KSDT.core.contracts.CommandFactory;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
@@ -53,6 +50,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowAllTeamMembersCommand(repository);
             case SHOWALLTEAMBOARDS:
                 return new ShowAllTeamBoardsCommand(repository);
+            case SHOWPERSONACTIVITY:
+                return new ShowPersonActivityCommand(repository);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

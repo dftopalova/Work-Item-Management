@@ -56,6 +56,7 @@ public abstract class WorkItemBase implements WorkItem {
     public void changeStatus(Person person, StatusType newStatus) {
         ValidationHelper.nullCheck(newStatus);
         historyPairs.add(Pair.create(person, HistoryHelper.collectChange(this.status, newStatus)));
+        person.addToPersonHistory(String.format("Person %s changed status to work item %s.",person.getName(),this.getTitle()));
         setStatus(newStatus);
     }
 
@@ -64,6 +65,7 @@ public abstract class WorkItemBase implements WorkItem {
         ValidationHelper.nullCheck(comment);
         ValidationHelper.nullCheck(person);
         commentPairs.add(Pair.create(person, comment));
+        person.addToPersonHistory(String.format("Person %s added a comment to work item %s.",person.getName(),this.getTitle()));
     }
 
     @Override
