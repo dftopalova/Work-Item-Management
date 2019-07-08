@@ -68,7 +68,6 @@ public class CreateBugInBoard implements Command {
         }
     }
 
-
     private void parseParameters(List<String> parameters) {
         try {
             teamName = parameters.get(0);

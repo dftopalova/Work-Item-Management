@@ -21,6 +21,7 @@ public class CommandConstants {
     public static final String FEEDBACK_DOESNT_CONTAIN_PRIORITY = "! Feedback doesn't contain priority field.";
     public static final String NO_REGISTERED_PERSONS_MESSAGE = "! There are no registered persons.";
     public static final String NO_CREATED_TEAMS_MESSAGE = "! No created teams." ;
+    public static final String NO_MEMBERS_IN_TEAM_ERROR = "! There are no members in team %s.";
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
