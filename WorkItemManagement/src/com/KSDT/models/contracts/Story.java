@@ -10,8 +10,8 @@ public interface Story  {
 
     Person getAssignee();
 
-    void changePriority(PriorityType newPriority);
+    void changePriority(Person person, PriorityType newPriority);
 
-    void changeSize(SizeType newSize);
+    void changeSize(Person person, SizeType newSize);
 
 }

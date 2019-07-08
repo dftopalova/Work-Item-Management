@@ -1,6 +1,7 @@
 package com.KSDT.models.items;
 
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
@@ -72,16 +73,16 @@ public class BugImpl extends WorkItemBase implements Bug {
     }
 
     @Override
-    public void changePriority(PriorityType newPriority) {
+    public void changePriority(Person person, PriorityType newPriority) {
         ValidationHelper.nullCheck(newPriority);
-        addToHistory(HistoryHelper.collectChange(getPriority(), newPriority));
+        addToHistory(person, HistoryHelper.collectChange(getPriority(), newPriority));
         setPriority(newPriority);
     }
 
     @Override
-    public void changeSeverity(SeverityType newSeverity) {
+    public void changeSeverity(Person person, SeverityType newSeverity) {
         ValidationHelper.nullCheck(newSeverity);
-        addToHistory(HistoryHelper.collectChange(getSeverity(), newSeverity));
+        addToHistory(person, HistoryHelper.collectChange(getSeverity(), newSeverity));
         setSeverity(newSeverity);
     }
 

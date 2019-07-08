@@ -56,16 +56,16 @@ public class StoryImpl extends WorkItemBase implements Story {
     }
 
     @Override
-    public void changePriority(PriorityType newPriority) {
+    public void changePriority(Person person, PriorityType newPriority) {
         ValidationHelper.nullCheck(newPriority);
-        addToHistory(HistoryHelper.collectChange(getPriority(), newPriority));
+        addToHistory(person, HistoryHelper.collectChange(getPriority(), newPriority));
         setPriority(newPriority);
     }
 
     @Override
-    public void changeSize(SizeType newSize) {
+    public void changeSize(Person person, SizeType newSize) {
         ValidationHelper.nullCheck(newSize);
-        addToHistory(HistoryHelper.collectChange(getSize(), newSize));
+        addToHistory(person, HistoryHelper.collectChange(getSize(), newSize));
         setSize(newSize);
     }
 

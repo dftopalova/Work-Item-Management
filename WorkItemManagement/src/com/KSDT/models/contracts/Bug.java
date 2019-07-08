@@ -15,8 +15,8 @@ public interface Bug extends WorkItem {
 
     PriorityType getPriority();
 
-    void changePriority(PriorityType newPriority);
+    void changePriority(Person person, PriorityType newPriority);
 
-    void changeSeverity(SeverityType newSeverity);
+    void changeSeverity(Person person, SeverityType newSeverity);
 
 }

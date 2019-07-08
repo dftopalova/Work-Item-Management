@@ -13,16 +13,16 @@ public interface WorkItem {
 
     List<Pair<Person, String>> getComments();
 
-    List<String> getHistory();
+    List<Pair<Person, String>> getHistoryPairs();
 
     String getDescription();
 
     String getType();
 
-    void changeStatus(StatusType newStatus);
+    void changeStatus(Person person, StatusType newStatus);
 
     void addComment(Person person, String comment);
 
-    void addToHistory(String change);
+    void addToHistory(Person person, String change);
 
 }

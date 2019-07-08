@@ -5,11 +5,9 @@ import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
-import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class WorkItemBase implements WorkItem {
@@ -24,17 +22,15 @@ public abstract class WorkItemBase implements WorkItem {
     private String title;
     private StatusType status;
     private String description;
-    private List<Pair<Person, String>> commentPair;
-    private List<String> comments; // Pair<Person, String>
-    private List<String> history;
+    private List<Pair<Person, String>> commentPairs;
+    private List<Pair<Person, String>> historyPairs;
 
     public  WorkItemBase(String title, StatusType status, String description) {
         setTitle(title);
         setStatus(status);
         setDescription(description);
-        this.commentPair = new ArrayList<>();
-        this.comments = new ArrayList<>();
-        this.history = new ArrayList<>();
+        this.commentPairs = new ArrayList<>();
+        this.historyPairs = new ArrayList<>();
     }
 
 
@@ -57,9 +53,9 @@ public abstract class WorkItemBase implements WorkItem {
     }
 
     @Override
-    public void changeStatus(StatusType newStatus) {
+    public void changeStatus(Person person, StatusType newStatus) {
         ValidationHelper.nullCheck(newStatus);
-        history.add(HistoryHelper.collectChange(this.status, newStatus));
+        historyPairs.add(Pair.create(person, HistoryHelper.collectChange(this.status, newStatus)));
         setStatus(newStatus);
     }
 
@@ -67,13 +63,13 @@ public abstract class WorkItemBase implements WorkItem {
     public void addComment(Person person, String comment) {
         ValidationHelper.nullCheck(comment);
         ValidationHelper.nullCheck(person);
-        commentPair.add(Pair.create(person, comment));
+        commentPairs.add(Pair.create(person, comment));
     }
 
     @Override
-    public void addToHistory(String change) {
+    public void addToHistory(Person person, String change) {
         ValidationHelper.nullCheck(change);
-        history.add(change);
+        historyPairs.add(Pair.create(person, change));
     }
 
     public abstract String getType();
@@ -91,12 +87,12 @@ public abstract class WorkItemBase implements WorkItem {
 
     @Override
     public List<Pair<Person, String>> getComments() {
-        return new ArrayList<>(commentPair);
+        return new ArrayList<>(commentPairs);
     }
 
     @Override
-    public List<String> getHistory() {
-        return new ArrayList<>(history);
+    public List<Pair<Person, String>> getHistoryPairs() {
+        return new ArrayList<>(historyPairs);
     }
 
     @Override
@@ -127,7 +123,7 @@ public abstract class WorkItemBase implements WorkItem {
                 "History: %s" +
                         System.lineSeparator() +
                 "%s",
-                getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(),getHistory(),additionalInfo()));
+                getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(), getHistoryPairs(),additionalInfo()));
         return strBuilder.toString();
 //        TODO Fix comments
     }
