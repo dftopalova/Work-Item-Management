@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Bug;
+import com.KSDT.models.contracts.Person;
 import com.KSDT.models.enums.SeverityType;
 
 import java.util.List;
@@ -11,10 +12,11 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class ChangeBugSeverityCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String personName;
     private int boardId;
     private String workItemId;
     private SeverityType newSeverity;
@@ -30,10 +32,11 @@ public class ChangeBugSeverityCommand implements Command {
         parseParameters(parameters);
 
         Bug bug = (Bug) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
         SeverityType oldSeverity = bug.getSeverity();
         validateSeverity(oldSeverity, newSeverity);
 
-        bug.changeSeverity(newSeverity);
+        bug.changeSeverity(person, newSeverity);
         return String.format(SEVERITY_SUCCESSFULLY_CHANGED, workItemId, oldSeverity, newSeverity);
     }
 
@@ -49,6 +52,9 @@ public class ChangeBugSeverityCommand implements Command {
         if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
+        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        }
     }
 
     private void validateSeverity(SeverityType oldSeverity, SeverityType newSeverity) {
@@ -63,6 +69,7 @@ public class ChangeBugSeverityCommand implements Command {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
             newSeverity = SeverityType.valueOf(parameters.get(2).toUpperCase());
+            personName = parameters.get(3);
             validateParameters();
 
 

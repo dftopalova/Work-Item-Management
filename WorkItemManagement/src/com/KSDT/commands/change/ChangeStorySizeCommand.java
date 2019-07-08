@@ -3,6 +3,7 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
 import com.KSDT.models.enums.SizeType;
 
@@ -11,10 +12,11 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class ChangeStorySizeCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 3;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String personName;
     private int boardId;
     private String workItemId;
     private SizeType newSize;
@@ -30,6 +32,8 @@ public class ChangeStorySizeCommand implements Command {
         parseParameters(parameters);
 
         Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
+
         // check if cast is successfull
         if(story==null){
             return String.format(WORK_ITEM_NOT_STORY,workItemId);
@@ -38,7 +42,7 @@ public class ChangeStorySizeCommand implements Command {
         SizeType oldSize = story.getSize();
         validateSize(oldSize, newSize);
 
-        story.changeSize(newSize);
+        story.changeSize(person, newSize);
         return String.format(SIZE_SUCCESSFULLY_CHANGED, workItemId, oldSize, newSize);
     }
 
@@ -58,6 +62,9 @@ public class ChangeStorySizeCommand implements Command {
         if (oldSize.equals(newSize)) {
             throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
         }
+        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        }
     }
 
     private void parseParameters(List<String> parameters) {
@@ -65,6 +72,7 @@ public class ChangeStorySizeCommand implements Command {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
             newSize = SizeType.valueOf(parameters.get(2).toUpperCase());
+            personName = parameters.get(3);
             validateParameters();
 
 

@@ -3,6 +3,7 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
 import com.KSDT.models.enums.PriorityType;
 
@@ -15,6 +16,7 @@ public class ChangeStoryPriorityCommand implements Command {
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String personName;
     private int boardId;
     private String workItemId;
     private PriorityType newPriority;
@@ -31,10 +33,11 @@ public class ChangeStoryPriorityCommand implements Command {
         parseParameters(parameters);
 
         Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
+        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
         PriorityType oldPriority = story.getPriority();
         validatePriority(oldPriority, newPriority);
 
-        story.changePriority(newPriority);
+        story.changePriority(person, newPriority);
         return String.format(PRIORITY_SUCCESSFULLY_CHANGED, workItemId, oldPriority, newPriority);
     }
 
@@ -49,6 +52,9 @@ public class ChangeStoryPriorityCommand implements Command {
         if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
+        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        }
     }
 
     private void validatePriority(PriorityType oldPriority, PriorityType newPriority) {
@@ -62,6 +68,7 @@ public class ChangeStoryPriorityCommand implements Command {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
             newPriority = PriorityType.valueOf(parameters.get(2).toUpperCase());
+            personName = parameters.get(3);
             validateParameters();
 
 
