@@ -75,14 +75,20 @@ public class BugImpl extends WorkItemBase implements Bug {
     @Override
     public void changePriority(Person person, PriorityType newPriority) {
         ValidationHelper.nullCheck(newPriority);
-        addToHistory(person, HistoryHelper.collectChange(getPriority(), newPriority));
+        String change = HistoryHelper.collectChange(getPriority(), newPriority);
+
+        addToHistory(person, change );
+        person.addToPersonHistory(change);
         setPriority(newPriority);
     }
 
     @Override
     public void changeSeverity(Person person, SeverityType newSeverity) {
         ValidationHelper.nullCheck(newSeverity);
-        addToHistory(person, HistoryHelper.collectChange(getSeverity(), newSeverity));
+        String change = HistoryHelper.collectChange(getSeverity(), newSeverity);
+
+        addToHistory(person, change);
+        person.addToPersonHistory(change);
         setSeverity(newSeverity);
     }
 

@@ -45,6 +45,11 @@ public class PersonImpl implements Person {
     }
 
     @Override
+    public void addToPersonHistory(String change) {
+        history.add(change);
+    }
+
+    @Override
     public String toString(){
         StringBuilder strBuilder=new StringBuilder();
         strBuilder.append(String.format("Person %s`s info:\n",getName()));

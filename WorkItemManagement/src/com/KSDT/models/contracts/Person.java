@@ -8,4 +8,6 @@ public interface Person {
     List<String> getHistory();
 
     List<WorkItem> getWorkItems();
+
+    void addToPersonHistory(String change);
 }
