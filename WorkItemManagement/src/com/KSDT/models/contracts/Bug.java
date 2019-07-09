@@ -19,4 +19,5 @@ public interface Bug extends WorkItem {
 
     void changeSeverity(Person person, SeverityType newSeverity);
 
+    void setAssignee(Person assignee);
 }

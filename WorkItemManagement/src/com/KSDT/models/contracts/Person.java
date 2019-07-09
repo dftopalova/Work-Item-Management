@@ -10,4 +10,8 @@ public interface Person {
     List<WorkItem> getWorkItems();
 
     void addToPersonHistory(String change);
+
+    void addWorkItem(WorkItem item);
+
+    void removeWorkItem(WorkItem item);
 }

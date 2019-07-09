@@ -41,7 +41,7 @@ public class BugImpl extends WorkItemBase implements Bug {
         this.severity = severity;
     }
 
-    private void setAssignee(Person assignee) {
+    public void setAssignee(Person assignee) {
         this.assignee = assignee;
     }
 

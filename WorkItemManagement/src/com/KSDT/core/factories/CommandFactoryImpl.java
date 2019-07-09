@@ -2,6 +2,8 @@ package com.KSDT.core.factories;
 
 import com.KSDT.commands.addition.AddCommentCommand;
 import com.KSDT.commands.addition.AddPersonCommand;
+import com.KSDT.commands.addition.AssignWorkItemCommand;
+import com.KSDT.commands.addition.UnassignWorkItemCommand;
 import com.KSDT.commands.change.*;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.*;
@@ -56,6 +58,10 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowTeamActivityCommand(repository);
             case SHOWBOARDACTIVITY:
                 return new ShowBoardActivityCommand(repository);
+            case ASSIGNWORKITEM:
+                return new AssignWorkItemCommand(repository);
+            case UNASSIGNWORKITEM:
+                return new UnassignWorkItemCommand(repository);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

@@ -1,5 +1,7 @@
 package com.KSDT.commands;
 
+import java.util.Locale;
+
 public class CommandConstants {
 //    TODO List all messages as constants
 
@@ -23,6 +25,7 @@ public class CommandConstants {
     public static final String NO_CREATED_TEAMS_MESSAGE = "! No created teams." ;
     public static final String NO_MEMBERS_IN_TEAM_ERROR = "! There are no members in team %s.";
     public static final String NO_BOARDS_IN_TEAM_ERROR = "! There are no boards assigned to team %s.";
+    public static final String FEEDBACK_HAS_NO_ASSIGNEE_ERROR = "! Feedback has no assignee.";
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
@@ -40,8 +43,8 @@ public class CommandConstants {
     public static final String RATING_SUCCESSFULLY_CHANGED = "Rating of work item with ID %s was changed from %s to %s.";
     public static final String SEVERITY_SUCCESSFULLY_CHANGED = "Severity of work item with ID %s was changed from %s to %s.";
     public static final String COMMENT_SUCCESSFULLY_ADDED = "Comment ' %s ' successfully added to work item with ID %s .";
+    public static final String SUCCESSFULLY_ASSIGNED_ITEM_MESSAGE = "Work item %s is successfully assigned to %s.";
+    public static final String SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE = "Work item %s is successfully unassigned.";;
 
-
-    public static final String JOIN_DELIMITER = "####################";
 
 }

@@ -14,4 +14,5 @@ public interface Story  {
 
     void changeSize(Person person, SizeType newSize);
 
+    void setAssignee(Person assignee);
 }

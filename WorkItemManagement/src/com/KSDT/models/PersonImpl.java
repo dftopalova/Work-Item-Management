@@ -29,6 +29,14 @@ public class PersonImpl implements Person {
         this.name = name;
     }
 
+    public void addWorkItem(WorkItem item){
+        workItems.add(item);
+    }
+
+    public void removeWorkItem(WorkItem item){
+        workItems.remove(item);
+    }
+
     @Override
     public String getName() {
         return name;
@@ -58,5 +66,10 @@ public class PersonImpl implements Person {
         history.stream().forEach(statement -> strBuilder.append(statement).append(System.lineSeparator()));
 
         return strBuilder.toString();
+    }
+
+    //emptyPerson - for UnassignWorkItem Command
+    public PersonImpl(){
+        this.name="";
     }
 }

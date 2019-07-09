@@ -28,7 +28,7 @@ public class StoryImpl extends WorkItemBase implements Story {
         this.size = size;
     }
 
-    private void setAssignee(Person assignee) {
+    public void setAssignee(Person assignee) {
         this.assignee = assignee;
     }
 
