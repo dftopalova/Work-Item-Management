@@ -34,7 +34,6 @@ public class BugImpl extends WorkItemBase implements Bug {
 
         this.stepsToReproduce = Arrays.asList(stepsList);
 //        this.stepsToReproduce = Collections.singletonList(stepsToReproduce);
-        //TODO CHECK singleton
     }
 
     private void setSeverity(SeverityType severity) {

@@ -106,6 +106,18 @@ public abstract class WorkItemBase implements WorkItem {
         return this.getClass().getSimpleName().replace("Impl","");
     }
 
+    private String getOnlyComments(){
+        StringBuilder stringBuilder=new StringBuilder();
+        getComments().forEach(personStringPair -> stringBuilder.append(personStringPair.getSecond() + System.lineSeparator()));
+        return stringBuilder.toString();
+    }
+
+    private String getOnlyHistory(){
+        StringBuilder stringBuilder=new StringBuilder();
+        getHistoryPairs().forEach(personStringPair -> stringBuilder.append(personStringPair.getSecond() + System.lineSeparator()));
+        return stringBuilder.toString();
+    }
+
     @Override
     public String toString(){
         StringBuilder strBuilder =new StringBuilder();
@@ -123,8 +135,7 @@ public abstract class WorkItemBase implements WorkItem {
                 "History: %s" +
                         System.lineSeparator() +
                 "%s",
-                getWorkItemType(), getTitle(),getStatus(),getDescription(),getComments(), getHistoryPairs(),additionalInfo()));
+                getWorkItemType(), getTitle(),getStatus(),getDescription(),getOnlyComments(), getOnlyHistory(),additionalInfo()));
         return strBuilder.toString();
-//        TODO Fix comments
     }
 }

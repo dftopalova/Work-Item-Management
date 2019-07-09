@@ -35,7 +35,7 @@ public class CreateBugInBoard implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        validateInput(parameters);
+        //validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
 
@@ -74,10 +74,10 @@ public class CreateBugInBoard implements Command {
             boardToAddName = parameters.get(1);
             bugNameToBeAdded = parameters.get(2);
             status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
-            description = parameters.get(4);
-            stepsToReproduce = parameters.get(5);
-            priority = PriorityType.valueOf(parameters.get(6).toUpperCase());
-            severity = SeverityType.valueOf(parameters.get(7).toUpperCase());
+            stepsToReproduce = parameters.get(4);
+            priority = PriorityType.valueOf(parameters.get(5).toUpperCase());
+            severity = SeverityType.valueOf(parameters.get(6).toUpperCase());
+            description = String.join(" ", parameters.subList(7, parameters.size() - 1));
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

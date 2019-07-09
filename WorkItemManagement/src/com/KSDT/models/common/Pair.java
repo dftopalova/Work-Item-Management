@@ -65,4 +65,11 @@ public class Pair<F, S> {
     public static <A, B> Pair<A, B> create(A a, B b) {
         return new Pair<A, B>(a, b);
     }
+
+    @Override
+    public String toString(){
+        StringBuilder strBuilder=new StringBuilder();
+        strBuilder.append(getFirst().toString() + " " + getSecond().toString()+System.lineSeparator());
+        return strBuilder.toString();
+    }
 }
