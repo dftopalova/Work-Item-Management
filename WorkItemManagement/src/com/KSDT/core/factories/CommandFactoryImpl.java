@@ -52,6 +52,10 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowAllTeamBoardsCommand(repository);
             case SHOWPERSONACTIVITY:
                 return new ShowPersonActivityCommand(repository);
+            case SHOWTEAMACTIVITY:
+                return new ShowTeamActivityCommand(repository);
+            case SHOWBOARDACTIVITY:
+                return new ShowBoardActivityCommand(repository);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

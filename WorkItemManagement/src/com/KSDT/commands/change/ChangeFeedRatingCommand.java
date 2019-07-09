@@ -3,6 +3,8 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Feedback;
 import com.KSDT.models.contracts.Person;
 
@@ -31,12 +33,14 @@ public class ChangeFeedRatingCommand implements Command {
         validateInput(parameters);
         parseParameters(parameters);
 
-        Feedback feedback = (Feedback) repository.getBoards().get(boardId).getWorkItem(workItemId);
-        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
+        Board board = repository.getBoards().get(boardId);
+        Feedback feedback = (Feedback) board.getWorkItem(workItemId);
+        Person person = board.getTeamOwner().getMembersList().get(personName);
         int oldRating = feedback.getRating();
         validateRating(oldRating, newRating);
 
         feedback.changeRating(person, newRating);
+        board.addToHistory(HistoryHelper.collectChange(oldRating, newRating));
         return String.format(RATING_SUCCESSFULLY_CHANGED, workItemId, oldRating, newRating);
     }
 

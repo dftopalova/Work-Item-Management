@@ -3,10 +3,13 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
+import java.awt.event.HierarchyBoundsAdapter;
 import java.util.List;
 
 import static com.KSDT.commands.CommandConstants.*;
@@ -33,10 +36,13 @@ public class ChangeStatusCommand implements Command {
         parseParameters(parameters);
         validateStatus();
 
-        WorkItem workItem = repository.getBoards().get(boardId).getWorkItem(workItemId);
-        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
+        Board board = repository.getBoards().get(boardId);
+        WorkItem workItem = board.getWorkItem(workItemId);
+        Person person = board.getTeamOwner().getMembersList().get(personName);
         String oldStatus = workItem.getStatus().toString();
+
         workItem.changeStatus(person, newStatus);
+        board.addToHistory(HistoryHelper.collectChange(oldStatus, newStatus));
         return String.format(STATUS_SUCCESSFULLY_CHANGED, workItemId, oldStatus, newStatus.toString());
     }
 

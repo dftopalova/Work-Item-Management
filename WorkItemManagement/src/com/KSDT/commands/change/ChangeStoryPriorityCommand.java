@@ -3,6 +3,8 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
 import com.KSDT.models.enums.PriorityType;
@@ -32,12 +34,14 @@ public class ChangeStoryPriorityCommand implements Command {
         validateInput(parameters);
         parseParameters(parameters);
 
-        Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
-        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
+        Board board = repository.getBoards().get(boardId);
+        Story story = (Story) board.getWorkItem(workItemId);
+        Person person = board.getTeamOwner().getMembersList().get(personName);
         PriorityType oldPriority = story.getPriority();
         validatePriority(oldPriority, newPriority);
 
         story.changePriority(person, newPriority);
+        board.addToHistory(HistoryHelper.collectChange(oldPriority, newPriority));
         return String.format(PRIORITY_SUCCESSFULLY_CHANGED, workItemId, oldPriority, newPriority);
     }
 

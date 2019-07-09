@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.BoardImpl;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;

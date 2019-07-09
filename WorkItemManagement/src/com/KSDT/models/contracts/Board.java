@@ -16,4 +16,5 @@ public interface Board {
 
     void addWorkItem(String name, WorkItem workItem);
 
+    void addToHistory(String change);
 }

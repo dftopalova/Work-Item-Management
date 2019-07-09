@@ -3,6 +3,8 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
 import com.KSDT.models.enums.SizeType;
@@ -31,18 +33,15 @@ public class ChangeStorySizeCommand implements Command {
         validateInput(parameters);
         parseParameters(parameters);
 
-        Story story = (Story) repository.getBoards().get(boardId).getWorkItem(workItemId);
-        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
-
-        // check if cast is successfull
-        if(story==null){
-            return String.format(WORK_ITEM_NOT_STORY,workItemId);
-        }
+        Board board = repository.getBoards().get(boardId);
+        Story story = (Story) board.getWorkItem(workItemId);
+        Person person = board.getTeamOwner().getMembersList().get(personName);
 
         SizeType oldSize = story.getSize();
         validateSize(oldSize, newSize);
 
         story.changeSize(person, newSize);
+        board.addToHistory(HistoryHelper.collectChange(oldSize, newSize));
         return String.format(SIZE_SUCCESSFULLY_CHANGED, workItemId, oldSize, newSize);
     }
 

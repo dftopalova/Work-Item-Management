@@ -44,6 +44,11 @@ public class BoardImpl implements Board {
     }
 
     @Override
+    public void addToHistory(String change) {
+        history.add(change);
+    }
+
+    @Override
     public String getName() {
         return name;
     }
@@ -76,9 +81,11 @@ public class BoardImpl implements Board {
                         "Team Owner: %s" +
                         System.lineSeparator(),
                 getName(), getTeamOwner().getName()));
+
         strBuilder.append("Work items in board: " + System.lineSeparator());
         workItems.keySet().forEach(entry -> strBuilder.append(entry + " "));
         strBuilder.append(System.lineSeparator());
+
         strBuilder.append("History:" + System.lineSeparator());
         history.stream().forEach(statement -> strBuilder.append(statement).append(System.lineSeparator()));
 

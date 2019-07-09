@@ -3,6 +3,8 @@ package com.KSDT.commands.change;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.enums.SeverityType;
@@ -31,15 +33,16 @@ public class ChangeBugSeverityCommand implements Command {
         validateInput(parameters);
         parseParameters(parameters);
 
-        Bug bug = (Bug) repository.getBoards().get(boardId).getWorkItem(workItemId);
-        Person person = repository.getBoards().get(boardId).getTeamOwner().getMembersList().get(personName);
+        Board board = repository.getBoards().get(boardId);
+        Bug bug = (Bug) board.getWorkItem(workItemId);
+        Person person = board.getTeamOwner().getMembersList().get(personName);
         SeverityType oldSeverity = bug.getSeverity();
         validateSeverity(oldSeverity, newSeverity);
 
         bug.changeSeverity(person, newSeverity);
+        board.addToHistory(HistoryHelper.collectChange(oldSeverity,newSeverity));
         return String.format(SEVERITY_SUCCESSFULLY_CHANGED, workItemId, oldSeverity, newSeverity);
     }
-
 
 
     private void validateInput(List<String> parameters) {
