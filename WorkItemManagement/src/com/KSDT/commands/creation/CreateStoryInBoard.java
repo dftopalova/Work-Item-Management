@@ -29,8 +29,8 @@ public class CreateStoryInBoard implements Command {
     private SizeType size;
 
     public CreateStoryInBoard(WorkItemRepository repository, WorkItemFactory factory) {
-        this.repository=repository;
-        this.factory=factory;
+        this.repository = repository;
+        this.factory = factory;
     }
 
     @Override
@@ -40,14 +40,14 @@ public class CreateStoryInBoard implements Command {
         validateParameters();
 
         Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
-        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority,size);
+        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority, size);
         repository.addWorkItem(story);
         board.addWorkItem(storyNameToBeAdded, story);
         return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
 
     private void validateInput(List<String> parameters) {
-        if (parameters.size() != EXPECTED_NUMBER_OF_ARGUMENTS) {
+        if (parameters.size() < EXPECTED_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(String.format(INVALID_NUMBER_OF_ARGUMENTS, EXPECTED_NUMBER_OF_ARGUMENTS, parameters.size()));
         }
     }
@@ -64,9 +64,9 @@ public class CreateStoryInBoard implements Command {
             boardToAddName = parameters.get(1);
             storyNameToBeAdded = parameters.get(2);
             status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
-            description = parameters.get(4);
-            priority = PriorityType.valueOf(parameters.get(5).toUpperCase());
-            size = SizeType.valueOf(parameters.get(6).toUpperCase());
+            priority = PriorityType.valueOf(parameters.get(4).toUpperCase());
+            size = SizeType.valueOf(parameters.get(5).toUpperCase());
+            description = String.join(" ", parameters.subList(6, parameters.size()));
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

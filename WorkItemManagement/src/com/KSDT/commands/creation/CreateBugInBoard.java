@@ -57,7 +57,7 @@ public class CreateBugInBoard implements Command {
 
 
     private void validateInput(List<String> parameters) {
-        if (parameters.size() != EXPECTED_NUMBER_OF_ARGUMENTS) {
+        if (parameters.size() < EXPECTED_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(String.format(INVALID_NUMBER_OF_ARGUMENTS, EXPECTED_NUMBER_OF_ARGUMENTS, parameters.size()));
         }
     }
@@ -77,7 +77,7 @@ public class CreateBugInBoard implements Command {
             stepsToReproduce = parameters.get(4);
             priority = PriorityType.valueOf(parameters.get(5).toUpperCase());
             severity = SeverityType.valueOf(parameters.get(6).toUpperCase());
-            description = String.join(" ", parameters.subList(7, parameters.size() - 1));
+            description = String.join(" ", parameters.subList(7, (parameters.size())));
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

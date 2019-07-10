@@ -25,9 +25,9 @@ public class CreateFeedbackInBoard implements Command {
     private String description;
     private int rating;
 
-    public CreateFeedbackInBoard(WorkItemRepository repository,WorkItemFactory factory) {
-        this.repository=repository;
-        this.factory=factory;
+    public CreateFeedbackInBoard(WorkItemRepository repository, WorkItemFactory factory) {
+        this.repository = repository;
+        this.factory = factory;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CreateFeedbackInBoard implements Command {
     }
 
     private void validateInput(List<String> parameters) {
-        if (parameters.size() != EXPECTED_NUMBER_OF_ARGUMENTS) {
+        if (parameters.size() < EXPECTED_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(String.format(INVALID_NUMBER_OF_ARGUMENTS, EXPECTED_NUMBER_OF_ARGUMENTS, parameters.size()));
         }
     }
@@ -61,8 +61,8 @@ public class CreateFeedbackInBoard implements Command {
             boardToAddName = parameters.get(1);
             feedbackToBeAdded = parameters.get(2);
             status = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(3).toUpperCase()));
-            description = parameters.get(4);
-            rating=Integer.parseInt(parameters.get(5));
+            rating = Integer.parseInt(parameters.get(4));
+            description = String.join(" ", parameters.subList(5, (parameters.size())));
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

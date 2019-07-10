@@ -24,7 +24,7 @@ public class ListAllWorkItemsCommand implements Command {
         strBuilder.append("List of all work items:"+System.lineSeparator());
         workItemList.stream().forEach(item -> strBuilder.append(item));
         strBuilder.append(System.lineSeparator());
-        
+
         return strBuilder.toString();
     }
 }
