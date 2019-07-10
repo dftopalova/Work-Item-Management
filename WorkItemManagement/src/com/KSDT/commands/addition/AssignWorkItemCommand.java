@@ -31,7 +31,6 @@ public class AssignWorkItemCommand implements Command {
 
         person.addWorkItem(item);
 
-        //TODO make it more beautiful
         if(item.getWorkItemType().equals("Bug")){
             ((Bug) item).setAssignee(person);
         }

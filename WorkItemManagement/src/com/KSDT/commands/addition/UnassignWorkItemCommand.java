@@ -31,7 +31,6 @@ public class UnassignWorkItemCommand implements Command {
 
         person.removeWorkItem(item);
 
-        //TODO make it more beautiful
         if(item.getWorkItemType().equals("Bug")){
             ((Bug) item).setAssignee(new PersonImpl());
         }
