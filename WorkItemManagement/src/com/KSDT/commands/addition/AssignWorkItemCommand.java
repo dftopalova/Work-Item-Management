@@ -56,7 +56,7 @@ public class AssignWorkItemCommand implements Command {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
         }
 
-        if(repository.getWorkItems().get(workItemID) instanceof Feedback){
+        if(repository.getWorkItems().get(workItemID).getWorkItemType().equalsIgnoreCase("Feedback")){
             throw new IllegalArgumentException(String.format(FEEDBACK_HAS_NO_ASSIGNEE_ERROR));
         }
     }

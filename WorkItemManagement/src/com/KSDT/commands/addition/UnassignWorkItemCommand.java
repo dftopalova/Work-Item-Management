@@ -32,10 +32,10 @@ public class UnassignWorkItemCommand implements Command {
         person.removeWorkItem(item);
 
         //TODO make it more beautiful
-        if(item instanceof Bug){
+        if(item.getWorkItemType().equals("Bug")){
             ((Bug) item).setAssignee(new PersonImpl());
         }
-        else if(item instanceof Story){
+        else if(item.getWorkItemType().equals("Story")){
             ((Story) item).setAssignee(new PersonImpl());
         }
         return String.format(SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE,item.getTitle(),personName);
@@ -56,7 +56,7 @@ public class UnassignWorkItemCommand implements Command {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
         }
 
-        if(repository.getWorkItems().get(workItemID) instanceof Feedback){
+        if(repository.getWorkItems().get(workItemID).getWorkItemType().equalsIgnoreCase("Feedback")){
             throw new IllegalArgumentException(String.format(FEEDBACK_HAS_NO_ASSIGNEE_ERROR));
         }
     }
