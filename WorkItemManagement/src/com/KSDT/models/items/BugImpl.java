@@ -87,11 +87,6 @@ public class BugImpl extends WorkItemBase implements Bug {
     }
 
     @Override
-    public String getType() {
-        return "BUG_";
-    }
-
-    @Override
     public String additionalInfo() {
         StringBuilder strBuilder =new StringBuilder();
         strBuilder.append(String.format(

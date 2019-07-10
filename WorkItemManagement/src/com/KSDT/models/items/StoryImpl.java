@@ -33,11 +33,6 @@ public class StoryImpl extends WorkItemBase implements Story {
     }
 
     @Override
-    public String getType() {
-        return "STORY_";
-    }
-
-    @Override
     public PriorityType getPriority() {
         return priority;
     }

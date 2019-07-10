@@ -72,9 +72,6 @@ public abstract class WorkItemBase implements WorkItem {
         historyPairs.add(Pair.create(person, change));
     }
 
-    public abstract String getType();
-
-
     @Override
     public String getTitle() {
         return title;
@@ -102,7 +99,7 @@ public abstract class WorkItemBase implements WorkItem {
 
     protected abstract String additionalInfo();
 
-    private String getWorkItemType(){
+    public String getWorkItemType(){
         return this.getClass().getSimpleName().replace("Impl","");
     }
 

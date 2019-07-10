@@ -32,10 +32,10 @@ public class AssignWorkItemCommand implements Command {
         person.addWorkItem(item);
 
         //TODO make it more beautiful
-        if(item instanceof Bug){
+        if(item.getWorkItemType().equals("Bug")){
             ((Bug) item).setAssignee(person);
         }
-        else if(item instanceof Story){
+        else if(item.getWorkItemType().equals("Story")){
             ((Story) item).setAssignee(person);
         }
         return String.format(SUCCESSFULLY_ASSIGNED_ITEM_MESSAGE,item.getTitle(),personName);

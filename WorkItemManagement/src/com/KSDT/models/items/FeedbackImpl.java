@@ -20,12 +20,6 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
         this.rating = rating;
     }
 
-
-    @Override
-    public String getType() {
-        return "FEED_";
-    }
-
     @Override
     public int getRating() {
         return rating;

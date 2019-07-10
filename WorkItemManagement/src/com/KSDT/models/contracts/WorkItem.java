@@ -17,7 +17,7 @@ public interface WorkItem {
 
     String getDescription();
 
-    String getType();
+    String getWorkItemType();
 
     void changeStatus(Person person, StatusType newStatus);
 
