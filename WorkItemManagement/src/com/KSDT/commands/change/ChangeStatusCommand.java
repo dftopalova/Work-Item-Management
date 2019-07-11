@@ -72,14 +72,14 @@ public class ChangeStatusCommand implements Command {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
-            validateParameters();
-
 
             String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItem(workItemId).getClass().getSimpleName().toUpperCase();
 //            String workItemClassSimpleName =  repository.getWorkItemsList().get(workItemId).getClass().getSimpleName().toUpperCase();
             WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length() - 4).concat("_");
             newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
             personName = parameters.get(3);
+            validateParameters();
+
 
 
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.PersonImpl;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;
@@ -26,6 +27,7 @@ public class BugImpl extends WorkItemBase implements Bug {
         setStepsToReproduce(stepsToReproduce);
         setPriority(priority);
         setSeverity(severity);
+        setAssignee(new PersonImpl());
     }
 
     private void setStepsToReproduce(String stepsToReproduce) {
@@ -100,7 +102,7 @@ public class BugImpl extends WorkItemBase implements Bug {
                         System.lineSeparator() +
                         "=*=*=*=*="+
                 System.lineSeparator()
-                , getStepsToReproduce(),getSeverity(),getPriority(),getAssignee()));
+                , getStepsToReproduce(),getSeverity(),getPriority(),getAssignee().getName()));
         return strBuilder.toString();
     }
 }

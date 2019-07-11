@@ -14,7 +14,7 @@ import static com.KSDT.commands.CommandConstants.*;
 public class CreateFeedbackInBoard implements Command {
 
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
-    private static final String WORK_ITEM_TYPE = "FEED_";
+    private static final String WORK_ITEM_TYPE = "FEEDBACK_";
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 

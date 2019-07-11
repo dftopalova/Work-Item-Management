@@ -1,5 +1,6 @@
 package com.KSDT.models.items;
 
+import com.KSDT.models.PersonImpl;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Person;
@@ -18,7 +19,10 @@ public class StoryImpl extends WorkItemBase implements Story {
         super(title, status, description);
         setPriority(priority);
         setSize(size);
+        setAssignee(new PersonImpl());
     }
+
+
 
     private void setPriority(PriorityType priority) {
         this.priority = priority;
@@ -75,7 +79,7 @@ public class StoryImpl extends WorkItemBase implements Story {
                         "Assignee: %s" +
                         System.lineSeparator() +
                         "=*=*=*=*="+System.lineSeparator()
-                ,getPriority(), getSize(), getAssignee()));
+                ,getPriority(), getSize(), getAssignee().getName()));
         return strBuilder.toString();
     }
 }

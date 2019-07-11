@@ -23,6 +23,13 @@ public class PersonImpl implements Person {
         this.workItems = new ArrayList<>();
     }
 
+    public PersonImpl() {
+        this.name="NO_NAME";
+        this.history = new ArrayList<>();
+        this.workItems = new ArrayList<>();
+    }
+
+
     public void setName(String name) {
         ValidationHelper.emptyStringCheck(name);
         ValidationHelper.lengthCheck(name, NAME_MIN_LENGTH, NAME_MAX_LENGTH, NAME_LENGTH_EXCEPTION);
@@ -44,7 +51,7 @@ public class PersonImpl implements Person {
 
     @Override
     public List<String> getHistory() {
-        return new ArrayList<>(history);
+        return new ArrayList<>(history); //fix printing, every entry on new line
     }
 
     @Override
@@ -69,7 +76,4 @@ public class PersonImpl implements Person {
     }
 
     //emptyPerson - for UnassignWorkItem Command
-    public PersonImpl(){
-        this.name="";
-    }
 }

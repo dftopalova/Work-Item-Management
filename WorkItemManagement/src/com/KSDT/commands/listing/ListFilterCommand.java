@@ -63,7 +63,7 @@ public class ListFilterCommand implements Command {
         }
 
         if (parameters.contains("-status")) {
-            status = StatusType.valueOf(itemType.toUpperCase() + "_" + (parameters.get(parameters.indexOf("-status") + 1)));
+            status = StatusType.valueOf(itemType.toUpperCase() + "_" + (parameters.get(parameters.indexOf("-status") + 1)).toUpperCase());
         }
 
         if (parameters.contains("-assignee")) {
