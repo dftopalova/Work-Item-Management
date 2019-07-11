@@ -2,11 +2,13 @@ package com.KSDT.commands.listing;
 
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemRepository;
+import com.KSDT.models.common.FilterHelper;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class ListFilterCommand implements Command {
     private String itemType;
     private StatusType status;
     private Person assignee;
+    static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
     public ListFilterCommand(WorkItemRepository repository) {
         this.repository = repository;
@@ -34,11 +37,14 @@ public class ListFilterCommand implements Command {
         parseParameters(parameters);
 
         notFilteredWorkItemList = repository.getWorkItems();
-        filteredWorkItemList = notFilteredWorkItemList.stream().filter(workItemTypeFilter()).collect(Collectors.toList());
-        filteredWorkItemList=filteredWorkItemList.stream().filter(statusFilter()).collect(Collectors.toList());
+//        filteredWorkItemList = notFilteredWorkItemList.stream().filter(workItemTypeFilter()).collect(Collectors.toList());
+//        filteredWorkItemList=filteredWorkItemList.stream().filter(statusFilter()).collect(Collectors.toList());
 
         StringBuilder strBuilder = new StringBuilder();
 //TODO get shit from filterhelper
+
+        filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList, FilterHelper.getAllPredicates());
+
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
         return strBuilder.toString();
     }
@@ -61,10 +67,14 @@ public class ListFilterCommand implements Command {
 
         if (parameters.contains("-type")) {
             itemType = parameters.get(parameters.indexOf("-type") + 1);
+            FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
+//            filterhelper filter = new filterhelper:
+//            filter.filter(parameters, notFilteredWorkItemList);
         }
 
         if (parameters.contains("-status")) {
             status = StatusType.valueOf(itemType.toUpperCase() + "_" + (parameters.get(parameters.indexOf("-status") + 1)).toUpperCase());
+            FilterHelper.addPredicates(item -> item.getStatus().equals(status));
         }
 
         if (parameters.contains("-assignee")) {

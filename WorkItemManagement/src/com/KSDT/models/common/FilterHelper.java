@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 public class FilterHelper {
 //TODO probably static, THINK, do shit
-    List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
+   static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
-    public void addPredicates(Predicate predicate) {
+    public static void addPredicates(Predicate<WorkItem> predicate) {
         allPredicates.add(predicate);
     }
 
-    public List<WorkItem> filter(List<WorkItem> unFilteredList, List<Predicate<WorkItem>> predicateList) {
+    public static List<WorkItem> filter(List<WorkItem> unFilteredList, List<Predicate<WorkItem>> predicateList) {
         List<WorkItem> filtered = new ArrayList<>();
 
         filtered =  unFilteredList.stream().filter(predicateList.stream()
@@ -24,6 +24,11 @@ public class FilterHelper {
                 .collect(Collectors.toList());
 
         return filtered;
+    }
+
+    public static List<Predicate<WorkItem>> getAllPredicates() {
+        return allPredicates;
+//        TODO return copy
     }
 
 
