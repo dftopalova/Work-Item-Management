@@ -20,6 +20,7 @@ public class ListFilterCommand implements Command {
     private List<WorkItem> notFilteredWorkItemList;
     private List<WorkItem> filteredWorkItemList;
 
+
     private String itemType;
     private StatusType status;
     private Person assignee;
@@ -37,7 +38,7 @@ public class ListFilterCommand implements Command {
         filteredWorkItemList=filteredWorkItemList.stream().filter(statusFilter()).collect(Collectors.toList());
 
         StringBuilder strBuilder = new StringBuilder();
-
+//TODO get shit from filterhelper
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
         return strBuilder.toString();
     }
