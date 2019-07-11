@@ -1,5 +1,6 @@
 package com.KSDT.models.common;
 
+import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
@@ -9,7 +10,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class FilterHelper {
-//TODO probably static, THINK, do shit
+
    static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
     public static void addPredicates(Predicate<WorkItem> predicate) {
@@ -17,9 +18,14 @@ public class FilterHelper {
     }
 
     public static List<WorkItem> filter(List<WorkItem> unFilteredList, List<Predicate<WorkItem>> predicateList) {
+
+        if(predicateList.size() == 0){
+            return unFilteredList;
+        }
+
         List<WorkItem> filtered = new ArrayList<>();
 
-        filtered =  unFilteredList.stream().filter(predicateList.stream()
+        filtered = unFilteredList.stream().filter(predicateList.stream()
                 .reduce(item ->true, Predicate::and))
                 .collect(Collectors.toList());
 
@@ -27,9 +33,7 @@ public class FilterHelper {
     }
 
     public static List<Predicate<WorkItem>> getAllPredicates() {
-        return allPredicates;
-//        TODO return copy
+        return new ArrayList<>(allPredicates);
     }
-
 
 }
