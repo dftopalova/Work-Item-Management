@@ -28,7 +28,7 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     @Override
     public void changeRating(Person person, int newRating) {
         ValidationHelper.positiveCheck(newRating);
-        String change = HistoryHelper.collectChange(getRating(), newRating);
+        String change = HistoryHelper.collectChange(getRating(), newRating,"rating");
 
         addToHistory(person, change);
         person.addToPersonHistory(change);

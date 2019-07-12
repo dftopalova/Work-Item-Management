@@ -30,7 +30,7 @@ public class FilterHelper {
         filtered = unFilteredList.stream().filter(getAllPredicates().stream()
                 .reduce(item -> true, Predicate::and))
                 .collect(Collectors.toList());
-
+            allPredicates.clear();
         return filtered;
     }
 

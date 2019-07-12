@@ -55,25 +55,33 @@ public class ListFilterCommand implements Command {
     }
 
     private void parseParameters(List<String> parameters) {
+        try {
+            if (parameters.contains("-type")) {
+                itemType = parameters.get(parameters.indexOf("-type") + 1);
+                FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
+            }
 
-        if (parameters.contains("-type")) {
-            itemType = parameters.get(parameters.indexOf("-type") + 1);
-            FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
+            if (parameters.contains("-status")) {
+                status = StatusType.valueOf(itemType.toUpperCase() + "_" + (parameters.get(parameters.indexOf("-status") + 1)).toUpperCase());
+                FilterHelper.addPredicates(item -> item.getStatus().equals(status));
+            }
+
+            if (parameters.contains("-sort")) {
+                sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
+            }
+
+            if (parameters.contains("-assignee") && itemType.equalsIgnoreCase("feedback")) {
+                throw new IllegalArgumentException("Invalid combination of type feedback and assignee filter!");
+            } else {
+                hasAssigneeFilter = true;
+                assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
+            }
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            throw new IllegalArgumentException("Invalid filter!");
+        } catch (Exception ex) {
+            throw new IllegalArgumentException(ex.getMessage());
         }
 
-        if (parameters.contains("-status")) {
-            status = StatusType.valueOf(itemType.toUpperCase() + "_" + (parameters.get(parameters.indexOf("-status") + 1)).toUpperCase());
-            FilterHelper.addPredicates(item -> item.getStatus().equals(status));
-        }
-
-        if (parameters.contains("-sort")) {
-            sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
-        }
-
-        if (parameters.contains("-assignee")) {
-            hasAssigneeFilter = true;
-            assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-        }
     }
 
 }
