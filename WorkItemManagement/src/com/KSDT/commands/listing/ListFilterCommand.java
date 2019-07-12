@@ -25,7 +25,7 @@ public class ListFilterCommand implements Command {
     private String itemType;
     private StatusType status;
     private Person assignee;
-    private String sortCriteria;
+    private String sortCriteria = "";
     private boolean hasAssigneeFilter;
 
     public ListFilterCommand(WorkItemRepository repository) {
@@ -40,11 +40,14 @@ public class ListFilterCommand implements Command {
         StringBuilder strBuilder = new StringBuilder();
 
         filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList);
+
         if (hasAssigneeFilter) {
             filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee);
         }
 
-//        SortHelper.sortBy(sortCriteria,filteredWorkItemList);
+        if(!sortCriteria.isEmpty()) {
+            SortHelper.sortBy(sortCriteria, filteredWorkItemList);
+        }
 
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
 
@@ -70,7 +73,6 @@ public class ListFilterCommand implements Command {
         if (parameters.contains("-assignee")) {
             hasAssigneeFilter = true;
             assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-
         }
     }
 
