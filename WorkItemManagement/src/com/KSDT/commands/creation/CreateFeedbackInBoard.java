@@ -15,6 +15,7 @@ public class CreateFeedbackInBoard implements Command {
 
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
     private static final String WORK_ITEM_TYPE = "FEEDBACK_";
+
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -22,8 +23,8 @@ public class CreateFeedbackInBoard implements Command {
     private String boardToAddName;
     private String feedbackToBeAdded;
     private StatusType status;
-    private String description;
     private int rating;
+    private String description;
 
     public CreateFeedbackInBoard(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
@@ -40,6 +41,7 @@ public class CreateFeedbackInBoard implements Command {
         WorkItem feedback = factory.createFeedback(feedbackToBeAdded, status, description, rating);
         repository.addWorkItem(feedback);
         board.addWorkItem(feedbackToBeAdded, feedback);
+
         return String.format(FEEDBACK_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
 
@@ -50,6 +52,11 @@ public class CreateFeedbackInBoard implements Command {
     }
 
     private void validateParameters() {
+
+        if(!repository.getTeams().containsKey(teamName)){
+            throw new IllegalArgumentException(String.format(INVALID_TEAM,teamName));
+        }
+
         if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }

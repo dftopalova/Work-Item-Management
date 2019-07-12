@@ -16,6 +16,7 @@ import static com.KSDT.commands.CommandConstants.*;
 public class CreateBugInBoard implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 8;
     private static final String WORK_ITEM_TYPE = "BUG_";
+
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -23,10 +24,10 @@ public class CreateBugInBoard implements Command {
     private String bugNameToBeAdded;
     private String boardToAddName;
     private StatusType status;
-    private String description;
     private String stepsToReproduce;
     private PriorityType priority;
     private SeverityType severity;
+    private String description;
 
     public CreateBugInBoard(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
@@ -35,7 +36,7 @@ public class CreateBugInBoard implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        //validateInput(parameters);
+        validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
 
@@ -45,16 +46,8 @@ public class CreateBugInBoard implements Command {
         repository.addWorkItem(bug);
         board.addWorkItem(bugNameToBeAdded, bug);
 
-//      TODO - logic for finding exact name match for workitem
-//        WorkItem findTest = repository.getWorkItemsList().stream()
-//                .filter(e -> e.getTitle().equals(bugNameToBeAdded))
-//                .findFirst()
-//                .get();
-
-
         return String.format(BUG_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
-
 
     private void validateInput(List<String> parameters) {
         if (parameters.size() < EXPECTED_NUMBER_OF_ARGUMENTS) {
@@ -63,6 +56,11 @@ public class CreateBugInBoard implements Command {
     }
 
     private void validateParameters() {
+
+        if(!repository.getTeams().containsKey(teamName)){
+            throw new IllegalArgumentException(String.format(INVALID_TEAM,teamName));
+        }
+
         if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }

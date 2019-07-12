@@ -17,6 +17,7 @@ public class CreateStoryInBoard implements Command {
 
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 7;
     private static final String WORK_ITEM_TYPE = "STORY_";
+
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -24,9 +25,9 @@ public class CreateStoryInBoard implements Command {
     private String boardToAddName;
     private String storyNameToBeAdded;
     private StatusType status;
-    private String description;
     private PriorityType priority;
     private SizeType size;
+    private String description;
 
     public CreateStoryInBoard(WorkItemRepository repository, WorkItemFactory factory) {
         this.repository = repository;
@@ -43,6 +44,7 @@ public class CreateStoryInBoard implements Command {
         WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority, size);
         repository.addWorkItem(story);
         board.addWorkItem(storyNameToBeAdded, story);
+
         return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
     }
 
@@ -53,6 +55,10 @@ public class CreateStoryInBoard implements Command {
     }
 
     private void validateParameters() {
+        if(!repository.getTeams().containsKey(teamName)){
+            throw new IllegalArgumentException(String.format(INVALID_TEAM,teamName));
+        }
+
         if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardToAddName)) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardToAddName));
         }
