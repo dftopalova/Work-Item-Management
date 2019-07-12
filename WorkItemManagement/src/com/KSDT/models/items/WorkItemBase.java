@@ -34,7 +34,6 @@ public abstract class WorkItemBase implements WorkItem {
         this.historyPairs = new ArrayList<>();
     }
 
-
     private void setTitle(String title) {
         ValidationHelper.emptyStringCheck(title);
         ValidationHelper.lengthCheck(title, TITLE_MIN_LENGTH, TITLE_MAX_LENGTH, TITLE_LENGTH_EXCEPTION);
@@ -97,8 +96,6 @@ public abstract class WorkItemBase implements WorkItem {
         return description;
     }
 
-    protected abstract String additionalInfo();
-
     public String getWorkItemType(){
         return this.getClass().getSimpleName().replace("Impl","");
     }
@@ -135,4 +132,6 @@ public abstract class WorkItemBase implements WorkItem {
                 getWorkItemType(), getTitle(),getStatus(),getDescription(),getOnlyComments(), getOnlyHistory(),additionalInfo()));
         return strBuilder.toString();
     }
+
+    protected abstract String additionalInfo();
 }

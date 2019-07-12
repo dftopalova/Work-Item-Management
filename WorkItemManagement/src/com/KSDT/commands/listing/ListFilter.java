@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 import static com.KSDT.commands.CommandConstants.INVALID_NUMBER_OF_ARGUMENTS;
 
-public class ListItemsWithOptionsCommand implements Command {
+public class ListFilter implements Command {
 
     private WorkItemRepository repository;
     private List<WorkItem> notFilteredWorkItemList;
@@ -35,7 +35,7 @@ public class ListItemsWithOptionsCommand implements Command {
 
     static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
-    public ListItemsWithOptionsCommand(WorkItemRepository repository) {
+    public ListFilter(WorkItemRepository repository) {
         this.repository = repository;
     }
 

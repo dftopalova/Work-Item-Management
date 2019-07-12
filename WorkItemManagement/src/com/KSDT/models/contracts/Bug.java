@@ -6,18 +6,12 @@ import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
-public interface Bug extends WorkItem {
+public interface Bug extends BasicItem {
+
     List<String> getStepsToReproduce();
 
     SeverityType getSeverity();
 
-    Person getAssignee();
-
-    PriorityType getPriority();
-
-    void changePriority(Person person, PriorityType newPriority);
-
     void changeSeverity(Person person, SeverityType newSeverity);
 
-    void setAssignee(Person assignee);
 }

@@ -64,8 +64,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new UnassignWorkItemCommand(repository);
             case LISTALLWORKITEMS:
                 return new ListAllWorkItemsCommand(repository);
-            case LISTITEMSWITHOPTIONS:
-                return new ListItemsWithOptionsCommand(repository);
+            case LISTFILTER:
+                return new ListFilter(repository);
         }
         throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandName));
     }

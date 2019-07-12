@@ -15,19 +15,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BugImpl extends WorkItemBase implements Bug {
+public class BugImpl extends BasicItemImpl implements Bug {
 
     private List<String> stepsToReproduce;
     private SeverityType severity;
-    private Person assignee;
-    private PriorityType priority;
 
     public BugImpl(String title, StatusType status,String description, String stepsToReproduce, PriorityType priority, SeverityType severity) {
-        super(title, status, description);
+        super(title, status, description,priority);
         setStepsToReproduce(stepsToReproduce);
-        setPriority(priority);
         setSeverity(severity);
-        setAssignee(new PersonImpl());
     }
 
     private void setStepsToReproduce(String stepsToReproduce) {
@@ -35,19 +31,10 @@ public class BugImpl extends WorkItemBase implements Bug {
         String[] stepsList = stepsToReproduce.trim().split("/");
 
         this.stepsToReproduce = Arrays.asList(stepsList);
-//        this.stepsToReproduce = Collections.singletonList(stepsToReproduce);
     }
 
     private void setSeverity(SeverityType severity) {
         this.severity = severity;
-    }
-
-    public void setAssignee(Person assignee) {
-        this.assignee = assignee;
-    }
-
-    public void setPriority(PriorityType priority) {
-        this.priority = priority;
     }
 
     @Override
@@ -58,25 +45,6 @@ public class BugImpl extends WorkItemBase implements Bug {
     @Override
     public SeverityType getSeverity() {
         return severity;
-    }
-
-    @Override
-    public Person getAssignee() {
-        return assignee;
-    }
-
-    @Override
-    public PriorityType getPriority() {
-        return priority;
-    }
-
-    @Override
-    public void changePriority(Person person, PriorityType newPriority) {
-        String change = HistoryHelper.collectChange(getPriority(), newPriority);
-
-        addToHistory(person, change );
-        person.addToPersonHistory(change);
-        setPriority(newPriority);
     }
 
     @Override

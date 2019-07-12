@@ -9,54 +9,22 @@ import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 
-public class StoryImpl extends WorkItemBase implements Story {
+public class StoryImpl extends BasicItemImpl implements Story {
 
-    private PriorityType priority;
     private SizeType size;
-    private Person assignee;
 
     public StoryImpl(String title, StatusType status, String description, PriorityType priority, SizeType size) {
-        super(title, status, description);
-        setPriority(priority);
+        super(title, status, description,priority);
         setSize(size);
-        setAssignee(new PersonImpl());
-    }
-
-
-
-    private void setPriority(PriorityType priority) {
-        this.priority = priority;
     }
 
     private void setSize(SizeType size) {
         this.size = size;
     }
 
-    public void setAssignee(Person assignee) {
-        this.assignee = assignee;
-    }
-
-    @Override
-    public PriorityType getPriority() {
-        return priority;
-    }
-
     @Override
     public SizeType getSize() {
         return size;
-    }
-
-    @Override
-    public Person getAssignee() {
-        return assignee;
-    }
-
-    @Override
-    public void changePriority(Person person, PriorityType newPriority) {
-        String change = HistoryHelper.collectChange(getPriority(), newPriority);
-        addToHistory(person, change);
-        person.addToPersonHistory(change);
-        setPriority(newPriority);
     }
 
     @Override
