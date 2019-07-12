@@ -1,12 +1,10 @@
 package com.KSDT.models.common;
 
-import com.KSDT.models.contracts.Bug;
-import com.KSDT.models.contracts.Feedback;
-import com.KSDT.models.contracts.Story;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SortHelper {
 
@@ -26,7 +24,15 @@ public class SortHelper {
     }
 
     public static void sortByPriority(List<WorkItem> unsortedList) {
-        //TODO
+        unsortedList.stream().map(BasicItem.class::cast).collect(Collectors.toList()).sort(new Comparator<BasicItem>() {
+            @Override
+            public int compare(BasicItem item1, BasicItem item2) {
+                if (item1.getPriority().equals(item2.getPriority())) {
+                    return 0;
+                }
+                return  item1.getPriority().ordinal() < item2.getPriority().ordinal() ? -1 :1;
+            }
+        });
     }
 
     public static void sortBugsBySeverity(List<Bug> unsortedList) {

@@ -26,6 +26,7 @@ public class ListFilterCommand implements Command {
     private StatusType status;
     private Person assignee;
     private String sortCriteria;
+    private boolean hasAssigneeFilter;
 
     public ListFilterCommand(WorkItemRepository repository) {
         this.repository = repository;
@@ -39,8 +40,11 @@ public class ListFilterCommand implements Command {
         StringBuilder strBuilder = new StringBuilder();
 
         filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList);
+        if (hasAssigneeFilter) {
+            filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee);
+        }
 
-        SortHelper.sortBy(sortCriteria,filteredWorkItemList);
+//        SortHelper.sortBy(sortCriteria,filteredWorkItemList);
 
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
 
@@ -52,8 +56,6 @@ public class ListFilterCommand implements Command {
         if (parameters.contains("-type")) {
             itemType = parameters.get(parameters.indexOf("-type") + 1);
             FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
-//            filterhelper filter = new filterhelper:
-//            filter.filter(parameters, notFilteredWorkItemList);
         }
 
         if (parameters.contains("-status")) {
@@ -61,14 +63,15 @@ public class ListFilterCommand implements Command {
             FilterHelper.addPredicates(item -> item.getStatus().equals(status));
         }
 
-        if (parameters.contains("-assignee")) {
-            assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-        }
-
         if (parameters.contains("-sort")) {
             sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
         }
 
+        if (parameters.contains("-assignee")) {
+            hasAssigneeFilter = true;
+            assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
+
+        }
     }
 
 }

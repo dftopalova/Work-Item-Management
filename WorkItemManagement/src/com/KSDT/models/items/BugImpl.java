@@ -20,8 +20,8 @@ public class BugImpl extends BasicItemImpl implements Bug {
     private List<String> stepsToReproduce;
     private SeverityType severity;
 
-    public BugImpl(String title, StatusType status,String description, String stepsToReproduce, PriorityType priority, SeverityType severity) {
-        super(title, status, description,priority);
+    public BugImpl(String title, StatusType status, String description, String stepsToReproduce, PriorityType priority, SeverityType severity) {
+        super(title, status, description, priority);
         setStepsToReproduce(stepsToReproduce);
         setSeverity(severity);
     }
@@ -58,19 +58,19 @@ public class BugImpl extends BasicItemImpl implements Bug {
 
     @Override
     public String additionalInfo() {
-        StringBuilder strBuilder =new StringBuilder();
+        StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(String.format(
                 "Steps to reproduce: %s" +
                         System.lineSeparator() +
-                "Severity: %s" +
+                        "Severity: %s" +
                         System.lineSeparator() +
-                "Priority: %s" +
+                        "Priority: %s" +
                         System.lineSeparator() +
-                "Assignee: %s" +
+                        "Assignee: %s" +
                         System.lineSeparator() +
-                        "=*=*=*=*="+
-                System.lineSeparator()
-                , getStepsToReproduce(),getSeverity(),getPriority(),getAssignee().getName()));
+                        "=*=*=*=*=" +
+                        System.lineSeparator()
+                , getStepsToReproduce(), getSeverity(), getPriority(), getAssignee().getName()));
         return strBuilder.toString();
     }
 }
