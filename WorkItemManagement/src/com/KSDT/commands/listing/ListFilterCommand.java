@@ -5,10 +5,7 @@ import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.FilterHelper;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.SortHelper;
-import com.KSDT.models.contracts.Bug;
-import com.KSDT.models.contracts.Person;
-import com.KSDT.models.contracts.Story;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
@@ -19,23 +16,18 @@ import java.util.stream.Stream;
 
 import static com.KSDT.commands.CommandConstants.INVALID_NUMBER_OF_ARGUMENTS;
 
-public class ListFilter implements Command {
+public class ListFilterCommand implements Command {
 
     private WorkItemRepository repository;
     private List<WorkItem> notFilteredWorkItemList;
     private List<WorkItem> filteredWorkItemList;
 
-
     private String itemType;
     private StatusType status;
     private Person assignee;
-    private Predicate<Bug> BugAssigneePredicate;
-    private Predicate<Story> StoryAssigneePredicate;
     private String sortCriteria;
 
-    static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
-
-    public ListFilter(WorkItemRepository repository) {
+    public ListFilterCommand(WorkItemRepository repository) {
         this.repository = repository;
     }
 
@@ -46,10 +38,12 @@ public class ListFilter implements Command {
         notFilteredWorkItemList = repository.getWorkItems();
         StringBuilder strBuilder = new StringBuilder();
 
-        filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList, FilterHelper.getAllPredicates());
+        filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList);
+
         SortHelper.sortBy(sortCriteria,filteredWorkItemList);
 
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
+
         return strBuilder.toString();
     }
 
@@ -69,13 +63,6 @@ public class ListFilter implements Command {
 
         if (parameters.contains("-assignee")) {
             assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-            switch (itemType.toUpperCase()) {
-                case "BUG":
-                    BugAssigneePredicate = (item -> item.getAssignee().equals(assignee));
-                case "STORY":
-                    StoryAssigneePredicate = (item -> item.getAssignee().equals(assignee));
-            }
-
         }
 
         if (parameters.contains("-sort")) {
@@ -83,6 +70,5 @@ public class ListFilter implements Command {
         }
 
     }
-
 
 }

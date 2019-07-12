@@ -30,13 +30,8 @@ public class UnassignWorkItemCommand implements Command {
         Person person=repository.getPersons().get(personName);
 
         person.removeWorkItem(item);
+        ((BasicItem) item).setAssignee(new PersonImpl());
 
-        if(item.getWorkItemType().equals("Bug")){
-            ((Bug) item).setAssignee(new PersonImpl());
-        }
-        else if(item.getWorkItemType().equals("Story")){
-            ((Story) item).setAssignee(new PersonImpl());
-        }
         return String.format(SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE,item.getTitle(),personName);
     }
 

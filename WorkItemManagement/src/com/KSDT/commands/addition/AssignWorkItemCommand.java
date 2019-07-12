@@ -30,13 +30,8 @@ public class AssignWorkItemCommand implements Command {
         Person person=repository.getPersons().get(personName);
 
         person.addWorkItem(item);
+        ((BasicItem) item).setAssignee(person);
 
-        if(item.getWorkItemType().equals("Bug")){
-            ((Bug) item).setAssignee(person);
-        }
-        else if(item.getWorkItemType().equals("Story")){
-            ((Story) item).setAssignee(person);
-        }
         return String.format(SUCCESSFULLY_ASSIGNED_ITEM_MESSAGE,item.getTitle(),personName);
     }
 

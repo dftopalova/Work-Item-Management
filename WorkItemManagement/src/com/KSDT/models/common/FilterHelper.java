@@ -17,15 +17,15 @@ public class FilterHelper {
         allPredicates.add(predicate);
     }
 
-    public static List<WorkItem> filter(List<WorkItem> unFilteredList, List<Predicate<WorkItem>> predicateList) {
+    public static List<WorkItem> filter(List<WorkItem> unFilteredList) {
 
-        if(predicateList.size() == 0){
+        if(allPredicates.size() == 0){
             return unFilteredList;
         }
 
         List<WorkItem> filtered = new ArrayList<>();
 
-        filtered = unFilteredList.stream().filter(predicateList.stream()
+        filtered = unFilteredList.stream().filter(getAllPredicates().stream()
                 .reduce(item ->true, Predicate::and))
                 .collect(Collectors.toList());
 
