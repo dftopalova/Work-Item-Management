@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/untitled104.iml" filepath="$PROJECT_DIR$/untitled104.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WIMProject.iml" filepath="$PROJECT_DIR$/WIMProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WIMTests/WIMTests.iml" filepath="$PROJECT_DIR$/WIMTests/WIMTests.iml" />
     </modules>
   </component>
 </project>
-
