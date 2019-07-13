@@ -29,7 +29,6 @@ public class CreateTeam_Tests {
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenPassedLessArguments() {
         // Arrange
-        testCommand = new CreateTeamCommand(repository, factory);
         List<String> testList = new ArrayList<>();
 
         //Act & Assert
@@ -39,7 +38,6 @@ public class CreateTeam_Tests {
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenPassedMoreArguments() {
         // Arrange
-        testCommand = new CreateTeamCommand(repository, factory);
         List<String> testList = new ArrayList<>();
         testList.add("asdasd");
         testList.add("asdasd");
@@ -51,7 +49,6 @@ public class CreateTeam_Tests {
     @Test
     public void execute_Should_CreateTeamWHenInputIsValid() {
         // Arrange
-        testCommand = new CreateTeamCommand(repository, factory);
         List<String> testList = new ArrayList<>();
         testList.add("asdasd");
 

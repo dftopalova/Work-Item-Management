@@ -1,16 +1,21 @@
 package com.KSDT.tests.commands;
 
-import com.KSDT.commands.addition.AddPersonCommand;
 import com.KSDT.commands.contracts.Command;
-import com.KSDT.commands.creation.CreateTeamCommand;
+import com.KSDT.commands.creation.CreateBugInBoard;
+import com.KSDT.commands.creation.CreateStoryInBoard;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.core.factories.WorkItemFactoryImpl;
-import com.KSDT.models.PersonImpl;
+import com.KSDT.models.BoardImpl;
 import com.KSDT.models.TeamImpl;
-import com.KSDT.models.contracts.Person;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Team;
+import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.enums.PriorityType;
+import com.KSDT.models.enums.SizeType;
+import com.KSDT.models.enums.StatusType;
+import com.KSDT.models.items.StoryImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,26 +23,31 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPerson_Tests {
+public class CreateStoryInBoard_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
     private Team testTeam;
-    private Person testPerson;
+    private WorkItem testStory;
+    private Board testBoard;
+
 
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new AddPersonCommand(repository, factory);
+        testCommand = new CreateStoryInBoard(repository, factory);
         testTeam = new TeamImpl("testTeam");
-        testPerson = new PersonImpl("nameasd");
+        testStory = new StoryImpl("testStory1", StatusType.STORY_INPROGRESS, "asd asd asd", PriorityType.HIGH, SizeType.MEDIUM);
+        testBoard = new BoardImpl("testBoard", testTeam);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenPassedLessArguments() {
         // Arrange
         List<String> testList = new ArrayList<>();
+        testList.add("asdasd");
+        testList.add("asdasd");
 
         //Act & Assert
         testCommand.execute(testList);
@@ -49,29 +59,46 @@ public class AddPerson_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("asdasd");
         testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenTeamDoesNotExist() {
+    public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
         // Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
         testList.add("testTeam");
-        repository.addPerson("nameasd", testPerson);
+        testList.add("testBoard");
+        testList.add("testStory1");
+        testList.add("InProgress");
+        testList.add("Low");
+        testList.add("Small");
+        testList.add("Story which is very cool");
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenPersonDoesNotExist() {
+    public void execute_Should_ThrowExceptionWhenBoardDoesntExist() {
         // Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
         testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testStory1");
+        testList.add("InProgress");
+        testList.add("Low");
+        testList.add("Small");
+        testList.add("Story which is very cool");
         repository.addTeam("testTeam", testTeam);
 
         //Act & Assert
@@ -79,18 +106,24 @@ public class AddPerson_Tests {
     }
 
     @Test
-    public void execute_Should_addPersonToTeam() {
+    public void execute_Should_CreateBugWhenInputIsValid() {
         // Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
         testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testStory1");
+        testList.add("InProgress");
+        testList.add("Low");
+        testList.add("Small");
+        testList.add("Story which is very cool");
         repository.addTeam("testTeam", testTeam);
-        repository.addPerson("nameasd", testPerson);
+        testTeam.addBoard("testBoard", testBoard);
 
         //Act
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals(1, repository.getTeams().get("testTeam").getMembersList().size());
+        Assert.assertEquals(1, testBoard.getWorkItemsList().size());
     }
+
 }

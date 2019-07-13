@@ -2,6 +2,7 @@ package com.KSDT.tests.commands;
 
 import com.KSDT.commands.addition.AddPersonCommand;
 import com.KSDT.commands.contracts.Command;
+import com.KSDT.commands.creation.CreatePersonCommand;
 import com.KSDT.commands.creation.CreateTeamCommand;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
@@ -18,7 +19,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPerson_Tests {
+public class CreatePerson_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
@@ -29,7 +30,7 @@ public class AddPerson_Tests {
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new AddPersonCommand(repository, factory);
+        testCommand = new CreatePersonCommand(repository, factory);
         testTeam = new TeamImpl("testTeam");
         testPerson = new PersonImpl("nameasd");
     }
@@ -54,43 +55,17 @@ public class AddPerson_Tests {
         testCommand.execute(testList);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenTeamDoesNotExist() {
-        // Arrange
-        List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
-        testList.add("testTeam");
-        repository.addPerson("nameasd", testPerson);
-
-        //Act & Assert
-        testCommand.execute(testList);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenPersonDoesNotExist() {
-        // Arrange
-        List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
-        testList.add("testTeam");
-        repository.addTeam("testTeam", testTeam);
-
-        //Act & Assert
-        testCommand.execute(testList);
-    }
-
     @Test
-    public void execute_Should_addPersonToTeam() {
-        // Arrange
+    public void execute_Should_CreatePersonWhenInputIsValid() {
+        //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("nameasd");
-        testList.add("testTeam");
-        repository.addTeam("testTeam", testTeam);
-        repository.addPerson("nameasd", testPerson);
+        testList.add("nameadd");
 
         //Act
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals(1, repository.getTeams().get("testTeam").getMembersList().size());
+        Assert.assertEquals(1, repository.getPersons().size());
     }
+
 }
