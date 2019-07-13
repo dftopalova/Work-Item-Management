@@ -1,21 +1,23 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.creation;
 
+import com.KSDT.commands.addition.AddPersonCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.CreateBugInBoard;
-import com.KSDT.commands.creation.CreateStoryInBoard;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.core.factories.WorkItemFactoryImpl;
 import com.KSDT.models.BoardImpl;
+import com.KSDT.models.PersonImpl;
 import com.KSDT.models.TeamImpl;
 import com.KSDT.models.contracts.Board;
+import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.PriorityType;
-import com.KSDT.models.enums.SizeType;
+import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
-import com.KSDT.models.items.StoryImpl;
+import com.KSDT.models.items.BugImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,12 +25,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateStoryInBoard_Tests {
+public class CreateBugInBoard_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
     private Team testTeam;
-    private WorkItem testStory;
+    private WorkItem testBug;
     private Board testBoard;
 
 
@@ -36,9 +38,9 @@ public class CreateStoryInBoard_Tests {
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new CreateStoryInBoard(repository, factory);
+        testCommand = new CreateBugInBoard(repository, factory);
         testTeam = new TeamImpl("testTeam");
-        testStory = new StoryImpl("testStory1", StatusType.STORY_INPROGRESS, "asd asd asd", PriorityType.HIGH, SizeType.MEDIUM);
+        testBug = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
         testBoard = new BoardImpl("testBoard", testTeam);
     }
 
@@ -78,11 +80,13 @@ public class CreateStoryInBoard_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory1");
-        testList.add("InProgress");
-        testList.add("Low");
-        testList.add("Small");
-        testList.add("Story which is very cool");
+        testList.add("testBug123");
+        testList.add("active");
+        testList.add("step1/step2/step3");
+        testList.add("High");
+        testList.add("Critical");
+        testList.add("\"Nqkvo bugche deto trqbva da se opravi\"");
+
 
         //Act & Assert
         testCommand.execute(testList);
@@ -94,11 +98,12 @@ public class CreateStoryInBoard_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory1");
-        testList.add("InProgress");
-        testList.add("Low");
-        testList.add("Small");
-        testList.add("Story which is very cool");
+        testList.add("testBug123");
+        testList.add("active");
+        testList.add("step1/step2/step3");
+        testList.add("High");
+        testList.add("Critical");
+        testList.add("\"Nqkvo bugche deto trqbva da se opravi\"");
         repository.addTeam("testTeam", testTeam);
 
         //Act & Assert
@@ -111,11 +116,12 @@ public class CreateStoryInBoard_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory1");
-        testList.add("InProgress");
-        testList.add("Low");
-        testList.add("Small");
-        testList.add("Story which is very cool");
+        testList.add("testBug123");
+        testList.add("active");
+        testList.add("step1/step2/step3");
+        testList.add("High");
+        testList.add("Critical");
+        testList.add("\"Nqkakvo bugche koeto trqbva da se opravi\"");
         repository.addTeam("testTeam", testTeam);
         testTeam.addBoard("testBoard", testBoard);
 

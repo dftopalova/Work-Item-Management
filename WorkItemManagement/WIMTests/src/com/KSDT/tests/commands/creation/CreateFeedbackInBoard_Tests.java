@@ -1,7 +1,6 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.creation;
 
 import com.KSDT.commands.contracts.Command;
-import com.KSDT.commands.creation.CreateBoardInTeamCommand;
 import com.KSDT.commands.creation.CreateFeedbackInBoard;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
@@ -21,19 +20,21 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateBoardInTeam_Tests {
+public class CreateFeedbackInBoard_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
     private Team testTeam;
+    private WorkItem testWorkItem;
     private Board testBoard;
 
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new CreateBoardInTeamCommand(repository, factory);
+        testCommand = new CreateFeedbackInBoard(repository, factory);
         testTeam = new TeamImpl("testTeam");
+        testWorkItem = new FeedbackImpl("testFeedback", StatusType.FEEDBACK_SCHEDULED, "asd asd asd", 5);
         testBoard = new BoardImpl("testBoard", testTeam);
     }
 
@@ -41,6 +42,7 @@ public class CreateBoardInTeam_Tests {
     public void execute_Should_ThrowExceptionWhenPassedLessArguments() {
         // Arrange
         List<String> testList = new ArrayList<>();
+        testList.add("asdasd");
         testList.add("asdasd");
 
         //Act & Assert
@@ -54,6 +56,13 @@ public class CreateBoardInTeam_Tests {
         testList.add("asdasd");
         testList.add("asdasd");
         testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
+        testList.add("asdasd");
 
         //Act & Assert
         testCommand.execute(testList);
@@ -63,40 +72,51 @@ public class CreateBoardInTeam_Tests {
     public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("testBoard");
         testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testFeedback");
+        testList.add("Scheduled");
+        testList.add("5");
+        testList.add("asd asd asd");
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenBoardAlreadyExist() {
+    public void execute_Should_ThrowExceptionWhenBoardDoesntExist() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("testBoard");
         testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testFeedback");
+        testList.add("Scheduled");
+        testList.add("5");
+        testList.add("asd asd asd");
         repository.addTeam("testTeam", testTeam);
-        testTeam.addBoard("testBoard", testBoard);
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
     @Test
-    public void execute_Should_CreateBoardWhenInputIsValid() {
+    public void execute_Should_CreateFeedbackWhenInputIsValid() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("testBoard");
         testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testFeedback");
+        testList.add("Scheduled");
+        testList.add("5");
+        testList.add("asd asd asd");
         repository.addTeam("testTeam", testTeam);
+        testTeam.addBoard("testBoard", testBoard);
 
         //Act
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals(1, testTeam.getBoardsList().size());
+        Assert.assertEquals(1, testBoard.getWorkItemsList().size());
     }
-
 
 }

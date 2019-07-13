@@ -50,14 +50,14 @@ public class AddCommentCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM,personName ,repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        if (repository.getBoards().size() <= boardId) {
+            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
         }
         if (!repository.getPersons().containsKey(personName)) {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
         }
-        if (repository.getBoards().size() <= boardId) {
-            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
+        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM,personName ,repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
         }
         if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
