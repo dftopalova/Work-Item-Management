@@ -23,6 +23,7 @@ public class PersonImpl implements Person {
         this.workItems = new ArrayList<>();
     }
 
+    //emptyPerson - for UnassignWorkItem Command
     public PersonImpl() {
         this.name="NO_NAME";
         this.history = new ArrayList<>();
@@ -74,6 +75,4 @@ public class PersonImpl implements Person {
 
         return strBuilder.toString();
     }
-
-    //emptyPerson - for UnassignWorkItem Command
 }
