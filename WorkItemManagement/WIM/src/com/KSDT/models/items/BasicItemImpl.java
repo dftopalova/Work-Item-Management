@@ -12,7 +12,7 @@ BasicItem is an abstract base class for Bug and Story, which purpose is to combi
 their common fields and methods (priority and assignee)
  */
 public abstract class BasicItemImpl extends WorkItemBase implements BasicItem {
-
+//TODO add abstract method
     Person assignee;
     PriorityType priority;
 
@@ -33,6 +33,8 @@ public abstract class BasicItemImpl extends WorkItemBase implements BasicItem {
 
     @Override
     public Person getAssignee() {
+
+        //TODO should return a copy
         return assignee;
     }
 
