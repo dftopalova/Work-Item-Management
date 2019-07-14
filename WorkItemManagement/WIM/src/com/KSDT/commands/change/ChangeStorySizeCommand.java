@@ -52,17 +52,20 @@ public class ChangeStorySizeCommand implements Command {
     }
 
     private void validateParameters() {
+        if (repository.getBoards().size() < boardId) {
+            throw new IllegalArgumentException(String.format(INVALID_BOARD, String.valueOf(boardId)));
+        }
         if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
+        }
+        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
         }
     }
 
     private void validateSize(SizeType oldSize, SizeType newSize) {
         if (oldSize.equals(newSize)) {
             throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
-        }
-        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
         }
     }
 
