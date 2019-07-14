@@ -12,6 +12,8 @@ public class PersonImpl implements Person {
     private static final String NAME_LENGTH_EXCEPTION = "Name must be between 5 and 15 symbols";
     private static final int NAME_MAX_LENGTH = 15;
     private static final int NAME_MIN_LENGTH = 5;
+    private static final String ITEM_ALREADY_ASSIGNED = "! %s already has been assigned to %s.";
+    private static final String ITEM_NEVER_ASSIGNED = "! %s has never been assigned to %s.";
     private String name;
     private List<String> history;
     private List<WorkItem> workItems;
@@ -38,10 +40,16 @@ public class PersonImpl implements Person {
     }
 
     public void addWorkItem(WorkItem item){
+        if (workItems.contains(item)) {
+            throw new IllegalArgumentException(String.format(ITEM_ALREADY_ASSIGNED, item.getTitle(), name));
+        }
         workItems.add(item);
     }
 
     public void removeWorkItem(WorkItem item){
+        if (!workItems.contains(item)) {
+            throw new IllegalArgumentException(String.format(ITEM_NEVER_ASSIGNED, item.getTitle(), name));
+        }
         workItems.remove(item);
     }
 
