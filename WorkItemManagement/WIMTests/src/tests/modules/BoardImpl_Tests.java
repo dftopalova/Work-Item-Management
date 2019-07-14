@@ -1,7 +1,11 @@
 package tests.modules;
 
+import com.KSDT.models.BoardImpl;
 import com.KSDT.models.PersonImpl;
+import com.KSDT.models.TeamImpl;
+import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
+import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SizeType;
@@ -13,8 +17,9 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class PersonImpl_Tests {
+public class BoardImpl_Tests {
     private WorkItem testItem;
+    private Team testTeam;
 
     @Before
     public void before(){
@@ -22,68 +27,45 @@ public class PersonImpl_Tests {
                 StatusType.STORY_DONE,
                 "One interesting story",
                 PriorityType.MEDIUM, SizeType.MEDIUM);
+
+        testTeam=new TeamImpl("test_team");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void constructor_Should_ThrowExceptionWhenNameIsEmpty() {
         //Arrange, Act, Assert
-        Person test_person =new PersonImpl("");
+        Board test_board =new BoardImpl("",testTeam);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void constructor_Should_ThrowExceptionWhenNameLengthIsLessThanMinimum() {
         //Arrange, Act, Assert
-        Person test_person=new PersonImpl("d");
+        Board test_board =new BoardImpl("d",testTeam);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void constructor_should_ThrowExceptionWhenNameLengthIsBiggerThanMaximum() {
         //Arrange, Act, Assert
-        Person test_person=new PersonImpl("asdfghjklqwertyui");
+        Board test_board =new BoardImpl("asdfghjklqwertyui",testTeam);
     }
 
     @Test
     public void constructor_should_BeSuccessfullWhenNameLengthIsCorrect() {
         //Arrange, Act
-        Person test_person=new PersonImpl("Valentin");
+        Board test_board =new BoardImpl("test_team",testTeam);
 
         //Assert
-        Assert.assertEquals(test_person.getName(), "Valentin");
-    }
-
-    @Test
-    public void getWorkItems_Should_ReturnShallowCopy() {
-        // Arrange
-        Person test_person=new PersonImpl("Valentin");
-
-        // Act
-        List<WorkItem> supposedShallowCopy = test_person.getWorkItems();
-        test_person.addWorkItem(testItem);
-
-        // Assert
-        Assert.assertEquals(0, supposedShallowCopy.size());
-    }
-
-    @Test
-    public void removeWorkItem_Should_RemoveItemWhenPassedPresentItem() {
-        // Arrange
-        Person test_person=new PersonImpl("Valentin");
-        test_person.addWorkItem(testItem);
-        // Act
-        test_person.removeWorkItem(testItem);
-
-        // Assert
-        Assert.assertEquals(0, test_person.getWorkItems().size());
+        Assert.assertEquals(test_board.getName(), "test_team");
     }
 
     @Test
     public void getHistory_Should_ReturnShallowCopy() {
         // Arrange
-        Person test_person=new PersonImpl("Valentin");
+        Board test_board=new BoardImpl("test_board",testTeam);
 
         // Act
-        List<String> supposedShallowCopy = test_person.getHistory();
-        test_person.addToPersonHistory("Valentin changed size of story test_story.");
+        List<String> supposedShallowCopy = test_board.getHistory();
+        test_board.addToHistory("Changed size of story test_story from medium to low.");
 
         // Assert
         Assert.assertEquals(0, supposedShallowCopy.size());

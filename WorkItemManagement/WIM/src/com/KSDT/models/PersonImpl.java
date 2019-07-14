@@ -52,7 +52,7 @@ public class PersonImpl implements Person {
 
     @Override
     public List<String> getHistory() {
-        return new ArrayList<>(history); //fix printing, every entry on new line
+        return new ArrayList<>(history);
     }
 
     @Override
