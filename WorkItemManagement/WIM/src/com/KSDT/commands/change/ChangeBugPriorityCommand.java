@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
@@ -34,12 +35,14 @@ public class ChangeBugPriorityCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
+        validateParameters();
+
 
         Board board = repository.getBoards().get(boardId);
         Bug bug = (Bug) board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
         PriorityType oldPriority = bug.getPriority();
-        validatePriority(oldPriority, newPriority);
+        ValidationHelper.equalityCheck(oldPriority, newPriority, String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
 
         bug.changePriority(person, newPriority);
         board.addToHistory(HistoryHelper.collectChange(oldPriority, newPriority));
@@ -64,20 +67,12 @@ public class ChangeBugPriorityCommand implements Command {
         }
     }
 
-    private void validatePriority(PriorityType oldPriority, PriorityType newPriority) {
-        if (oldPriority.equals(newPriority)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
-        }
-    }
-
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
-            workItemId = String.valueOf(parameters.get(1));
+            workItemId = parameters.get(1);
             newPriority = PriorityType.valueOf(parameters.get(2).toUpperCase());
             personName = parameters.get(3);
-            validateParameters();
-
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Feedback;
 import com.KSDT.models.contracts.Person;
@@ -32,15 +33,18 @@ public class ChangeFeedRatingCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
+        validateParameters();
+
 
         Board board = repository.getBoards().get(boardId);
         Feedback feedback = (Feedback) board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
         int oldRating = feedback.getRating();
-        validateRating(oldRating, newRating);
+        ValidationHelper.equalityCheck(oldRating, newRating, String.format(WORK_ITEM_RATING_SAME, workItemId));
 
         feedback.changeRating(person, newRating);
         board.addToHistory(HistoryHelper.collectChange(oldRating, newRating));
+
         return String.format(RATING_SUCCESSFULLY_CHANGED, workItemId, oldRating, newRating);
     }
 
@@ -63,21 +67,12 @@ public class ChangeFeedRatingCommand implements Command {
         }
     }
 
-    private void validateRating(int oldRating, int newRating) {
-        if (oldRating == newRating) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_RATING_SAME, workItemId));
-        }
-    }
-
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
-            workItemId = String.valueOf(parameters.get(1));
+            workItemId = parameters.get(1);
             newRating = Integer.valueOf(parameters.get(2).toUpperCase());
             personName = parameters.get(3);
-
-            validateParameters();
-
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

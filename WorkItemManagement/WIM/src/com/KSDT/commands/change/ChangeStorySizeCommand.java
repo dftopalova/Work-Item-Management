@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
@@ -32,13 +33,14 @@ public class ChangeStorySizeCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
+        validateParameters();
 
         Board board = repository.getBoards().get(boardId);
         Story story = (Story) board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
 
         SizeType oldSize = story.getSize();
-        validateSize(oldSize, newSize);
+        ValidationHelper.equalityCheck(oldSize, newSize, String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
 
         story.changeSize(person, newSize);
         board.addToHistory(HistoryHelper.collectChange(oldSize, newSize));
@@ -63,20 +65,12 @@ public class ChangeStorySizeCommand implements Command {
         }
     }
 
-    private void validateSize(SizeType oldSize, SizeType newSize) {
-        if (oldSize.equals(newSize)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_PRIORITY_SAME, workItemId));
-        }
-    }
-
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
             newSize = SizeType.valueOf(parameters.get(2).toUpperCase());
             personName = parameters.get(3);
-            validateParameters();
-
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

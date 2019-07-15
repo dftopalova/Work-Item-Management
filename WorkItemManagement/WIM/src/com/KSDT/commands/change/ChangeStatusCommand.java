@@ -4,19 +4,19 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
-import java.awt.event.HierarchyBoundsAdapter;
 import java.util.List;
 
 import static com.KSDT.commands.CommandConstants.*;
 
 public class ChangeStatusCommand implements Command {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
-    private String WORK_ITEM_TYPE;
+    private String workItemType;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -34,12 +34,15 @@ public class ChangeStatusCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
-        validateStatus();
+        validateParameters();
+
 
         Board board = repository.getBoards().get(boardId);
         WorkItem workItem = board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
         String oldStatus = workItem.getStatus().toString();
+        ValidationHelper.equalityCheck(oldStatus, newStatus, String.format(WORK_ITEM_STATUS_SAME, workItemId));
+
 
         workItem.changeStatus(person, newStatus);
         board.addToHistory(HistoryHelper.collectChange(oldStatus, newStatus));
@@ -65,30 +68,19 @@ public class ChangeStatusCommand implements Command {
         }
     }
 
-    private void validateStatus() {
-        if (repository.getBoards().get(boardId).getWorkItemsList().get(workItemId).getStatus().equals(newStatus)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_STATUS_SAME, workItemId));
-        }
-    }
-
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
 
             String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItem(workItemId).getClass().getSimpleName().toUpperCase();
-//            String workItemClassSimpleName =  repository.getWorkItemsList().get(workItemId).getClass().getSimpleName().toUpperCase();
-            WORK_ITEM_TYPE = workItemClassSimpleName.substring(0, workItemClassSimpleName.length() - 4).concat("_");
-            newStatus = StatusType.valueOf(WORK_ITEM_TYPE + (parameters.get(2).toUpperCase()));
+            workItemType = workItemClassSimpleName.replace("IMPL", "").concat("_");
+            newStatus = StatusType.valueOf(workItemType + (parameters.get(2).toUpperCase()));
             personName = parameters.get(3);
-            validateParameters();
-
-
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
 //            TODO EXCEPTION
         }
     }
-
 }

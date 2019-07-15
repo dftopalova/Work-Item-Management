@@ -9,6 +9,13 @@ public class ValidationHelper {
     private static final String NEGATIVE_NUMBER_MESSAGE = "Number cannot be negative";
     private static final String EMPTY_STRING_MESSAGE = "String cannot be empty.";
 
+
+    public static <E> void equalityCheck(E obj1, E obj2, String exception) {
+        if (obj1.equals(obj2))
+            throw new IllegalArgumentException(exception);
+    }
+
+
     public static <E> void nullCheck(E obj) {
         if (obj == null) {
             throw new IllegalArgumentException(NULL_OBJECT_MESSAGE);

@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
+import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
@@ -32,12 +33,13 @@ public class ChangeBugSeverityCommand implements Command {
     public String execute(List<String> parameters) {
         validateInput(parameters);
         parseParameters(parameters);
+        validateParameters();
 
         Board board = repository.getBoards().get(boardId);
         Bug bug = (Bug) board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
         SeverityType oldSeverity = bug.getSeverity();
-        validateSeverity(oldSeverity, newSeverity);
+        ValidationHelper.equalityCheck(oldSeverity, newSeverity,String.format(WORK_ITEM_SEVERITY_SAME, workItemId));
 
         bug.changeSeverity(person, newSeverity);
         board.addToHistory(HistoryHelper.collectChange(oldSeverity,newSeverity));
@@ -52,7 +54,7 @@ public class ChangeBugSeverityCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getBoards().size() < boardId) {
+        if (repository.getBoards().size() <= boardId) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, String.valueOf(boardId)));
         }
         if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
@@ -63,20 +65,12 @@ public class ChangeBugSeverityCommand implements Command {
         }
     }
 
-    private void validateSeverity(SeverityType oldSeverity, SeverityType newSeverity) {
-        if (oldSeverity.equals(newSeverity)) {
-            throw new IllegalArgumentException(String.format(WORK_ITEM_SEVERITY_SAME, workItemId));
-//     TODO MAKE GENERIC METHOD FOR THAT VALIDATION AND IMPLEMENTED IT IN OTHER PLACES!!!
-        }
-    }
-
     private void parseParameters(List<String> parameters) {
         try {
             boardId = Integer.valueOf(parameters.get(0));
-            workItemId = String.valueOf(parameters.get(1));
+            workItemId = parameters.get(1);
             newSeverity = SeverityType.valueOf(parameters.get(2).toUpperCase());
             personName = parameters.get(3);
-            validateParameters();
 
 
         } catch (Exception e) {
