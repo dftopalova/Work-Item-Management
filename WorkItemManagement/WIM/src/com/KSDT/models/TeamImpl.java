@@ -72,10 +72,10 @@ public class TeamImpl implements Team {
         strBuilder.append(String.format("Team %s`s info:" + System.lineSeparator(), getName()));
 
         members.entrySet().forEach(member ->
-                strBuilder.append(member.getKey() + " " + member.getValue() + System.lineSeparator()));
+                strBuilder.append(member.getValue()));
 
         boards.entrySet().forEach(board ->
-                strBuilder.append(board.getKey() + " " + board.getValue() + System.lineSeparator()));
+                strBuilder.append(board.getValue()));
 
         return strBuilder.toString();
     }
