@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class SortHelper {
 
     public static void sortBy(String sortingCriteria,List<WorkItem> unsortedList){
-        ValidationHelper.nullCheck(sortingCriteria);
+//        ValidationHelper.nullCheck(sortingCriteria);
         switch (sortingCriteria.toUpperCase()){
             case "TITLE":
                 sortByTitle(unsortedList);

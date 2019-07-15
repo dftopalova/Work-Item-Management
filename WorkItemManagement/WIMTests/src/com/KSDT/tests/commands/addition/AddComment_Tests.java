@@ -1,4 +1,4 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.addition;
 
 import com.KSDT.commands.addition.AddCommentCommand;
 import com.KSDT.commands.addition.AddPersonCommand;

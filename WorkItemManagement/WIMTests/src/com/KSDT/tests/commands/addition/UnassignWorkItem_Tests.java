@@ -1,12 +1,10 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.addition;
 
-import com.KSDT.commands.addition.AddPersonCommand;
 import com.KSDT.commands.addition.AssignWorkItemCommand;
+import com.KSDT.commands.addition.UnassignWorkItemCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.WorkItemRepositoryImpl;
-import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
-import com.KSDT.core.factories.WorkItemFactoryImpl;
 import com.KSDT.models.PersonImpl;
 import com.KSDT.models.TeamImpl;
 import com.KSDT.models.contracts.BasicItem;
@@ -25,7 +23,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AssignWorkItem_Tests {
+public class UnassignWorkItem_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private Team testTeam;
@@ -36,7 +34,7 @@ public class AssignWorkItem_Tests {
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();
-        testCommand = new AssignWorkItemCommand(repository);
+        testCommand = new UnassignWorkItemCommand(repository);
         testTeam = new TeamImpl("testTeam");
         testBasicItem = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
         testWorkItem = new FeedbackImpl("testFeedback", StatusType.FEEDBACK_SCHEDULED, "asd asd asd", 5);
@@ -110,12 +108,14 @@ public class AssignWorkItem_Tests {
         testList.add("nameasd");
         repository.addPerson("nameasd", testPerson);
         repository.addWorkItem(testBasicItem);
+        testBasicItem.setAssignee(testPerson);
+        testPerson.addWorkItem(testBasicItem);
 
         //Act
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals(testPerson.getName(), testBasicItem.getAssignee().getName());
+        Assert.assertEquals("NO_NAME", testBasicItem.getAssignee().getName());
     }
 
 

@@ -45,7 +45,7 @@ public class ListFilterCommand implements Command {
             filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee);
         }
 
-        if(!sortCriteria.isEmpty()) {
+        if (!sortCriteria.isEmpty()) {
             SortHelper.sortBy(sortCriteria, filteredWorkItemList);
         }
 
@@ -56,6 +56,9 @@ public class ListFilterCommand implements Command {
 
     private void parseParameters(List<String> parameters) {
         try {
+
+
+//            TODO if no type,
             if (parameters.contains("-type")) {
                 itemType = parameters.get(parameters.indexOf("-type") + 1);
                 FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
