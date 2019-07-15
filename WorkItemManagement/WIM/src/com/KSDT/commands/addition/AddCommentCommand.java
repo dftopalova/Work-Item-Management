@@ -35,7 +35,9 @@ public class AddCommentCommand implements Command {
         validateParameters();
 
         Board board = repository.getBoards().get(boardId);
+//       Board test = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardId)).findFirst().get();
         WorkItem workItem = board.getWorkItem(workItemId);
+//        WorkItem t2est = board.getWorkItemsList().values().stream().filter(item -> item.getTitle().equals(workItemId)).findFirst().get();
         Person person = repository.getPersons().get(personName);
         workItem.addComment(person, comment);
 

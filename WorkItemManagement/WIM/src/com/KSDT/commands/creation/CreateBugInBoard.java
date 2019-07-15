@@ -4,7 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
@@ -42,11 +42,12 @@ public class CreateBugInBoard implements Command {
 
 
         Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
-        WorkItem bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, priority, severity);
-        repository.addWorkItem(bug);
+        Bug bug = factory.createBug(bugNameToBeAdded, status, description, stepsToReproduce, priority, severity);
+        repository.addBug(bug);
+//        repository.addWorkItem(bug);
         board.addWorkItem(bugNameToBeAdded, bug);
 
-        return String.format(BUG_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
+        return String.format(BUG_ADDED_TO_BOARD, repository.getWorkItemID(repository.getBugMap(), bug), boardToAddName);
     }
 
     private void validateInput(List<String> parameters) {

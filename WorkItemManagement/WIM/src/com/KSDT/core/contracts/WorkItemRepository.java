@@ -1,9 +1,6 @@
 package com.KSDT.core.contracts;
 
-import com.KSDT.models.contracts.Board;
-import com.KSDT.models.contracts.Person;
-import com.KSDT.models.contracts.Team;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.*;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +9,13 @@ public interface WorkItemRepository {
 
     Map<String, Team> getTeams();
 
-    List<WorkItem> getWorkItems();
+//    List<WorkItem> getWorkItems();
+
+    Map<Integer, Bug> getBugMap();
+
+    Map<Integer, Story> getStoryMap();
+
+    Map<Integer, Feedback> getFeedbackMap();
 
     Map<String, Person> getPersons();
 
@@ -20,11 +23,17 @@ public interface WorkItemRepository {
 
     void addTeam(String name, Team team);
 
-    void addWorkItem(WorkItem workItem);
+//    void addWorkItem(WorkItem workItem);
 
     void addPerson(String name, Person person);
 
     void addBoard(Board board);
 
+    void addBug(Bug bug);
 
+    void addStory(Story story);
+
+    void addFeedback(Feedback feedback);
+
+    <K, V> K getWorkItemID(Map<K, V> map, V value);
 }

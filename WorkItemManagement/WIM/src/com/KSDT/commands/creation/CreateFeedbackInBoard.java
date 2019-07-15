@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
+import com.KSDT.models.contracts.Feedback;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.StatusType;
 
@@ -38,11 +39,12 @@ public class CreateFeedbackInBoard implements Command {
         validateParameters();
 
         Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
-        WorkItem feedback = factory.createFeedback(feedbackToBeAdded, status, description, rating);
-        repository.addWorkItem(feedback);
+        Feedback feedback = factory.createFeedback(feedbackToBeAdded, status, description, rating);
+//        repository.addWorkItem(feedback);
+        repository.addFeedback(feedback);
         board.addWorkItem(feedbackToBeAdded, feedback);
 
-        return String.format(FEEDBACK_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
+        return String.format(FEEDBACK_ADDED_TO_BOARD, repository.getWorkItemID(repository.getFeedbackMap(), feedback), boardToAddName);
     }
 
     private void validateInput(List<String> parameters) {

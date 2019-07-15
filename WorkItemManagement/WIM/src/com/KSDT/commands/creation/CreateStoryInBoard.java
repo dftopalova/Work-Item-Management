@@ -43,6 +43,7 @@ public class CreateStoryInBoard implements Command {
         Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
         WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority, size);
         repository.addWorkItem(story);
+        repository.addStory(story);
         board.addWorkItem(storyNameToBeAdded, story);
 
         return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);

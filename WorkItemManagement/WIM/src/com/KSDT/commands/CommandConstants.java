@@ -34,7 +34,7 @@ public class CommandConstants {
     public static final String PERSON_CREATED = "Person with ID %s was created.";
     public static final String PERSON_ADDED_TO_TEAM = "Person with ID %s was added to %s team.";
     public static final String BOARD_ADDED_TO_TEAM = "Board with ID %s was added to %s team.";
-    public static final String BUG_ADDED_TO_BOARD = "Bug with ID %s was added to %s board.";
+    public static final String BUG_ADDED_TO_BOARD = "Bug with ID %s  was added to %s board.";
     public static final String STORY_ADDED_TO_BOARD = "Story with ID %s was added to %s board.";
     public static final String FEEDBACK_ADDED_TO_BOARD = "Feedback with ID %s was added to %s board.";
     public static final String STATUS_SUCCESSFULLY_CHANGED = "Status of work item with ID %s was changed from %s to %s.";
