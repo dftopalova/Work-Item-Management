@@ -1,10 +1,7 @@
 package com.KSDT.models.common;
 
-import com.KSDT.models.contracts.BasicItem;
-import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
-import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +35,9 @@ public class FilterHelper {
 
         List<WorkItem> filtered = new ArrayList<>();
 
-        filtered = unfilteredList.stream().map(BasicItem.class::cast)
+        filtered = unfilteredList.stream().map(BasicI tem.class::cast)
+                //TODO do shit
+
                 .filter(item -> item.getAssignee().equals(assignee))
                 .collect(Collectors.toList());
 

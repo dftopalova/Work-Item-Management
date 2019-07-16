@@ -1,15 +1,11 @@
 package com.KSDT.tests.commands.addition;
 
-import com.KSDT.commands.addition.AddPersonCommand;
 import com.KSDT.commands.addition.AssignWorkItemCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.WorkItemRepositoryImpl;
-import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
-import com.KSDT.core.factories.WorkItemFactoryImpl;
 import com.KSDT.models.PersonImpl;
 import com.KSDT.models.TeamImpl;
-import com.KSDT.models.contracts.BasicItem;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;

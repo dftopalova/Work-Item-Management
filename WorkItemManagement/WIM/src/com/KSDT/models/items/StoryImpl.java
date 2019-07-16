@@ -1,15 +1,13 @@
 package com.KSDT.models.items;
 
-import com.KSDT.models.PersonImpl;
 import com.KSDT.models.common.HistoryHelper;
-import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.Story;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 
-public class StoryImpl extends BasicItemImpl implements Story {
+public class StoryImpl extends AbstractBasicItem implements Story {
 
     private SizeType size;
 

@@ -6,7 +6,7 @@ import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
-public interface Bug extends BasicItem {
+public interface Bug extends Assignable, Priorityable {
 
     List<String> getStepsToReproduce();
 

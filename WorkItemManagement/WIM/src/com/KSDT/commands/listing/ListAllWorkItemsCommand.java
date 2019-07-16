@@ -18,7 +18,7 @@ public class ListAllWorkItemsCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-        workItemList=repository.getWorkItems();
+//        workItemList=repository.getAllItems().entrySet().stream().forEach();
 
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append("List of all work items:"+System.lineSeparator());

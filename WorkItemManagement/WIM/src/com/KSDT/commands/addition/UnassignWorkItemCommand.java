@@ -13,7 +13,7 @@ public class UnassignWorkItemCommand implements Command {
     private final static int EXPECTED_NUMBER_OF_ARGUMENTS=2;
     private final WorkItemRepository repository;
 
-    private int workItemID;
+    private String workItemName;
     private String personName;
 
     public UnassignWorkItemCommand(WorkItemRepository repository){
@@ -22,17 +22,25 @@ public class UnassignWorkItemCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
+
         validateInput(parameters);
         parseParameters(parameters);
         validateParameters();
 
-        WorkItem item=repository.getWorkItems().get(workItemID);
         Person person=repository.getPersons().get(personName);
+        Assignable itemToAdd = repository.getAssignableItems().values()
+                .stream()
+                .filter(item -> item.getTitle()
+                        .equals(workItemName)).findFirst().orElse(null);
 
-        person.removeWorkItem(item);
-        ((BasicItem) item).setAssignee(new PersonImpl());
+        if (itemToAdd == null) {
+            throw new IllegalArgumentException(String.format(INVALID_ASSIGNABLE_WORK_ITEM, workItemName));
+        }
 
-        return String.format(SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE,item.getTitle(),personName);
+        person.removeWorkItem(itemToAdd);
+        itemToAdd.setAssignee(new PersonImpl());
+
+        return String.format(SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE,itemToAdd.getTitle(),personName);
     }
 
     private void validateInput(List<String> parameters) {
@@ -42,22 +50,14 @@ public class UnassignWorkItemCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getWorkItems().size() <= workItemID) {
-            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemID));
-        }
-
         if (!repository.getPersons().containsKey(personName)) {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
-        }
-
-        if(repository.getWorkItems().get(workItemID).getWorkItemType().equalsIgnoreCase("Feedback")){
-            throw new IllegalArgumentException(String.format(FEEDBACK_HAS_NO_ASSIGNEE_ERROR));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
-            workItemID = Integer.parseInt(parameters.get(0));
+            workItemName = parameters.get(0);
             personName = parameters.get(1);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);

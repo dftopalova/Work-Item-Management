@@ -5,6 +5,7 @@ import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Person;
+import com.KSDT.models.contracts.Team;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public class AddCommentCommand implements Command {
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
-    private int boardId;
-    private String workItemId;
+    private String boardName;
+    private String workItemName;
     private String personName;
     private String comment;
 
@@ -34,14 +35,12 @@ public class AddCommentCommand implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getBoards().get(boardId);
-//       Board test = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardId)).findFirst().get();
-        WorkItem workItem = board.getWorkItem(workItemId);
-//        WorkItem t2est = board.getWorkItemsList().values().stream().filter(item -> item.getTitle().equals(workItemId)).findFirst().get();
+        Board board = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
+        WorkItem workItem = board.getWorkItem(workItemName);
         Person person = repository.getPersons().get(personName);
         workItem.addComment(person, comment);
 
-        return String.format(COMMENT_SUCCESSFULLY_ADDED, comment, workItemId);
+        return String.format(COMMENT_SUCCESSFULLY_ADDED, comment, workItemName);
     }
 
 
@@ -52,24 +51,35 @@ public class AddCommentCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getBoards().size() <= boardId) {
-            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardId));
+        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
+            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
+
         if (!repository.getPersons().containsKey(personName)) {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
         }
-        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM,personName ,repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+
+        Team tempTeam = repository.getBoards().stream().
+                filter(board1 -> board1.getName().equals(boardName))
+                .findFirst().get()
+                .getTeamOwner();
+
+        if (!tempTeam.getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, tempTeam.getName(), boardName));
         }
-        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
-            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
+
+        if (!repository.getBoards().stream().
+                filter(board1 -> board1.getName().equals(boardName))
+                .findFirst().get()
+                .getWorkItemsList().containsKey(workItemName)) {
+            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
-            boardId = Integer.valueOf(parameters.get(0));
-            workItemId = parameters.get(1);
+            boardName = parameters.get(0);
+            workItemName = parameters.get(1);
             personName = parameters.get(2);
 
             List<String> fullComment = parameters.stream().collect(Collectors.toList());

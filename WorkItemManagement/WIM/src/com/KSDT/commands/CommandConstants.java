@@ -12,6 +12,7 @@ public class CommandConstants {
     public static final String PERSON_NOT_IN_TEAM = "! Person with ID %s is not in team %s, owner of board with ID %d.";
     public static final String INVALID_BOARD = "! Board with ID %s doesn't exist.";
     public static final String INVALID_WORK_ITEM = "! Work item with ID %s doesn't exist.";
+    public static final String INVALID_ASSIGNABLE_WORK_ITEM = "! Assignable work item with title %s doesn't exist.";
     public static final String BOARD_ALREADY_EXISTS = "! Board with ID %s in team %s already exists.";
     public static final String WORK_ITEM_STATUS_SAME = "! Work item with ID %s has the same status.";
     public static final String WORK_ITEM_PRIORITY_SAME = "! Work item with ID %s has the same priority.";
@@ -44,7 +45,7 @@ public class CommandConstants {
     public static final String SEVERITY_SUCCESSFULLY_CHANGED = "Severity of work item with ID %s was changed from %s to %s.";
     public static final String COMMENT_SUCCESSFULLY_ADDED = "Comment ' %s ' successfully added to work item with ID %s .";
     public static final String SUCCESSFULLY_ASSIGNED_ITEM_MESSAGE = "Work item %s is successfully assigned to %s.";
-    public static final String SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE = "Work item %s is successfully unassigned.";;
+    public static final String SUCCESSFULLY_UNASSIGNED_ITEM_MESSAGE = "Work item %s is successfully unassigned from %s.";;
 
 
 }

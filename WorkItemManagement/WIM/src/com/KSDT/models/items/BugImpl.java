@@ -1,8 +1,6 @@
 package com.KSDT.models.items;
 
-import com.KSDT.models.PersonImpl;
 import com.KSDT.models.common.HistoryHelper;
-import com.KSDT.models.common.Pair;
 import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
@@ -12,10 +10,9 @@ import com.KSDT.models.enums.StatusType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-public class BugImpl extends BasicItemImpl implements Bug {
+public class BugImpl extends AbstractBasicItem implements Bug {
 
     private List<String> stepsToReproduce;
     private SeverityType severity;
@@ -73,4 +70,6 @@ public class BugImpl extends BasicItemImpl implements Bug {
                 , getStepsToReproduce(), getSeverity(), getPriority(), getAssignee().getName()));
         return strBuilder.toString();
     }
+
+
 }

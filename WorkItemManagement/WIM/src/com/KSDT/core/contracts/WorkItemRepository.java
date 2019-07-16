@@ -7,9 +7,15 @@ import java.util.Map;
 
 public interface WorkItemRepository {
 
+    Map<Integer, WorkItem> getAllItems();
+
     Map<String, Team> getTeams();
 
 //    List<WorkItem> getWorkItems();
+
+    Map<Integer, Assignable> getAssignableItems();
+
+    Map<Integer, Priorityable> getPrioritizableItems();
 
     Map<Integer, Bug> getBugMap();
 

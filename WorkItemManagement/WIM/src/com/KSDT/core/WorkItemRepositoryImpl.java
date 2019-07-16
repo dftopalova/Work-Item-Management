@@ -3,10 +3,7 @@ package com.KSDT.core;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<String, Team> teams;
@@ -17,6 +14,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<Integer, Story> storyMap;
     private List<Board> boards;
     private int workItemID = 0;
+    private List<Assignable> assignableList;
 
     public WorkItemRepositoryImpl() {
         this.teams = new HashMap<>();
@@ -26,6 +24,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
         this.feedbackMap = new HashMap<>();
         this.persons = new HashMap<>();
         this.boards = new ArrayList<>();
+        this.assignableList = new ArrayList<>();
     }
 
     @Override
@@ -70,15 +69,46 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
 
     @Override
     public void addPerson(String name, Person person) {
-        List<String> assignable = new ArrayList<>();
-        assignable = bugMap.toString.
-
         this.persons.put(name, person);
     }
 
     @Override
     public void addBoard( Board board) {
         this.boards.add(board);
+    }
+
+    @Override
+    public Map<Integer, Priorityable> getPrioritizableItems() {
+        Map<Integer, Priorityable> tempMap = new HashMap();
+
+        getAllItems().entrySet()
+                .stream()
+                .filter(item -> getAllInterfaces(item.getValue().getClass()).contains(Priorityable.class))
+                .forEach(item -> tempMap.put(getWorkItemID(getAllItems(), item.getValue()), (Priorityable) item.getValue()));
+
+        return tempMap;
+    }
+
+    @Override
+    public Map<Integer, Assignable> getAssignableItems() {
+        Map<Integer, Assignable> tempMap = new HashMap();
+
+                 getAllItems().entrySet()
+                .stream()
+                .filter(item -> getAllInterfaces(item.getValue().getClass()).contains(Assignable.class))
+                .forEach(item -> tempMap.put(getWorkItemID(getAllItems(), item.getValue()), (Assignable) item.getValue()));
+
+                 return tempMap;
+    }
+
+    public Map<Integer, WorkItem> getAllItems() {
+        Map<Integer, WorkItem> tempList = new HashMap<>();
+
+        tempList.putAll(bugMap);
+        tempList.putAll(storyMap);
+        tempList.putAll(feedbackMap);
+
+        return tempList;
     }
 
     @Override
@@ -116,6 +146,37 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
 
     }
 
+
+    private static List<Class<?>> getAllInterfaces(final Class<?> cls) {
+        if (cls == null) {
+            return null;
+        }
+
+        final LinkedHashSet<Class<?>> interfacesFound = new LinkedHashSet<>();
+        getAllInterfaces(cls, interfacesFound);
+
+        return new ArrayList<>(interfacesFound);
+    }
+
+    /**
+     * Get the interfaces for the specified class.
+     *
+     * @param cls  the class to look up, may be {@code null}
+     * @param interfacesFound the {@code Set} of interfaces for the class
+     */
+    private static void getAllInterfaces(Class<?> cls, final HashSet<Class<?>> interfacesFound) {
+        while (cls != null) {
+            final Class<?>[] interfaces = cls.getInterfaces();
+
+            for (final Class<?> i : interfaces) {
+                if (interfacesFound.add(i)) {
+                    getAllInterfaces(i, interfacesFound);
+                }
+            }
+
+            cls = cls.getSuperclass();
+        }
+    }
 
 //    @Override
 //    public void addWorkItem(WorkItem workItem) {

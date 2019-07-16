@@ -4,6 +4,7 @@ import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Board;
+import com.KSDT.models.contracts.Story;
 import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SizeType;
@@ -41,12 +42,12 @@ public class CreateStoryInBoard implements Command {
         validateParameters();
 
         Board board = repository.getTeams().get(teamName).getBoardsList().get(boardToAddName);
-        WorkItem story = factory.createStory(storyNameToBeAdded, status, description, priority, size);
-        repository.addWorkItem(story);
+        Story story = factory.createStory(storyNameToBeAdded, status, description, priority, size);
+//        repository.addWorkItem(story);
         repository.addStory(story);
         board.addWorkItem(storyNameToBeAdded, story);
 
-        return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItems().size() - 1, boardToAddName);
+        return String.format(STORY_ADDED_TO_BOARD, repository.getWorkItemID(repository.getStoryMap(), story), boardToAddName);
     }
 
     private void validateInput(List<String> parameters) {

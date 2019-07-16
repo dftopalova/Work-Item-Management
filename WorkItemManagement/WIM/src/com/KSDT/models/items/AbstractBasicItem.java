@@ -2,8 +2,9 @@ package com.KSDT.models.items;
 
 import com.KSDT.models.PersonImpl;
 import com.KSDT.models.common.HistoryHelper;
-import com.KSDT.models.contracts.BasicItem;
+import com.KSDT.models.contracts.Assignable;
 import com.KSDT.models.contracts.Person;
+import com.KSDT.models.contracts.Priorityable;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.StatusType;
 
@@ -11,12 +12,12 @@ import com.KSDT.models.enums.StatusType;
 BasicItem is an abstract base class for Bug and Story, which purpose is to combine
 their common fields and methods (priority and assignee)
  */
-public abstract class BasicItemImpl extends WorkItemBase implements BasicItem {
+public abstract class AbstractBasicItem extends WorkItemBase implements Priorityable, Assignable {
 //TODO add abstract method
     Person assignee;
     PriorityType priority;
 
-    protected BasicItemImpl(String title, StatusType status, String description,PriorityType priority) {
+    protected AbstractBasicItem(String title, StatusType status, String description, PriorityType priority) {
         super(title, status, description);
         setPriority(priority);
         setAssignee(new PersonImpl());

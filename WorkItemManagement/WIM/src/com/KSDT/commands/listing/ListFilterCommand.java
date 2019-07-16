@@ -36,7 +36,8 @@ public class ListFilterCommand implements Command {
     public String execute(List<String> parameters) {
         parseParameters(parameters);
 
-        notFilteredWorkItemList = repository.getWorkItems();
+//TODO do shit
+// notFilteredWorkItemList = repository.getWorkItems();
         StringBuilder strBuilder = new StringBuilder();
 
         filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList);
