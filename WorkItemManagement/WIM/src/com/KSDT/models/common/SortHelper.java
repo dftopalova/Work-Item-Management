@@ -2,6 +2,7 @@ package com.KSDT.models.common;
 
 import com.KSDT.models.contracts.*;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class SortHelper {
                 sortFeedbacksByRating(unsortedList);
                 break;
                 default:
-                    System.out.println("No such a criteria!");
+                    System.out.println("No such criteria!");
         }
     }
 
@@ -35,10 +36,14 @@ public class SortHelper {
         unsortedList.sort(Comparator.comparing(WorkItem::getTitle));
     }
 
-    private static void sortByPriority(List<WorkItem> unsortedList) {
-        unsortedList.stream().map(BasicItem.class::cast).collect(Collectors.toList()).sort(new Comparator<BasicItem>() {
+    private static void sortByPriority(List<Priorityable> unsortedList) {
+        unsortedList.stream().collect(Collectors.toList()).sort();
+
+
+        List<Priorityable> tempList = new ArrayList<>();
+        tempList.stream().collect(Collectors.toList()).sort(new Comparator<Priorityable>() {
             @Override
-            public int compare(BasicItem item1, BasicItem item2) {
+            public int compare(Priorityable item1, Priorityable item2) {
                 if (item1.getPriority().equals(item2.getPriority())) {
                     return 0;
                 }
@@ -46,6 +51,19 @@ public class SortHelper {
             }
         });
     }
+
+
+//    private static void sortByPriority(List<WorkItem> unsortedList) {
+//        unsortedList.stream().map(BasicItem.class::cast).collect(Collectors.toList()).sort(new Comparator<BasicItem>() {
+//            @Override
+//            public int compare(BasicItem item1, BasicItem item2) {
+//                if (item1.getPriority().equals(item2.getPriority())) {
+//                    return 0;
+//                }
+//                return  item1.getPriority().ordinal() < item2.getPriority().ordinal() ? -1 :1;
+//            }
+//        });
+//    }
 
     private static void sortBugsBySeverity(List<WorkItem> unsortedList) {
         unsortedList.stream().map(Bug.class::cast).collect(Collectors.toList()).sort(new Comparator<Bug>() {

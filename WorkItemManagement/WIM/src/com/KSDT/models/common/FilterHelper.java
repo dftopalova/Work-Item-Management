@@ -1,5 +1,6 @@
 package com.KSDT.models.common;
 
+import com.KSDT.models.contracts.Assignable;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 
@@ -31,11 +32,11 @@ public class FilterHelper {
         return filtered;
     }
 
-    public static List<WorkItem> assigneeFilter(List<WorkItem> unfilteredList, Person assignee) {
+    public static List<WorkItem> assigneeFilter(List<Assignable> unfilteredList, Person assignee) {
 
         List<WorkItem> filtered = new ArrayList<>();
 
-        filtered = unfilteredList.stream().map(BasicI tem.class::cast)
+        filtered = unfilteredList.stream()
                 //TODO do shit
 
                 .filter(item -> item.getAssignee().equals(assignee))
