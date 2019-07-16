@@ -143,9 +143,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
                 .getValue().equals(value))
                 .map(Map.Entry::getKey)
                 .findFirst().get();
-
     }
-
 
     private static List<Class<?>> getAllInterfaces(final Class<?> cls) {
         if (cls == null) {

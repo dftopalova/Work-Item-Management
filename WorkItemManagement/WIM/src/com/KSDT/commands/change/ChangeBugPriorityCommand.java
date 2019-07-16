@@ -42,7 +42,7 @@ public class ChangeBugPriorityCommand implements Command {
 
         Board board = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
         Bug bug = (Bug) board.getWorkItem(workItemName);
-        Priorityable big = repository.getPrioritizableItems().entrySet().stream().
+//        Priorityable big = repository.getPrioritizableItems().entrySet().stream().
 
         Person person = board.getTeamOwner().getMembersList().get(personName);
         PriorityType oldPriority = bug.getPriority();
@@ -60,16 +60,16 @@ public class ChangeBugPriorityCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
-            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
-        }
-
-        if (!repository.getBoards().get(boardName).getWorkItemsList().containsKey(workItemName)) {
-            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
-        }
-        if (!repository.getBoards().get(boardName).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardName).getTeamOwner().getName(), boardName));
-        }
+//        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
+//            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
+//        }
+//
+//        if (!repository.getBoards().get(boardName).getWorkItemsList().containsKey(workItemName)) {
+//            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
+//        }
+//        if (!repository.getBoards().get(boardName).getTeamOwner().getMembersList().containsKey(personName)) {
+//            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardName).getTeamOwner().getName(), boardName));
+//        }
     }
 
     private void parseParameters(List<String> parameters) {
