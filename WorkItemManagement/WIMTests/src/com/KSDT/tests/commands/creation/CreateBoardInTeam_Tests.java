@@ -2,7 +2,6 @@ package com.KSDT.tests.commands.creation;
 
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.commands.creation.CreateBoardInTeamCommand;
-import com.KSDT.commands.creation.CreateFeedbackInBoard;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
@@ -11,9 +10,6 @@ import com.KSDT.models.BoardImpl;
 import com.KSDT.models.TeamImpl;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Team;
-import com.KSDT.models.contracts.WorkItem;
-import com.KSDT.models.enums.StatusType;
-import com.KSDT.models.items.FeedbackImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,6 +92,7 @@ public class CreateBoardInTeam_Tests {
 
         //Assert
         Assert.assertEquals(1, testTeam.getBoardsList().size());
+        Assert.assertEquals(1, repository.getBoardsList().size());
     }
 
 

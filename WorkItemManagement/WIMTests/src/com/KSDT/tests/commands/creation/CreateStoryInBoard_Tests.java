@@ -124,6 +124,7 @@ public class CreateStoryInBoard_Tests {
 
         //Assert
         Assert.assertEquals(1, testBoard.getWorkItemsList().size());
+        Assert.assertEquals(1, repository.getStoryMap().size());
     }
 
 }

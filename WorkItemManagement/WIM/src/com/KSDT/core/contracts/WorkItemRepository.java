@@ -25,7 +25,7 @@ public interface WorkItemRepository {
 
     Map<String, Person> getPersons();
 
-    List<Board> getBoards();
+    List<Board> getBoardsList();
 
     void addTeam(String name, Team team);
 

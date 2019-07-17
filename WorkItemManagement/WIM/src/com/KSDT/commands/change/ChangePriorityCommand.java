@@ -51,7 +51,7 @@ public  class ChangePriorityCommand implements Command {
         parseParameters(params);
         validateParameters();
 
-        Board board = repository.getBoards().stream()
+        Board board = repository.getBoardsList().stream()
                 .filter(board1 -> board1.getName().equals(boardName))
                 .findFirst().get();
         Person person = board.getTeamOwner().getMembersList().get(personName);
@@ -76,18 +76,18 @@ public  class ChangePriorityCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
+        if (!repository.getBoardsList().stream().anyMatch(item -> item.getName().equals(boardName))) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
 
-        if (!repository.getBoards()
+        if (!repository.getBoardsList()
                 .stream()
                 .filter(item -> item.getName().equals(boardName))
                 .findFirst().get()
                 .getWorkItemsList().containsKey(workItemName)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
         }
-        if (!repository.getBoards()
+        if (!repository.getBoardsList()
                 .stream()
                 .filter(item -> item.getName().equals(boardName))
                 .findFirst().get()
@@ -95,7 +95,7 @@ public  class ChangePriorityCommand implements Command {
             throw new IllegalArgumentException(
                     String.format(PERSON_NOT_IN_TEAM,
                             personName,
-                            repository.getBoards()
+                            repository.getBoardsList()
                             .stream()
                             .filter(item -> item.getName().equals(boardName))
                             .findFirst().get()

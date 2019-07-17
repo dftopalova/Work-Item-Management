@@ -8,7 +8,6 @@ import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
-import com.KSDT.models.contracts.Priorityable;
 import com.KSDT.models.enums.PriorityType;
 
 import java.util.List;
@@ -40,7 +39,7 @@ public class ChangeBugPriorityCommand implements Command {
 //TODO в общата команда ще валидираме дали итем е част от борда, а след това ИТЕМ-А се взема от getPriorityabale() И НЕ СЕ КАСТВА ЙЕЙЙЙЙ <3
 
 
-        Board board = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
+        Board board = repository.getBoardsList().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
         Bug bug = (Bug) board.getWorkItem(workItemName);
 //        Priorityable big = repository.getPrioritizableItems().entrySet().stream().
 
@@ -60,15 +59,15 @@ public class ChangeBugPriorityCommand implements Command {
     }
 
     private void validateParameters() {
-//        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
+//        if (!repository.getBoardsList().stream().anyMatch(item -> item.getName().equals(boardName))) {
 //            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
 //        }
 //
-//        if (!repository.getBoards().get(boardName).getWorkItemsList().containsKey(workItemName)) {
+//        if (!repository.getBoardsList().get(boardName).getWorkItemsList().containsKey(workItemName)) {
 //            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
 //        }
-//        if (!repository.getBoards().get(boardName).getTeamOwner().getMembersList().containsKey(personName)) {
-//            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardName).getTeamOwner().getName(), boardName));
+//        if (!repository.getBoardsList().get(boardName).getTeamOwner().getMembersList().containsKey(personName)) {
+//            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoardsList().get(boardName).getTeamOwner().getName(), boardName));
 //        }
     }
 

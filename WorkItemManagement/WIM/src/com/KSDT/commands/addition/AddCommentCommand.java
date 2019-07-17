@@ -35,7 +35,7 @@ public class AddCommentCommand implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getBoards().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
+        Board board = repository.getBoardsList().stream().filter(board1 -> board1.getName().equals(boardName)).findFirst().get();
         WorkItem workItem = board.getWorkItem(workItemName);
         Person person = repository.getPersons().get(personName);
         workItem.addComment(person, comment);
@@ -51,7 +51,7 @@ public class AddCommentCommand implements Command {
     }
 
     private void validateParameters() {
-        if (!repository.getBoards().stream().anyMatch(item -> item.getName().equals(boardName))) {
+        if (!repository.getBoardsList().stream().anyMatch(item -> item.getName().equals(boardName))) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
 
@@ -59,7 +59,7 @@ public class AddCommentCommand implements Command {
             throw new IllegalArgumentException(String.format(INVALID_PERSON, personName));
         }
 
-        Team tempTeam = repository.getBoards().stream().
+        Team tempTeam = repository.getBoardsList().stream().
                 filter(board1 -> board1.getName().equals(boardName))
                 .findFirst().get()
                 .getTeamOwner();
@@ -68,7 +68,7 @@ public class AddCommentCommand implements Command {
             throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, tempTeam.getName(), boardName));
         }
 
-        if (!repository.getBoards().stream().
+        if (!repository.getBoardsList().stream().
                 filter(board1 -> board1.getName().equals(boardName))
                 .findFirst().get()
                 .getWorkItemsList().containsKey(workItemName)) {

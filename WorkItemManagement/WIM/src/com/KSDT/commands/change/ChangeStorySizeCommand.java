@@ -35,7 +35,7 @@ public class ChangeStorySizeCommand implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getBoards().get(boardId);
+        Board board = repository.getBoardsList().get(boardId);
         Story story = (Story) board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
 
@@ -54,14 +54,14 @@ public class ChangeStorySizeCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getBoards().size() < boardId) {
+        if (repository.getBoardsList().size() < boardId) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, String.valueOf(boardId)));
         }
-        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
+        if (!repository.getBoardsList().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
-        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        if (!repository.getBoardsList().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoardsList().get(boardId).getTeamOwner().getName(), boardId));
         }
     }
 

@@ -58,7 +58,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     }
 
     @Override
-    public List<Board> getBoards() {
+    public List<Board> getBoardsList() {
         return new ArrayList<>(boards);
     }
 
