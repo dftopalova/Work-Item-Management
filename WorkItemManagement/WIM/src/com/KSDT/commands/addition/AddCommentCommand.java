@@ -68,6 +68,10 @@ public class AddCommentCommand implements Command {
             throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, tempTeam.getName(), boardName));
         }
 
+        if (!tempTeam.getBoardsList().containsKey(boardName)) {
+            throw new IllegalArgumentException(String.format(BOARD_NOT_IN_TEAM, boardName, tempTeam.getName()));
+        }
+
         if (!repository.getBoardsList().stream().
                 filter(board1 -> board1.getName().equals(boardName))
                 .findFirst().get()
