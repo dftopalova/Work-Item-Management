@@ -69,6 +69,7 @@ public class ChangeBugPriority_Tests {
         testList.add("asdasd");
         testList.add("asdasd");
         testList.add("asdasd");
+        testList.add("asdasd");
 
         //Act & Assert
         testCommand.execute(testList);
@@ -79,6 +80,22 @@ public class ChangeBugPriority_Tests {
         //Arrange
         List<String> testList = new ArrayList<>();
         testList.add("feedback");
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("medium");
+        testList.add("nameasd");
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("bug");
+        testList.add("testTeam");
         testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
@@ -93,10 +110,30 @@ public class ChangeBugPriority_Tests {
         //Arrange
         List<String> testList = new ArrayList<>();
         testList.add("bug");
+        testList.add("testTeam");
         testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
         testList.add("nameasd");
+        repository.addTeam("testTeam", testTeam);
+        testTeam.addBoard("testBoard", testBoard);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenBoardNotInTeam() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("bug");
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("medium");
+        testList.add("nameasd");
+        repository.addTeam("testTeam", testTeam);
+        repository.addBoard(testBoard);
 
         //Act & Assert
         testCommand.execute(testList);
@@ -107,11 +144,15 @@ public class ChangeBugPriority_Tests {
     public void execute_Should_ThrowExceptionWhenBoardDoesntContainWorkItem() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("0");
+        testList.add("bug");
+        testList.add("testTeam");
+        testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
         testList.add("nameasd");
         repository.addBoard(testBoard);
+        repository.addTeam("testTeam", testTeam);
+        testTeam.addBoard("testBoard", testBoard);
 
         //Act & Assert
         testCommand.execute(testList);
@@ -122,7 +163,9 @@ public class ChangeBugPriority_Tests {
     public void execute_Should_ThrowExceptionWhenMemberNotInTeam() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("0");
+        testList.add("bug");
+        testList.add("testTeam");
+        testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
         testList.add("nameasd");
@@ -139,11 +182,14 @@ public class ChangeBugPriority_Tests {
     public void execute_Should_ThrowExceptionWhenPriorityIsTheSame() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("0");
+        testList.add("bug");
+        testList.add("testTeam");
+        testList.add("testBoard");
         testList.add("testBug123");
         testList.add("high");
         testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
+        repository.addBug(testBug);
         testTeam.addBoard("testBoard", testBoard);
         testBoard.addWorkItem("testBug123", testBug);
         repository.addBoard(testBoard);
@@ -157,11 +203,14 @@ public class ChangeBugPriority_Tests {
     public void execute_Should_ChangePriorityWhenInputIsValid() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("0");
+        testList.add("bug");
+        testList.add("testTeam");
+        testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
         testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
+        repository.addBug(testBug);
         testTeam.addBoard("testBoard", testBoard);
         testBoard.addWorkItem("testBug123", testBug);
         repository.addBoard(testBoard);

@@ -1,6 +1,5 @@
 package com.KSDT.tests.commands;
 
-import com.KSDT.commands.change.ChangeBugPriorityCommand;
 import com.KSDT.commands.change.ChangeBugSeverityCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.WorkItemRepositoryImpl;
@@ -28,7 +27,7 @@ public class ChangeBugSeverity_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
-    private Bug testWorkItem;
+    private Bug testBug;
     private Team testTeam;
     private Team testTeam1;
     private Person testPerson;
@@ -47,7 +46,7 @@ public class ChangeBugSeverity_Tests {
         testPerson1 = new PersonImpl("nameasd1");
         testBoard = new BoardImpl("testBoard", testTeam);
         testBoard1 = new BoardImpl("testBoard1", testTeam1);
-        testWorkItem = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
+        testBug = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
     }
 
     @Test(expected = IllegalArgumentException.class)
