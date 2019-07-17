@@ -73,11 +73,12 @@ public class ListFilterCommand implements Command {
         if (itemType.equalsIgnoreCase("feedback") && (!sortCriteria.equalsIgnoreCase("title") || !sortCriteria.equalsIgnoreCase("rating"))) {
             throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
         }
-        if (itemType.equalsIgnoreCase("bug") && !sortCriteria.equalsIgnoreCase("title")) {
-            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
-        }if (itemType.equalsIgnoreCase("bug") &&  !sortCriteria.equalsIgnoreCase("severity")) {
+        if (itemType.equalsIgnoreCase("bug") && !sortCriteria.matches("TITLE|SEVERITY")) {
             throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
         }
+//        if (itemType.equalsIgnoreCase("bug") &&  !sortCriteria.equalsIgnoreCase("severity")) {
+//            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
+//        }
     }
 
     private void parseParameters(List<String> parameters) {
@@ -93,7 +94,7 @@ public class ListFilterCommand implements Command {
             }
 
             if (parameters.contains("-sort")) {
-                sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
+                sortCriteria = parameters.get(parameters.indexOf("-sort") + 1).toUpperCase();
             }
 
             if (parameters.contains("-assignee") ) { //TODO FIX!
