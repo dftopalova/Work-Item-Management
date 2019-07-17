@@ -34,7 +34,7 @@ public class ChangeBugSeverity_Tests {
     private Person testPerson1;
     private Board testBoard;
     private Board testBoard1;
-
+//TODO not finished!
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();
@@ -65,6 +65,7 @@ public class ChangeBugSeverity_Tests {
     public void execute_Should_ThrowExceptionWhenPassedMoreArguments() {
         // Arrange
         List<String> testList = new ArrayList<>();
+        testList.add("asdasd");
         testList.add("asdasd");
         testList.add("asdasd");
         testList.add("asdasd");
