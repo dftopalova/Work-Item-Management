@@ -6,7 +6,7 @@ public class HistoryHelper {
         StringBuilder strBuilder = new StringBuilder();
         String objClassName = objBefore.getClass().getSimpleName().replace("Type", "");
 
-        strBuilder.append(objClassName);
+        strBuilder.append("Changed " + objClassName);
         strBuilder.append(" from " + objBefore.toString());
         strBuilder.append(" to " + objAfter.toString());
         return strBuilder.toString();
@@ -16,7 +16,7 @@ public class HistoryHelper {
         StringBuilder strBuilder = new StringBuilder();
         Character.toUpperCase(objectToChangeName.charAt(0));
 
-        strBuilder.append(objectToChangeName);
+        strBuilder.append(" changed " + objectToChangeName);
         strBuilder.append(" from " + objBefore.toString());
         strBuilder.append(" to " + objAfter.toString());
         return strBuilder.toString();

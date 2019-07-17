@@ -26,7 +26,7 @@ public abstract class WorkItemBase implements WorkItem {
     private List<Pair<Person, String>> commentPairs;
     private List<Pair<Person, String>> historyPairs;
 
-    public  WorkItemBase(String title, StatusType status, String description) {
+    public WorkItemBase(String title, StatusType status, String description) {
         setTitle(title);
         setStatus(status);
         setDescription(description);
@@ -41,6 +41,7 @@ public abstract class WorkItemBase implements WorkItem {
     }
 
     private void setStatus(StatusType status) {
+        ValidationHelper.statusTypeCheck(status, this.getWorkItemType());
         this.status = status;
     }
 
@@ -54,7 +55,7 @@ public abstract class WorkItemBase implements WorkItem {
     @Override
     public void changeStatus(Person person, StatusType newStatus) {
         historyPairs.add(Pair.create(person, HistoryHelper.collectChange(this.status, newStatus)));
-        person.addToPersonHistory(String.format("Person %s changed status to work item %s.",person.getName(),this.getTitle()));
+        person.addToPersonHistory(String.format("Person %s changed status to work item %s.", person.getName(), this.getTitle()));
         setStatus(newStatus);
     }
 
@@ -62,7 +63,7 @@ public abstract class WorkItemBase implements WorkItem {
     public void addComment(Person person, String comment) {
         ValidationHelper.emptyStringCheck(comment);
         commentPairs.add(Pair.create(person, comment));
-        person.addToPersonHistory(String.format("Person %s added a comment to work item %s.",person.getName(),this.getTitle()));
+        person.addToPersonHistory(String.format("Person %s added a comment to work item %s.", person.getName(), this.getTitle()));
     }
 
     @Override
@@ -96,40 +97,40 @@ public abstract class WorkItemBase implements WorkItem {
         return description;
     }
 
-    public String getWorkItemType(){
-        return this.getClass().getSimpleName().replace("Impl","");
+    public String getWorkItemType() {
+        return this.getClass().getSimpleName().replace("Impl", "");
     }
 
-    private String getOnlyComments(){
-        StringBuilder stringBuilder=new StringBuilder();
+    private String getOnlyComments() {
+        StringBuilder stringBuilder = new StringBuilder();
         getComments().forEach(personStringPair -> stringBuilder.append(personStringPair.getSecond() + System.lineSeparator()));
         return stringBuilder.toString();
     }
 
-    private String getOnlyHistory(){
-        StringBuilder stringBuilder=new StringBuilder();
+    private String getOnlyHistory() {
+        StringBuilder stringBuilder = new StringBuilder();
         getHistoryPairs().forEach(personStringPair -> stringBuilder.append(personStringPair.getSecond() + System.lineSeparator()));
         return stringBuilder.toString();
     }
 
     @Override
-    public String toString(){
-        StringBuilder strBuilder =new StringBuilder();
+    public String toString() {
+        StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(String.format(
                 "%s info:" +
                         System.lineSeparator() +
-                "Title: %s" +
+                        "Title: %s" +
                         System.lineSeparator() +
-                "Status: %s" +
+                        "Status: %s" +
                         System.lineSeparator() +
-                "Description: %s" +
+                        "Description: %s" +
                         System.lineSeparator() +
-                "Comments: %s" +
+                        "Comments: %s" +
                         System.lineSeparator() +
-                "History: %s" +
+                        "History: %s" +
                         System.lineSeparator() +
-                "%s",
-                getWorkItemType(), getTitle(),getStatus(),getDescription(),getOnlyComments(), getOnlyHistory(),additionalInfo()));
+                        "%s",
+                getWorkItemType(), getTitle(), getStatus(), getDescription(), getOnlyComments(), getOnlyHistory(), additionalInfo()));
         return strBuilder.toString();
     }
 

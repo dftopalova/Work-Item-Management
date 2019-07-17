@@ -49,7 +49,7 @@ public class BugImpl extends AbstractBasicItem implements Bug {
         String change = HistoryHelper.collectChange(getSeverity(), newSeverity);
 
         addToHistory(person, change);
-        person.addToPersonHistory(change);
+        person.addToPersonHistory(String.format("Person %s changed severity to work item %s.", person.getName(), this.getTitle()));
         setSeverity(newSeverity);
     }
 
@@ -65,7 +65,7 @@ public class BugImpl extends AbstractBasicItem implements Bug {
                         System.lineSeparator() +
                         "Assignee: %s" +
                         System.lineSeparator() +
-                        "=*=*=*=*=" +
+                        "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" +
                         System.lineSeparator()
                 , getStepsToReproduce(), getSeverity(), getPriority(), getAssignee().getName()));
         return strBuilder.toString();
