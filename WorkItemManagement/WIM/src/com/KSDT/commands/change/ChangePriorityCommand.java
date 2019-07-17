@@ -13,7 +13,7 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public  class ChangePriorityCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 6;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
@@ -30,6 +30,7 @@ public  class ChangePriorityCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
+        validateInput(parameters);
         switch (parameters.get(0).toUpperCase()) {
             case "FEEDBACK":
                 throw new IllegalArgumentException(FEEDBACK_DOESNT_CONTAIN_PRIORITY) ;  //TODO за да мине тестове трябва ексепшън
@@ -41,18 +42,14 @@ public  class ChangePriorityCommand implements Command {
                 return changePriority(parameters);
         }
 
-        return String.format(WRONG_WORK_ITEM_TYPE, parameters.get(0));
+        throw new IllegalArgumentException(String.format(WRONG_WORK_ITEM_TYPE, parameters.get(0)));
     }
 
     private String changePriority(List<String> params) {
-        validateInput(params);
         parseParameters(params);
         validateParameters();
 
-        Team team = repository.getTeams().get(teamName);
-
-        Board board = team.getBoard(boardName);
-
+        Board board = repository.getTeams().get(teamName).getBoard(boardName);
         Person person = board.getTeamOwner().getMembersList().get(personName);
 
         WorkItem tempItem = board.getWorkItem(workItemName);
@@ -85,17 +82,23 @@ public  class ChangePriorityCommand implements Command {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
 
-        if (!repository.getBoardsList()
+        if (!repository.getTeams().entrySet().stream()
+                .filter(item -> item.getValue().getName().equals(teamName))
+                .findFirst().get().getValue()
+                .getBoardsList().entrySet()
                 .stream()
-                .filter(item -> item.getName().equals(boardName))
-                .findFirst().get()
+                .filter(item -> item.getValue().getName().equals(boardName))
+                .findFirst().get().getValue()
                 .getWorkItemsList().containsKey(workItemName)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
         }
-        if (!repository.getBoardsList()
+
+        if (!repository.getTeams().entrySet().stream().filter(item -> item.getValue().getName().equals(teamName))
+                .findFirst().get().getValue()
+                .getBoardsList().entrySet()
                 .stream()
-                .filter(item -> item.getName().equals(boardName))
-                .findFirst().get()
+                .filter(item -> item.getValue().getName().equals(boardName))
+                .findFirst().get().getValue()
                 .getTeamOwner().getMembersList().containsKey(personName)) {
             throw new IllegalArgumentException(
                     String.format(PERSON_NOT_IN_TEAM,
