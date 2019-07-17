@@ -5,6 +5,7 @@ import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ListAllWorkItemsCommand implements Command {
 
@@ -18,7 +19,7 @@ public class ListAllWorkItemsCommand implements Command {
 
     @Override
     public String execute(List<String> parameters) {
-//        workItemList=repository.getAllItems().entrySet().stream().forEach();
+        workItemList=repository.getAllItems().values().stream().collect(Collectors.toList());
 
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append("List of all work items:"+System.lineSeparator());

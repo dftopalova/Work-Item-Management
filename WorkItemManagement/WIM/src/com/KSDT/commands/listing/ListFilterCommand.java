@@ -6,7 +6,6 @@ import com.KSDT.models.common.FilterHelper;
 import com.KSDT.models.common.SortHelper;
 import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.StatusType;
-import com.KSDT.commands.CommandConstants.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class ListFilterCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         parseParameters(parameters);
-        paramValidityCheck();
+        parametersValidityCheck();
 
         notFilteredWorkItemMap = repository.getAllItems();
         StringBuilder strBuilder = new StringBuilder();
@@ -57,7 +56,7 @@ public class ListFilterCommand implements Command {
         return strBuilder.toString();
     }
 
-    private void paramValidityCheck() {
+    private void parametersValidityCheck() {
         if (itemType ==null) {
             throw new IllegalArgumentException(FILTER_TYPE_MISSING);
         }
@@ -70,15 +69,18 @@ public class ListFilterCommand implements Command {
             throw new IllegalArgumentException(FEEDBACK_HAS_NO_ASSIGNEE_ERROR);
         }
 
-        if (itemType.equalsIgnoreCase("feedback") && (!sortCriteria.equalsIgnoreCase("title") || !sortCriteria.equalsIgnoreCase("rating"))) {
+        if (itemType.equalsIgnoreCase("feedback") &&
+                !sortCriteria.isEmpty() && !sortCriteria.matches("TITLE|RATING")) {
             throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
         }
-        if (itemType.equalsIgnoreCase("bug") && !sortCriteria.matches("TITLE|SEVERITY")) {
+        if (itemType.equalsIgnoreCase("bug") &&
+                !sortCriteria.isEmpty() && !sortCriteria.matches("TITLE|PRIORITY|SEVERITY")) {
             throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
         }
-//        if (itemType.equalsIgnoreCase("bug") &&  !sortCriteria.equalsIgnoreCase("severity")) {
-//            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
-//        }
+        if (itemType.equalsIgnoreCase("story") &&
+                !sortCriteria.isEmpty() && !sortCriteria.matches("TITLE|PRIORITY|SIZE")) {
+            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
+        }
     }
 
     private void parseParameters(List<String> parameters) {
@@ -97,7 +99,7 @@ public class ListFilterCommand implements Command {
                 sortCriteria = parameters.get(parameters.indexOf("-sort") + 1).toUpperCase();
             }
 
-            if (parameters.contains("-assignee") ) { //TODO FIX!
+            if (parameters.contains("-assignee") ) {
                 hasAssigneeFilter = true;
                 assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
             }

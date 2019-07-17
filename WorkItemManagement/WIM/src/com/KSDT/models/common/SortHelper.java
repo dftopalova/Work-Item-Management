@@ -32,19 +32,18 @@ public class SortHelper {
         }
     }
 
+    public static List getFinalList() {
+        return finalList;
+    }
+
     private static void sortByTitle(List<WorkItem> unsortedList) {
         unsortedList.sort(Comparator.comparing(WorkItem::getTitle));
         finalList.clear();
         finalList.addAll(unsortedList);
     }
 
-    public static List getFinalList() {
-        return finalList;
-    }
-
     private static void sortByPriority(List<WorkItem> unsortedList, WorkItemRepository repository) {
         List<Priorityable> tempList = new ArrayList<>();
-        Map<Integer, WorkItem> allItemsMap = repository.getAllItems();
         Map<Integer, Priorityable> priorityableMap = repository.getPrioritizableItems();
 
         collectCommonItems(unsortedList, repository, tempList, priorityableMap);
