@@ -49,7 +49,7 @@ public abstract class AbstractBasicItem extends WorkItemBase implements Priority
         String change = HistoryHelper.collectChange(getPriority(), newPriority);
 
         addToHistory(person, change );
-        person.addToPersonHistory(change);
+        person.addToPersonHistory(String.format("Person %s changed priority to work item %s.", person.getName(), this.getTitle()));
         setPriority(newPriority);
     }
 }

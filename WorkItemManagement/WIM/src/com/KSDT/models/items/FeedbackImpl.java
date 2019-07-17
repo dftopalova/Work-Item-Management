@@ -28,18 +28,17 @@ public class FeedbackImpl extends WorkItemBase implements Feedback {
     @Override
     public void changeRating(Person person, int newRating) {
         ValidationHelper.positiveCheck(newRating);
-        String change = HistoryHelper.collectChange(getRating(), newRating,"rating");
+        String change = HistoryHelper.collectChange(getRating(), newRating, "rating");
 
         addToHistory(person, change);
-        person.addToPersonHistory(change);
+        person.addToPersonHistory(String.format("Person %s changed rating to work item %s.", person.getName(), this.getTitle()));
         setRating(newRating);
     }
 
     @Override
     public String additionalInfo() {
         return String.format("Rating: %d" +
-                System.lineSeparator() +
-                "=*=*=*=*="+System.lineSeparator()
-                ,getRating());
+                        System.lineSeparator() +
+                        "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator(), getRating());
     }
 }

@@ -12,7 +12,7 @@ public class StoryImpl extends AbstractBasicItem implements Story {
     private SizeType size;
 
     public StoryImpl(String title, StatusType status, String description, PriorityType priority, SizeType size) {
-        super(title, status, description,priority);
+        super(title, status, description, priority);
         setSize(size);
     }
 
@@ -30,13 +30,13 @@ public class StoryImpl extends AbstractBasicItem implements Story {
         String change = HistoryHelper.collectChange(getSize(), newSize);
 
         addToHistory(person, change);
-        person.addToPersonHistory(change);
+        person.addToPersonHistory(String.format("Person %s changed size to work item %s.", person.getName(), this.getTitle()));
         setSize(newSize);
     }
 
     @Override
     public String additionalInfo() {
-        StringBuilder strBuilder =new StringBuilder();
+        StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(String.format(
                 "Priority: %s" +
                         System.lineSeparator() +
@@ -44,8 +44,8 @@ public class StoryImpl extends AbstractBasicItem implements Story {
                         System.lineSeparator() +
                         "Assignee: %s" +
                         System.lineSeparator() +
-                        "=*=*=*=*="+System.lineSeparator()
-                ,getPriority(), getSize(), getAssignee().getName()));
+                        "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator()
+                , getPriority(), getSize(), getAssignee().getName()));
         return strBuilder.toString();
     }
 }

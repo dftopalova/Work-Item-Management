@@ -44,6 +44,15 @@ public class WorkItemBase_Tests {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void changeStatus_Should_ThrowExceptionWhenStatusTypeIsIncorrect(){
+        //Arrange, Act
+        test_item.changeStatus(test_person,StatusType.STORY_DONE);
+
+        //Assert
+        Assert.assertEquals(null,test_item.getStatus());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void addToHistory_Should_ThrowExceptionWhenChangeIsEmptyString(){
         //Arrange, Act, Assert
         test_item.addToHistory(test_person,"");
@@ -54,4 +63,5 @@ public class WorkItemBase_Tests {
         //Arrange, Act, Assert
         test_item.addToHistory(test_person,"Feedback has changed!");
     }
+
 }
