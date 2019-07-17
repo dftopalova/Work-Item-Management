@@ -64,6 +64,29 @@ public class PersonImpl_Tests {
         Assert.assertEquals(0, supposedShallowCopy.size());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void addWorkItem_Should_ThrowExceptionWhenPassedExistingItem() {
+        // Arrange
+        Person test_person=new PersonImpl("Valentin");
+        // Act
+        test_person.addWorkItem(testItem);
+        test_person.addWorkItem(testItem);
+
+        // Assert
+        Assert.assertEquals(0, test_person.getWorkItems().size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeWorkItem_Should_ThrowExceptionWhenPassedNotPresentItem() {
+        // Arrange
+        Person test_person=new PersonImpl("Valentin");
+        // Act
+        test_person.removeWorkItem(testItem);
+
+        // Assert
+        Assert.assertEquals(0, test_person.getWorkItems().size());
+    }
+
     @Test
     public void removeWorkItem_Should_RemoveItemWhenPassedPresentItem() {
         // Arrange

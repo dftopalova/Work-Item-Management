@@ -16,7 +16,7 @@ public class SortHelper {
                 sortByTitle(unsortedList);
                 break;
             case "PRIORITY":
-                sortByPriority(unsortedList);
+//TODO                sortByPriority(unsortedList);
                 break;
             case "SEVERITY":
                 sortBugsBySeverity(unsortedList);
@@ -37,7 +37,6 @@ public class SortHelper {
     }
 
     private static void sortByPriority(List<Priorityable> unsortedList) {
-        unsortedList.stream().collect(Collectors.toList()).sort();
 
 
         List<Priorityable> tempList = new ArrayList<>();
