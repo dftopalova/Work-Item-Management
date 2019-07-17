@@ -13,7 +13,6 @@ BasicItem is an abstract base class for Bug and Story, which purpose is to combi
 their common fields and methods (priority and assignee)
  */
 public abstract class AbstractBasicItem extends WorkItemBase implements Priorityable, Assignable {
-//TODO add abstract method
     Person assignee;
     PriorityType priority;
 
@@ -52,4 +51,6 @@ public abstract class AbstractBasicItem extends WorkItemBase implements Priority
         person.addToPersonHistory(String.format("Person %s changed priority to work item %s.", person.getName(), this.getTitle()));
         setPriority(newPriority);
     }
+
+    protected abstract String additionalInfo();
 }

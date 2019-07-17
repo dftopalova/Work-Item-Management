@@ -14,7 +14,7 @@ import org.junit.Test;
 import java.util.List;
 
 public class WorkItemBase_Tests {
-    WorkItem test_item;
+    private WorkItem test_item;
     private Person test_person;
 
     @Before

@@ -70,7 +70,7 @@ public class TeamImpl_Tests {
                 "Severity: Critical" + System.lineSeparator() +
                 "Priority: High" + System.lineSeparator() +
                 "Assignee: Valentin" + System.lineSeparator() +
-                "=*=*=*=*=" +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" +
                 System.lineSeparator() + System.lineSeparator() +
                 "Board test_board info:" + System.lineSeparator() +
                 "Team Owner: test_team" + System.lineSeparator() +
