@@ -37,7 +37,7 @@ public class ChangeStatusCommand implements Command {
         validateParameters();
 
 
-        Board board = repository.getBoards().get(boardId);
+        Board board = repository.getBoardsList().get(boardId);
         WorkItem workItem = board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
         StatusType oldStatus = workItem.getStatus();
@@ -57,14 +57,14 @@ public class ChangeStatusCommand implements Command {
     }
 
     private void validateParameters() {
-        if (repository.getBoards().size() < boardId) {
+        if (repository.getBoardsList().size() < boardId) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, String.valueOf(boardId)));
         }
-        if (!repository.getBoards().get(boardId).getWorkItemsList().containsKey(workItemId)) {
+        if (!repository.getBoardsList().get(boardId).getWorkItemsList().containsKey(workItemId)) {
             throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
         }
-        if (!repository.getBoards().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoards().get(boardId).getTeamOwner().getName(), boardId));
+        if (!repository.getBoardsList().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoardsList().get(boardId).getTeamOwner().getName(), boardId));
         }
     }
 
@@ -73,7 +73,7 @@ public class ChangeStatusCommand implements Command {
             boardId = Integer.valueOf(parameters.get(0));
             workItemId = String.valueOf(parameters.get(1));
 
-            String workItemClassSimpleName = repository.getBoards().get(boardId).getWorkItem(workItemId).getClass().getSimpleName().toUpperCase();
+            String workItemClassSimpleName = repository.getBoardsList().get(boardId).getWorkItem(workItemId).getClass().getSimpleName().toUpperCase();
             workItemType = workItemClassSimpleName.replace("IMPL", "").concat("_");
             newStatus = StatusType.valueOf(workItemType + (parameters.get(2).toUpperCase()));
             personName = parameters.get(3);

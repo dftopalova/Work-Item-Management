@@ -1,7 +1,6 @@
 package com.KSDT.tests.commands;
 
-import com.KSDT.commands.addition.AddCommentCommand;
-import com.KSDT.commands.change.ChangeBugPriorityCommand;
+import com.KSDT.commands.change.ChangePriorityCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
@@ -26,7 +25,7 @@ public class ChangeBugPriority_Tests {
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
-    private Bug testWorkItem;
+    private Bug testBug;
     private Team testTeam;
     private Team testTeam1;
     private Person testPerson;
@@ -39,14 +38,14 @@ public class ChangeBugPriority_Tests {
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new ChangeBugPriorityCommand(repository, factory);
+        testCommand = new ChangePriorityCommand(repository, factory);
         testTeam = new TeamImpl("testTeam");
         testTeam1 = new TeamImpl("testTeam1");
         testPerson = new PersonImpl("nameasd");
         testPerson1 = new PersonImpl("nameasd1");
         testBoard = new BoardImpl("testBoard", testTeam);
         testBoard1 = new BoardImpl("testBoard1", testTeam1);
-        testWorkItem = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
+        testBug = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -76,10 +75,25 @@ public class ChangeBugPriority_Tests {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenFeedbackIsGiven() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("feedback");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("medium");
+        testList.add("nameasd");
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenBoardDoesntExist() {
         //Arrange
         List<String> testList = new ArrayList<>();
-        testList.add("0");
+        testList.add("bug");
+        testList.add("testBoard");
         testList.add("testBug123");
         testList.add("medium");
         testList.add("nameasd");
@@ -114,7 +128,7 @@ public class ChangeBugPriority_Tests {
         testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
         testTeam.addBoard("testBoard", testBoard);
-        testBoard.addWorkItem("testBug123", testWorkItem);
+        testBoard.addWorkItem("testBug123", testBug);
         repository.addBoard(testBoard);
 
         //Act & Assert
@@ -131,7 +145,7 @@ public class ChangeBugPriority_Tests {
         testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
         testTeam.addBoard("testBoard", testBoard);
-        testBoard.addWorkItem("testBug123", testWorkItem);
+        testBoard.addWorkItem("testBug123", testBug);
         repository.addBoard(testBoard);
         testTeam.addPerson("nameasd", testPerson);
 
@@ -149,7 +163,7 @@ public class ChangeBugPriority_Tests {
         testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
         testTeam.addBoard("testBoard", testBoard);
-        testBoard.addWorkItem("testBug123", testWorkItem);
+        testBoard.addWorkItem("testBug123", testBug);
         repository.addBoard(testBoard);
         testTeam.addPerson("nameasd", testPerson);
 
@@ -157,7 +171,7 @@ public class ChangeBugPriority_Tests {
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals("MEDIUM", testWorkItem.getPriority().toString().toUpperCase());
+        Assert.assertEquals("MEDIUM", testBug.getPriority().toString().toUpperCase());
     }
 
 }

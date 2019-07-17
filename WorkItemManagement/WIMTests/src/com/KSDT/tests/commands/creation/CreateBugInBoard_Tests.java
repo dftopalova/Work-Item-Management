@@ -130,6 +130,7 @@ public class CreateBugInBoard_Tests {
 
         //Assert
         Assert.assertEquals(1, testBoard.getWorkItemsList().size());
+        Assert.assertEquals(1, repository.getFeedbackMap().size());
     }
 
 }

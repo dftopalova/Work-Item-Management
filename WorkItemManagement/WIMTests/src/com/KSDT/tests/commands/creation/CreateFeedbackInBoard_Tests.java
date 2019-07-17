@@ -117,6 +117,7 @@ public class CreateFeedbackInBoard_Tests {
 
         //Assert
         Assert.assertEquals(1, testBoard.getWorkItemsList().size());
+        Assert.assertEquals(1, testBoard.getWorkItemsList().size());
     }
 
 }

@@ -11,6 +11,7 @@ public class CommandConstants {
     public static final String INVALID_TEAM = "! Team with ID %s doesn't exist.";
     public static final String INVALID_PERSON = "! Person with ID %s doesn't exist.";
     public static final String PERSON_NOT_IN_TEAM = "! Person with ID %s is not in team %s, owner of board with ID %d.";
+    public static final String BOARD_NOT_IN_TEAM = "! Board with ID %s is not in team %s.";
     public static final String INVALID_BOARD = "! Board with ID %s doesn't exist.";
     public static final String INVALID_WORK_ITEM = "! Work item with ID %s doesn't exist.";
     public static final String INVALID_ASSIGNABLE_WORK_ITEM = "! Assignable work item with title %s doesn't exist.";
