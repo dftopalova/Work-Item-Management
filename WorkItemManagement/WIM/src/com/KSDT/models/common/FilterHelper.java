@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static com.KSDT.commands.CommandConstants.PERSON_HAS_NO_ASSIGNED_ITEMS;
+
 public class FilterHelper {
+
 
     static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
@@ -33,9 +36,9 @@ public class FilterHelper {
 
         filtered = unFilteredMap.values().stream()
                 .filter(getAllPredicates().stream()
-                .reduce(item -> true, Predicate::and))
+                        .reduce(item -> true, Predicate::and))
                 .collect(Collectors.toList());
-            allPredicates.clear(); // to clear predicates for next invocation
+        allPredicates.clear(); // to clear predicates for next invocation
 
         return filtered;
 
@@ -48,7 +51,8 @@ public class FilterHelper {
         Map<Integer, WorkItem> allItemsMap = repository.getAllItems();
 
         for (WorkItem item : unfilteredList) {
-            if (assignableItemsMap.containsValue(item)); {
+            if (assignableItemsMap.containsValue(item)) ;
+            {
                 int id = repository.getWorkItemID(allItemsMap, item);
                 assignableList.add(assignableItemsMap.get(id));
             }
@@ -57,6 +61,9 @@ public class FilterHelper {
         filtered = assignableList.stream()
                 .filter(item -> item.getAssignee().equals(assignee))
                 .collect(Collectors.toList());
+
+        if (filtered.isEmpty())
+            throw new IllegalArgumentException(PERSON_HAS_NO_ASSIGNED_ITEMS);
 
         return filtered;  // ??????
     }

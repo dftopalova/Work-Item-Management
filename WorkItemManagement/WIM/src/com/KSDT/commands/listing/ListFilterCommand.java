@@ -6,11 +6,15 @@ import com.KSDT.models.common.FilterHelper;
 import com.KSDT.models.common.SortHelper;
 import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.StatusType;
+import com.KSDT.commands.CommandConstants.*;
 
 import java.util.List;
 import java.util.Map;
 
+import static com.KSDT.commands.CommandConstants.*;
+
 public class ListFilterCommand implements Command {
+
 
     private WorkItemRepository repository;
     private Map<Integer, WorkItem> notFilteredWorkItemMap;
@@ -29,6 +33,7 @@ public class ListFilterCommand implements Command {
     @Override
     public String execute(List<String> parameters) {
         parseParameters(parameters);
+        paramValidityCheck();
 
         notFilteredWorkItemMap = repository.getAllItems();
         StringBuilder strBuilder = new StringBuilder();
@@ -52,11 +57,31 @@ public class ListFilterCommand implements Command {
         return strBuilder.toString();
     }
 
+    private void paramValidityCheck() {
+        if (itemType ==null) {
+            throw new IllegalArgumentException(FILTER_TYPE_MISSING);
+        }
+
+        if (assignee == null && hasAssigneeFilter) {
+            throw new IllegalArgumentException(PERSON_DOESNT_EXIST);
+        }
+
+        if (itemType.equalsIgnoreCase("feedback") && hasAssigneeFilter) {
+            throw new IllegalArgumentException(FEEDBACK_HAS_NO_ASSIGNEE_ERROR);
+        }
+
+        if (itemType.equalsIgnoreCase("feedback") && (!sortCriteria.equalsIgnoreCase("title") || !sortCriteria.equalsIgnoreCase("rating"))) {
+            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
+        }
+        if (itemType.equalsIgnoreCase("bug") && !sortCriteria.equalsIgnoreCase("title")) {
+            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
+        }if (itemType.equalsIgnoreCase("bug") &&  !sortCriteria.equalsIgnoreCase("severity")) {
+            throw new IllegalArgumentException(INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA);
+        }
+    }
+
     private void parseParameters(List<String> parameters) {
         try {
-
-
-//            TODO if no type,
             if (parameters.contains("-type")) {
                 itemType = parameters.get(parameters.indexOf("-type") + 1);
                 FilterHelper.addPredicates(item -> item.getWorkItemType().equalsIgnoreCase(itemType));
@@ -71,13 +96,12 @@ public class ListFilterCommand implements Command {
                 sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
             }
 
-//            if (!parameters.contains("-assignee") ) { //TODO FIX!
-//                throw new IllegalArgumentException("Invalid combination of type feedback and assignee filter!");
-//            } else {
-//                hasAssigneeFilter = true;
-//                assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-//            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
+            if (parameters.contains("-assignee") ) { //TODO FIX!
+                hasAssigneeFilter = true;
+                assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
+            }
+
+        } catch (IndexOutOfBoundsException ex) {
             throw new IllegalArgumentException("Invalid filter!");
         } catch (Exception ex) {
             throw new IllegalArgumentException(ex.getMessage());

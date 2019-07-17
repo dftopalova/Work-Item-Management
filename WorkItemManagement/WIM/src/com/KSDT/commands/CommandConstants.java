@@ -6,6 +6,7 @@ public class CommandConstants {
 //    TODO List all messages as constants
 
     //Error messages
+    public static final String PERSON_HAS_NO_ASSIGNED_ITEMS = "! Person has no assigned items!";
     public static final String INVALID_NUMBER_OF_ARGUMENTS = "! Invalid number of arguments. Expected: %d, Received: %d";
     public static final String INVALID_TEAM = "! Team with ID %s doesn't exist.";
     public static final String INVALID_PERSON = "! Person with ID %s doesn't exist.";
@@ -27,6 +28,9 @@ public class CommandConstants {
     public static final String NO_MEMBERS_IN_TEAM_ERROR = "! There are no members in team %s.";
     public static final String NO_BOARDS_IN_TEAM_ERROR = "! There are no boards assigned to team %s.";
     public static final String FEEDBACK_HAS_NO_ASSIGNEE_ERROR = "! Feedback has no assignee.";
+    public static final String FILTER_TYPE_MISSING = "! You must declare type of work items! /bug/story/feedback/";
+    public static final String PERSON_DOESNT_EXIST = "! Person with that name doesn't exist!";
+    public static final String INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA = "! Item type is incompatible with entered sort criteria!";
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
