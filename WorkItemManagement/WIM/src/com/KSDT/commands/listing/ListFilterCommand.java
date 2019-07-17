@@ -3,23 +3,17 @@ package com.KSDT.commands.listing;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.FilterHelper;
-import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.SortHelper;
 import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.StatusType;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static com.KSDT.commands.CommandConstants.INVALID_NUMBER_OF_ARGUMENTS;
+import java.util.Map;
 
 public class ListFilterCommand implements Command {
 
     private WorkItemRepository repository;
-    private List<WorkItem> notFilteredWorkItemList;
+    private Map<Integer, WorkItem> notFilteredWorkItemMap;
     private List<WorkItem> filteredWorkItemList;
 
     private String itemType;
@@ -36,18 +30,17 @@ public class ListFilterCommand implements Command {
     public String execute(List<String> parameters) {
         parseParameters(parameters);
 
-//TODO do shit
-// notFilteredWorkItemList = repository.getWorkItems();
+        notFilteredWorkItemMap = repository.getAllItems();
         StringBuilder strBuilder = new StringBuilder();
 
-        filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemList);
+        filteredWorkItemList = FilterHelper.filter(notFilteredWorkItemMap);
 
         if (hasAssigneeFilter) {
-            filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee);
+            filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee, repository);
         }
 
         if (!sortCriteria.isEmpty()) {
-            SortHelper.sortBy(sortCriteria, filteredWorkItemList);
+            SortHelper.sortBy(sortCriteria, filteredWorkItemList, repository);
         }
 
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
@@ -74,12 +67,12 @@ public class ListFilterCommand implements Command {
                 sortCriteria = parameters.get(parameters.indexOf("-sort") + 1);
             }
 
-            if (parameters.contains("-assignee") && itemType.equalsIgnoreCase("feedback")) {
-                throw new IllegalArgumentException("Invalid combination of type feedback and assignee filter!");
-            } else {
-                hasAssigneeFilter = true;
-                assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
-            }
+//            if (!parameters.contains("-assignee") ) { //TODO FIX!
+//                throw new IllegalArgumentException("Invalid combination of type feedback and assignee filter!");
+//            } else {
+//                hasAssigneeFilter = true;
+//                assignee = repository.getPersons().get(parameters.get(parameters.indexOf("-assignee") + 1));
+//            }
         } catch (ArrayIndexOutOfBoundsException ex) {
             throw new IllegalArgumentException("Invalid filter!");
         } catch (Exception ex) {

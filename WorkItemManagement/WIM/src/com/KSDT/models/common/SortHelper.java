@@ -1,22 +1,23 @@
 package com.KSDT.models.common;
 
+import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class SortHelper {
 
-    public static void sortBy(String sortingCriteria,List<WorkItem> unsortedList){
-//        ValidationHelper.nullCheck(sortingCriteria);
+    public static void sortBy(String sortingCriteria, List<WorkItem> unsortedList, WorkItemRepository repository){
         switch (sortingCriteria.toUpperCase()){
             case "TITLE":
                 sortByTitle(unsortedList);
                 break;
             case "PRIORITY":
-                sortByPriority(unsortedList);
+                sortByPriority(unsortedList, repository);
                 break;
             case "SEVERITY":
                 sortBugsBySeverity(unsortedList);
@@ -36,12 +37,19 @@ public class SortHelper {
         unsortedList.sort(Comparator.comparing(WorkItem::getTitle));
     }
 
-    private static void sortByPriority(List<Priorityable> unsortedList) {
-        unsortedList.stream().collect(Collectors.toList()).sort();
-
-
+    private static void sortByPriority(List<WorkItem> unsortedList, WorkItemRepository repository) {
         List<Priorityable> tempList = new ArrayList<>();
-        tempList.stream().collect(Collectors.toList()).sort(new Comparator<Priorityable>() {
+        Map<Integer, WorkItem> allItemsMap = repository.getAllItems();
+        Map<Integer, Priorityable> priorityableMap= repository.getPrioritizableItems();
+
+        for (WorkItem item : unsortedList) {
+            if (priorityableMap.containsValue(item)); {
+                int id = repository.getWorkItemID(allItemsMap, item);
+                tempList.add(priorityableMap.get(id));
+            }
+        }
+
+        tempList.sort(new Comparator<Priorityable>() {
             @Override
             public int compare(Priorityable item1, Priorityable item2) {
                 if (item1.getPriority().equals(item2.getPriority())) {

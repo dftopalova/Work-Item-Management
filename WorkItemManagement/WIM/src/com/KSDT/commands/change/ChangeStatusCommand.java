@@ -21,7 +21,7 @@ public class ChangeStatusCommand implements Command {
     private final WorkItemFactory factory;
 
     private String personName;
-    private int boardId;
+    private int boardId; //TODO string?!?
     private String workItemId;
     private StatusType newStatus;
 
@@ -40,7 +40,7 @@ public class ChangeStatusCommand implements Command {
         Board board = repository.getBoards().get(boardId);
         WorkItem workItem = board.getWorkItem(workItemId);
         Person person = board.getTeamOwner().getMembersList().get(personName);
-        String oldStatus = workItem.getStatus().toString();
+        StatusType oldStatus = workItem.getStatus();
         ValidationHelper.equalityCheck(oldStatus, newStatus, String.format(WORK_ITEM_STATUS_SAME, workItemId));
 
 
