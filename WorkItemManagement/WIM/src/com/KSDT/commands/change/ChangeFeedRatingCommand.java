@@ -43,7 +43,7 @@ public class ChangeFeedRatingCommand implements Command {
         ValidationHelper.equalityCheck(oldRating, newRating, String.format(WORK_ITEM_RATING_SAME, workItemId));
 
         feedback.changeRating(person, newRating);
-        board.addToHistory(HistoryHelper.collectChange(oldRating, newRating));
+        board.addToHistory(HistoryHelper.collectChange(oldRating, newRating, "rating"));
 
         return String.format(RATING_SUCCESSFULLY_CHANGED, workItemId, oldRating, newRating);
     }

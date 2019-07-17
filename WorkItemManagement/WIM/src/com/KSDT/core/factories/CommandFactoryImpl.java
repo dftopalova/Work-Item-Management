@@ -28,8 +28,12 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new AddPersonCommand(repository, factory);
             case CREATEBOARDINTEAM:
                 return new CreateBoardInTeamCommand(repository, factory);
-            case CREATEWORKITEMINBOARD:
-                return new CreateWorkItemInBoard(repository,factory);
+            case CREATEBUGINBOARD:
+                return new CreateBugInBoard(repository, factory);
+            case CREATESTORYINBOARD:
+                return new CreateStoryInBoard(repository, factory);
+            case CREATEFEEDBACKINBOARD:
+                return new CreateFeedbackInBoard(repository, factory);
             case CHANGESTATUS:
                 return new ChangeStatusCommand(repository, factory);
             case ADDCOMMENT:

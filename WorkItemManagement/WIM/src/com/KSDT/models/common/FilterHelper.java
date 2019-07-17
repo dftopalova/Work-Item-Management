@@ -1,11 +1,14 @@
 package com.KSDT.models.common;
 
+import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.contracts.Assignable;
 import com.KSDT.models.contracts.Person;
 import com.KSDT.models.contracts.WorkItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -17,32 +20,45 @@ public class FilterHelper {
         allPredicates.add(predicate);
     }
 
-    public static List<WorkItem> filter(List<WorkItem> unFilteredList) {
+    public static List<WorkItem> filter(Map<Integer, WorkItem> unFilteredMap) {
 
         if (allPredicates.size() == 0) {
-            return unFilteredList;
+            return unFilteredMap.values().stream().collect(Collectors.toList());
         }
 
+//        Map<Integer,WorkItem> filtered = new HashMap<>();
         List<WorkItem> filtered = new ArrayList<>();
 
-        filtered = unFilteredList.stream().filter(getAllPredicates().stream()
+//        filtered = unFilteredMap.entrySet().stream().filter()
+
+        filtered = unFilteredMap.values().stream()
+                .filter(getAllPredicates().stream()
                 .reduce(item -> true, Predicate::and))
                 .collect(Collectors.toList());
-            allPredicates.clear();
+            allPredicates.clear(); // to clear predicates for next invocation
+
         return filtered;
+
     }
 
-    public static List<WorkItem> assigneeFilter(List<Assignable> unfilteredList, Person assignee) {
+    public static List<WorkItem> assigneeFilter(List<WorkItem> unfilteredList, Person assignee, WorkItemRepository repository) {
+        List<WorkItem> filtered = new ArrayList<>(); // ??????
+        List<Assignable> assignableList = new ArrayList<>();
+        Map<Integer, Assignable> assignableItemsMap = repository.getAssignableItems();
+        Map<Integer, WorkItem> allItemsMap = repository.getAllItems();
 
-        List<WorkItem> filtered = new ArrayList<>();
+        for (WorkItem item : unfilteredList) {
+            if (assignableItemsMap.containsValue(item)); {
+                int id = repository.getWorkItemID(allItemsMap, item);
+                assignableList.add(assignableItemsMap.get(id));
+            }
+        }
 
-        filtered = unfilteredList.stream()
-                //TODO do shit
-
+        filtered = assignableList.stream()
                 .filter(item -> item.getAssignee().equals(assignee))
                 .collect(Collectors.toList());
 
-        return filtered;
+        return filtered;  // ??????
     }
 
     public static List<Predicate<WorkItem>> getAllPredicates() {

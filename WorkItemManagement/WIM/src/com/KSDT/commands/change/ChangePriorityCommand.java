@@ -56,7 +56,7 @@ public  class ChangePriorityCommand implements Command {
                 .findFirst().get();
         Person person = board.getTeamOwner().getMembersList().get(personName);
 
-        WorkItem tempItem = repository.getAllItems().get(workItemName);
+        WorkItem tempItem = board.getWorkItem(workItemName);
         Integer key = repository.getWorkItemID(repository.getAllItems(), tempItem);
         Priorityable item = repository.getPrioritizableItems().get(key);
 
