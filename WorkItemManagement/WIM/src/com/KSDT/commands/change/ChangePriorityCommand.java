@@ -5,10 +5,7 @@ import com.KSDT.core.contracts.WorkItemFactory;
 import com.KSDT.core.contracts.WorkItemRepository;
 import com.KSDT.models.common.HistoryHelper;
 import com.KSDT.models.common.ValidationHelper;
-import com.KSDT.models.contracts.Board;
-import com.KSDT.models.contracts.Person;
-import com.KSDT.models.contracts.Priorityable;
-import com.KSDT.models.contracts.WorkItem;
+import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.PriorityType;
 
 import java.util.List;
@@ -16,10 +13,11 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public  class ChangePriorityCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String teamName;
     private String personName;
     private String boardName;
     private String workItemName;
@@ -51,9 +49,10 @@ public  class ChangePriorityCommand implements Command {
         parseParameters(params);
         validateParameters();
 
-        Board board = repository.getBoardsList().stream()
-                .filter(board1 -> board1.getName().equals(boardName))
-                .findFirst().get();
+        Team team = repository.getTeams().get(teamName);
+
+        Board board = team.getBoard(boardName);
+
         Person person = board.getTeamOwner().getMembersList().get(personName);
 
         WorkItem tempItem = board.getWorkItem(workItemName);
@@ -76,6 +75,12 @@ public  class ChangePriorityCommand implements Command {
     }
 
     private void validateParameters() {
+        if (!repository.getTeams().containsKey(teamName)) {
+            throw new IllegalArgumentException(String.format(INVALID_TEAM, teamName));
+        }
+        if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardName)) {
+            throw new IllegalArgumentException(String.format(BOARD_NOT_IN_TEAM, boardName, teamName));
+        }
         if (!repository.getBoardsList().stream().anyMatch(item -> item.getName().equals(boardName))) {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
@@ -106,10 +111,11 @@ public  class ChangePriorityCommand implements Command {
 
     private void parseParameters(List<String> parameters) {
         try {
-            boardName = parameters.get(0);
-            workItemName = parameters.get(1);
-            newPriority = PriorityType.valueOf(parameters.get(2).toUpperCase());
-            personName = parameters.get(3);
+            teamName = parameters.get(0);
+            boardName = parameters.get(1);
+            workItemName = parameters.get(2);
+            newPriority = PriorityType.valueOf(parameters.get(3).toUpperCase());
+            personName = parameters.get(4);
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
