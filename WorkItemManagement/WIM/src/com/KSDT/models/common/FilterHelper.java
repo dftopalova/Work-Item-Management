@@ -16,7 +16,7 @@ import static com.KSDT.commands.CommandConstants.PERSON_HAS_NO_ASSIGNED_ITEMS;
 
 public class FilterHelper {
 
-
+    // probably private ??
     static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
     public static void addPredicates(Predicate<WorkItem> predicate) {
@@ -29,15 +29,13 @@ public class FilterHelper {
             return unFilteredMap.values().stream().collect(Collectors.toList());
         }
 
-//        Map<Integer,WorkItem> filtered = new HashMap<>();
         List<WorkItem> filtered = new ArrayList<>();
-
-//        filtered = unFilteredMap.entrySet().stream().filter()
 
         filtered = unFilteredMap.values().stream()
                 .filter(getAllPredicates().stream()
                         .reduce(item -> true, Predicate::and))
                 .collect(Collectors.toList());
+
         allPredicates.clear(); // to clear predicates for next invocation
 
         return filtered;
