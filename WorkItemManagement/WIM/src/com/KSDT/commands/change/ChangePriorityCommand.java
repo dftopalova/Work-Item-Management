@@ -34,7 +34,7 @@ public  class ChangePriorityCommand implements Command {
     public String execute(List<String> parameters) {
         switch (parameters.get(0).toUpperCase()) {
             case "FEEDBACK":
-                return FEEDBACK_DOESNT_CONTAIN_PRIORITY;
+                throw new IllegalArgumentException(FEEDBACK_DOESNT_CONTAIN_PRIORITY) ;  //TODO за да мине тестове трябва ексепшън
             case "BUG":
                 parameters.remove(0);
                 return changePriority(parameters);
