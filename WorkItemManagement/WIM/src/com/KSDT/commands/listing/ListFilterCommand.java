@@ -39,9 +39,13 @@ public class ListFilterCommand implements Command {
             filteredWorkItemList = FilterHelper.assigneeFilter(filteredWorkItemList, assignee, repository);
         }
 
+
         if (!sortCriteria.isEmpty()) {
             SortHelper.sortBy(sortCriteria, filteredWorkItemList, repository);
+            SortHelper.getFinalList().forEach(item -> strBuilder.append(item));
+            return strBuilder.toString();
         }
+
 
         filteredWorkItemList.forEach(item -> strBuilder.append(item));
 

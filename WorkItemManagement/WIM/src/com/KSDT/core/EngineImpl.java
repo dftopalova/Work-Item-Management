@@ -11,7 +11,7 @@ import com.KSDT.core.providers.ConsoleWriter;
 import java.util.List;
 
 public class EngineImpl implements Engine {
-    private static final String EMPTI_NULL_COMMAND_EXCEPTION = "Command cannot be null or empty.";
+    private static final String EMPTY_NULL_COMMAND_EXCEPTION = "Command cannot be null or empty.";
     private static final String TERMINATION_COMMAND = "Exit";
 
     private WorkItemFactory workItemFactory;
@@ -49,7 +49,7 @@ public class EngineImpl implements Engine {
 
     private void processCommand( String commandAsString) {
         if (commandAsString == null || commandAsString.trim().equals("")) {
-            throw new IllegalArgumentException(EMPTI_NULL_COMMAND_EXCEPTION);
+            throw new IllegalArgumentException(EMPTY_NULL_COMMAND_EXCEPTION);
         }
 
         String commandName = commandParser.parseCommand(commandAsString);
