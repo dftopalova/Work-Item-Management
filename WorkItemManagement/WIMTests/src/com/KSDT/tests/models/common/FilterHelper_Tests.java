@@ -12,6 +12,7 @@ import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.StoryImpl;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,11 @@ public class FilterHelper_Tests {
         test_item = new StoryImpl("story123456", StatusType.STORY_DONE, "random description", PriorityType.MEDIUM, SizeType.SMALL);
     }
 
+    @After
+    public void after(){
+        FilterHelper.clearPredicates();
+    }
+
     @Test
     public void addPredicates_Should_BeSuccessfulWhenPassedCorrectPredicate() {
         //Arrange,Act
@@ -42,18 +48,6 @@ public class FilterHelper_Tests {
 
         //Assert
         Assert.assertEquals(1, FilterHelper.getAllPredicates().size());
-    }
-
-    @Test
-    public void filter_Should_ReturnListWithAllUnchangedItems() {
-        //Arrange
-        test_unFilteredMap.put(1, test_item);
-
-        //Act
-        List<WorkItem> workItemList = FilterHelper.filter(test_unFilteredMap);
-
-        //Assert
-        Assert.assertEquals(1, workItemList.size());
     }
 
     @Test
@@ -66,6 +60,18 @@ public class FilterHelper_Tests {
 
         //Assert
         Assert.assertEquals(0, FilterHelper.getAllPredicates().size());
+    }
+
+    @Test
+    public void filter_Should_ReturnListWithAllUnchangedItems() {
+        //Arrange
+        test_unFilteredMap.put(1, test_item);
+
+        //Act
+        List<WorkItem> workItemList = FilterHelper.filter(test_unFilteredMap);
+
+        //Assert
+        Assert.assertEquals(1, workItemList.size());
     }
 
     @Test(expected = IllegalArgumentException.class)

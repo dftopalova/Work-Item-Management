@@ -17,7 +17,7 @@ import static com.KSDT.commands.CommandConstants.PERSON_HAS_NO_ASSIGNED_ITEMS;
 public class FilterHelper {
 
     // probably private ??
-    static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
+    private static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
     public static void addPredicates(Predicate<WorkItem> predicate) {
         allPredicates.add(predicate);
@@ -36,7 +36,7 @@ public class FilterHelper {
                         .reduce(item -> true, Predicate::and))
                 .collect(Collectors.toList());
 
-        allPredicates.clear(); // to clear predicates for next invocation
+        FilterHelper.clearPredicates(); // to clear predicates for next invocation
 
         return filtered;
 
@@ -70,4 +70,7 @@ public class FilterHelper {
         return new ArrayList<>(allPredicates);
     }
 
+    public static void clearPredicates(){
+        FilterHelper.allPredicates.clear();
+    }
 }
