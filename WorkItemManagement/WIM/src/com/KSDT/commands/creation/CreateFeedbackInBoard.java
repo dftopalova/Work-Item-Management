@@ -75,7 +75,6 @@ public class CreateFeedbackInBoard implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 }

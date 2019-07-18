@@ -33,7 +33,7 @@ public  class ChangePriorityCommand implements Command {
         validateInput(parameters);
         switch (parameters.get(0).toUpperCase()) {
             case "FEEDBACK":
-                throw new IllegalArgumentException(FEEDBACK_DOESNT_CONTAIN_PRIORITY) ;  //TODO за да мине тестове трябва ексепшън
+                throw new IllegalArgumentException(FEEDBACK_DOESNT_CONTAIN_PRIORITY) ;
             case "BUG":
                 parameters.remove(0);
                 return changePriority(parameters);
@@ -122,7 +122,6 @@ public  class ChangePriorityCommand implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

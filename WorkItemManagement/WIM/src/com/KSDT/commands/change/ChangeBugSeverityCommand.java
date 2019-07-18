@@ -114,7 +114,6 @@ public class ChangeBugSeverityCommand implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

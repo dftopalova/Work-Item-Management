@@ -161,6 +161,7 @@ public class AddComment_Tests {
     public void execute_Should_AddCommentWhenInputIsValid() {
         //Arrange
         List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
         testList.add("testBoard");
         testList.add("testBug123");
         testList.add("nameasd");

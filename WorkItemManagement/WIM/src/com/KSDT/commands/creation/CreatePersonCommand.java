@@ -42,8 +42,7 @@ public class CreatePersonCommand implements Command {
         try {
             name = parameters.get(0);
         } catch (Exception e) {
-            throw new IllegalArgumentException("");
-//            TODO EXCEPTION
+            throw new IllegalArgumentException(e);
         }
     }
 

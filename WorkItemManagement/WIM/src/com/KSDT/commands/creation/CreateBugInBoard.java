@@ -80,7 +80,6 @@ public class CreateBugInBoard implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

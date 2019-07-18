@@ -49,7 +49,7 @@ public class ListAllWorkItemsCommand_Tests {
     }
 
     @Test
-    public void execute_Should_PrintAllWorkItemsFromRepository(){
+    public void execute_Should_PrintAllWorkItemsFromRepository() {
         //Arrange, Act
         StringBuilder expected=new StringBuilder();
 

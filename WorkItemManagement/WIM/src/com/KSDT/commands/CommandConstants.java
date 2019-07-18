@@ -3,9 +3,9 @@ package com.KSDT.commands;
 import java.util.Locale;
 
 public class CommandConstants {
-//    TODO List all messages as constants
 
     //Error messages
+    public static final String WORK_ITEM_IS_NOT_IN_BOARD = "! Work item is not in board!";
     public static final String PERSON_HAS_NO_ASSIGNED_ITEMS = "! Person has no assigned items!";
     public static final String INVALID_NUMBER_OF_ARGUMENTS = "! Invalid number of arguments. Expected: %d, Received: %d";
     public static final String INVALID_TEAM = "! Team with ID %s doesn't exist.";
@@ -39,7 +39,6 @@ public class CommandConstants {
     public static final String EMPTY_STRING_MESSAGE = "! String cannot be empty.";
     public static final String INCOMPATIBLE_STATUSTYPE_AND_WORKITEMTYPE = "! Entered status type is incompatible with current work item!";
 
-    // TODO BUG, STORY AND FEEDBACK ERRORS
 
     //Success messages
     public static final String TEAM_CREATED = "Team with ID %s was created.";

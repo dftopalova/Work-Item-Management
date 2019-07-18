@@ -29,8 +29,7 @@ public class CreateTeamCommand implements Command {
 
         Team team = factory.createTeam(name);
         repository.addTeam(name, team);
-        return String.format(TEAM_CREATED, team.getName() );  //repository.getTeams().size()-1
-//        TODO ID ??? WIM_REMARKS
+        return String.format(TEAM_CREATED, team.getName() );
     }
 
     private void validateInput(List<String> parameters) {
@@ -43,8 +42,7 @@ public class CreateTeamCommand implements Command {
         try {
             name = parameters.get(0);
         } catch (Exception e) {
-            throw new IllegalArgumentException("");
-//            TODO EXCEPTION
+            throw new IllegalArgumentException(e);
         }
     }
 

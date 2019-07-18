@@ -59,7 +59,6 @@ public class AddPersonCommand implements Command {
             teamToAddName = parameters.get(1);
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

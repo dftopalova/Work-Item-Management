@@ -16,7 +16,6 @@ import static com.KSDT.commands.CommandConstants.PERSON_HAS_NO_ASSIGNED_ITEMS;
 
 public class FilterHelper {
 
-    // probably private ??
     private static List<Predicate<WorkItem>> allPredicates = new ArrayList<>();
 
     public static void addPredicates(Predicate<WorkItem> predicate) {

@@ -111,7 +111,6 @@ public class ChangeStorySizeCommand implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

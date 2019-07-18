@@ -35,7 +35,7 @@ public class ChangeBugSeverity_Tests {
     private Person testPerson1;
     private Board testBoard;
     private Board testBoard1;
-//TODO not finished!
+
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();

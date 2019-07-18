@@ -113,7 +113,6 @@ public class ChangeFeedRatingCommand implements Command {
 
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
-//            TODO EXCEPTION
         }
     }
 

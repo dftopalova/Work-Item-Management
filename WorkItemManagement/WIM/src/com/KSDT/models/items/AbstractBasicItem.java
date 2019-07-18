@@ -12,6 +12,7 @@ import com.KSDT.models.enums.StatusType;
 BasicItem is an abstract base class for Bug and Story, which purpose is to combine
 their common fields and methods (priority and assignee)
  */
+
 public abstract class AbstractBasicItem extends WorkItemBase implements Priorityable, Assignable {
     Person assignee;
     PriorityType priority;
@@ -34,7 +35,6 @@ public abstract class AbstractBasicItem extends WorkItemBase implements Priority
     @Override
     public Person getAssignee() {
 
-        //TODO should return a copy
         return assignee;
     }
 

@@ -69,7 +69,6 @@ public class ChangeStatusCommand implements Command {
             throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
         }
 
-
         if (!repository.getTeams().entrySet().stream()
                 .filter(item -> item.getValue().getName().equals(teamName))
                 .findFirst().get().getValue()
@@ -106,29 +105,24 @@ public class ChangeStatusCommand implements Command {
             boardName = parameters.get(1);
             workItemName = parameters.get(2);
 
-            String workItemClassSimpleName = repository.getBoardsList()
+            String workItemClassSimpleName = repository.getTeams().entrySet().stream()
+                    .filter(team -> team.getValue().getName().equals(teamName))
+                    .findFirst().get().getValue()
+                    .getBoardsList().entrySet()
                     .stream()
-                    .filter(board -> board.getName().equals(boardName))
-                    .findFirst().get()
+                    .filter(board -> board.getValue().getName().equals(boardName))
+                    .findFirst().get().getValue()
                     .getWorkItem(workItemName).getClass().getSimpleName().toUpperCase();
 
-
-//            String workItemClassSimpleName = repository.getBoardsList().get(boardName).getWorkItem(workItemName).getClass().getSimpleName().toUpperCase();
             workItemType = workItemClassSimpleName.replace("IMPL", "").concat("_");
-
             newStatus = StatusType.valueOf(workItemType + (parameters.get(3).toUpperCase()));
-            ValidationHelper.statusTypeCheck(newStatus, workItemType.replace("_", ""));
             personName = parameters.get(4);
 
         } catch (NoSuchElementException ex) {
-            throw new IllegalArgumentException("! Work item is not in board!"); //TODO fix!
+            throw new IllegalArgumentException(WORK_ITEM_IS_NOT_IN_BOARD);
         }
         catch (Exception e) {
-            if (e.getMessage().contains("No enum constant")) {
-                throw new IllegalArgumentException(INCOMPATIBLE_STATUSTYPE_AND_WORKITEMTYPE);
-            } else {
                 throw new IllegalArgumentException(e);
-            }
         }
     }
 }

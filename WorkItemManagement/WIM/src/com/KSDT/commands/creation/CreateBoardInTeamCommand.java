@@ -64,8 +64,7 @@ public class CreateBoardInTeamCommand implements Command {
             boardNameToBeAdded = parameters.get(0);
             teamToAddName = parameters.get(1);
         } catch (Exception e) {
-            throw new IllegalArgumentException("");
-//            TODO EXCEPTION
+            throw new IllegalArgumentException(e);
         }
     }
 

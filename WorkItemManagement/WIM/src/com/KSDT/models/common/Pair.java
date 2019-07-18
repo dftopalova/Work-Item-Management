@@ -38,15 +38,7 @@ public class Pair<F, S> {
         return Objects.equals(p.first, first) && Objects.equals(p.second, second);
     }
 
-    /**
-     * Compute a hash code using the hash codes of the underlying objects
-     *
-     * @return a hashcode of the Pair
-     */
-    @Override
-    public int hashCode() {
-        return (first == null ? 0 : first.hashCode()) ^ (second == null ? 0 : second.hashCode());
-    }
+
 
     /**
      * Convenience method for creating an appropriately typed pair.
