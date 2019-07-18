@@ -18,6 +18,7 @@ public class AddCommentCommand implements Command {
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    //TODO add team shit
     private String boardName;
     private String workItemName;
     private String personName;
