@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SortHelper {
-    static List finalList = new ArrayList<>();
+    private static List finalList = new ArrayList<>();
 
     public static void sortBy(String sortingCriteria, List<WorkItem> unsortedList, WorkItemRepository repository) {
         switch (sortingCriteria.toUpperCase()) {
