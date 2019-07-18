@@ -17,6 +17,7 @@ import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.BugImpl;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,5 +78,110 @@ public class ChangeBugSeverity_Tests {
     }
 
 
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("major");
+        testList.add("nameasd");
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenBoardNotInTeam() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("major");
+        testList.add("nameasd");
+        repository.addTeam("testTeam", testTeam);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenBoardDoesntContainWorkItem() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("major");
+        testList.add("nameasd");
+        repository.addBoard(testBoard);
+        repository.addTeam("testTeam", testTeam);
+        testTeam.addBoard("testBoard", testBoard);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenMemberNotInTeam() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("major");
+        testList.add("nameasd");
+        repository.addBoard(testBoard);
+        repository.addTeam("testTeam", testTeam);
+        testTeam.addBoard("testBoard", testBoard);
+        testBoard.addWorkItem("testBug123", testBug);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenSeverityIsTheSame() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("critical");
+        testList.add("nameasd");
+        repository.addBoard(testBoard);
+        repository.addTeam("testTeam", testTeam);
+        repository.addBug(testBug);
+        testTeam.addBoard("testBoard", testBoard);
+        testBoard.addWorkItem("testBug123", testBug);
+        testTeam.addPerson("nameasd", testPerson);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test
+    public void execute_Should_ChangeBugSeverityWhenInputIsValid() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("major");
+        testList.add("nameasd");
+        repository.addBoard(testBoard);
+        repository.addTeam("testTeam", testTeam);
+        repository.addBug(testBug);
+        testTeam.addBoard("testBoard", testBoard);
+        testBoard.addWorkItem("testBug123", testBug);
+        testTeam.addPerson("nameasd", testPerson);
+
+        //Act
+        testCommand.execute(testList);
+
+        //Assert
+        Assert.assertEquals("major", testBug.getSeverity().toString().toLowerCase());
+    }
 
 }
