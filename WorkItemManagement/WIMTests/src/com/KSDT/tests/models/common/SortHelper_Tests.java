@@ -19,5 +19,5 @@ public class SortHelper_Tests {
         unsortedList=new ArrayList<>();
         repository=new WorkItemRepositoryImpl();
     }
-    
+
 }
