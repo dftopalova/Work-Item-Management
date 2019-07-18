@@ -8,6 +8,7 @@ import com.KSDT.models.common.ValidationHelper;
 import com.KSDT.models.contracts.Board;
 import com.KSDT.models.contracts.Bug;
 import com.KSDT.models.contracts.Person;
+import com.KSDT.models.contracts.WorkItem;
 import com.KSDT.models.enums.SeverityType;
 
 import java.util.List;
@@ -15,13 +16,14 @@ import java.util.List;
 import static com.KSDT.commands.CommandConstants.*;
 
 public class ChangeBugSeverityCommand implements Command {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 5;
     private final WorkItemRepository repository;
     private final WorkItemFactory factory;
 
+    private String teamName;
     private String personName;
-    private int boardId;
-    private String workItemId;
+    private String boardName;
+    private String workItemName;
     private SeverityType newSeverity;
 
     public ChangeBugSeverityCommand(WorkItemRepository repository, WorkItemFactory factory) {
@@ -35,15 +37,20 @@ public class ChangeBugSeverityCommand implements Command {
         parseParameters(parameters);
         validateParameters();
 
-        Board board = repository.getBoardsList().get(boardId);
-        Bug bug = (Bug) board.getWorkItem(workItemId);
+
+        Board board = repository.getTeams().get(teamName).getBoard(boardName);
         Person person = board.getTeamOwner().getMembersList().get(personName);
+
+        WorkItem tempItem = board.getWorkItem(workItemName);
+        Integer key = repository.getWorkItemID(repository.getAllItems(), tempItem);
+
+        Bug bug = repository.getBugMap().get(key);
         SeverityType oldSeverity = bug.getSeverity();
-        ValidationHelper.equalityCheck(oldSeverity, newSeverity,String.format(WORK_ITEM_SEVERITY_SAME, workItemId));
+        ValidationHelper.equalityCheck(oldSeverity, newSeverity,String.format(WORK_ITEM_SEVERITY_SAME, workItemName));
 
         bug.changeSeverity(person, newSeverity);
         board.addToHistory(HistoryHelper.collectChange(oldSeverity,newSeverity));
-        return String.format(SEVERITY_SUCCESSFULLY_CHANGED, workItemId, oldSeverity, newSeverity);
+        return String.format(SEVERITY_SUCCESSFULLY_CHANGED, workItemName, oldSeverity, newSeverity);
     }
 
 
@@ -53,24 +60,56 @@ public class ChangeBugSeverityCommand implements Command {
         }
     }
 
+
     private void validateParameters() {
-        if (repository.getBoardsList().size() <= boardId) {
-            throw new IllegalArgumentException(String.format(INVALID_BOARD, String.valueOf(boardId)));
+        if (!repository.getTeams().containsKey(teamName)) {
+            throw new IllegalArgumentException(String.format(INVALID_TEAM, teamName));
         }
-        if (!repository.getBoardsList().get(boardId).getWorkItemsList().containsKey(workItemId)) {
-            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemId));
+        if (!repository.getTeams().get(teamName).getBoardsList().containsKey(boardName)) {
+            throw new IllegalArgumentException(String.format(BOARD_NOT_IN_TEAM, boardName, teamName));
         }
-        if (!repository.getBoardsList().get(boardId).getTeamOwner().getMembersList().containsKey(personName)) {
-            throw new IllegalArgumentException(String.format(PERSON_NOT_IN_TEAM, personName, repository.getBoardsList().get(boardId).getTeamOwner().getName(), boardId));
+        if (!repository.getBoardsList().stream().anyMatch(item -> item.getName().equals(boardName))) {
+            throw new IllegalArgumentException(String.format(INVALID_BOARD, boardName));
+        }
+
+
+        if (!repository.getTeams().entrySet().stream()
+                .filter(item -> item.getValue().getName().equals(teamName))
+                .findFirst().get().getValue()
+                .getBoardsList().entrySet()
+                .stream()
+                .filter(item -> item.getValue().getName().equals(boardName))
+                .findFirst().get().getValue()
+                .getWorkItemsList().containsKey(workItemName)) {
+            throw new IllegalArgumentException(String.format(INVALID_WORK_ITEM, workItemName));
+        }
+
+        if (!repository.getTeams().entrySet().stream().filter(item -> item.getValue().getName().equals(teamName))
+                .findFirst().get().getValue()
+                .getBoardsList().entrySet()
+                .stream()
+                .filter(item -> item.getValue().getName().equals(boardName))
+                .findFirst().get().getValue()
+                .getTeamOwner().getMembersList().containsKey(personName)) {
+            throw new IllegalArgumentException(
+                    String.format(PERSON_NOT_IN_TEAM,
+                            personName,
+                            repository.getBoardsList()
+                                    .stream()
+                                    .filter(item -> item.getName().equals(boardName))
+                                    .findFirst().get()
+                                    .getTeamOwner().getName(),
+                            boardName));
         }
     }
 
     private void parseParameters(List<String> parameters) {
         try {
-            boardId = Integer.valueOf(parameters.get(0));
-            workItemId = parameters.get(1);
-            newSeverity = SeverityType.valueOf(parameters.get(2).toUpperCase());
-            personName = parameters.get(3);
+            teamName = parameters.get(0);
+            boardName = parameters.get(1);
+            workItemName = parameters.get(2);
+            newSeverity = SeverityType.valueOf(parameters.get(3).toUpperCase());
+            personName = parameters.get(4);
 
 
         } catch (Exception e) {
