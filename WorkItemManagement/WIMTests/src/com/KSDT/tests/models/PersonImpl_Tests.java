@@ -68,23 +68,19 @@ public class PersonImpl_Tests {
     public void addWorkItem_Should_ThrowExceptionWhenPassedExistingItem() {
         // Arrange
         Person test_person=new PersonImpl("Valentin");
-        // Act
-        test_person.addWorkItem(testItem);
-        test_person.addWorkItem(testItem);
 
-        // Assert
-        Assert.assertEquals(0, test_person.getWorkItems().size());
+        // Act & Assert
+        test_person.addWorkItem(testItem);
+        test_person.addWorkItem(testItem);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removeWorkItem_Should_ThrowExceptionWhenPassedNotPresentItem() {
         // Arrange
         Person test_person=new PersonImpl("Valentin");
-        // Act
-        test_person.removeWorkItem(testItem);
 
-        // Assert
-        Assert.assertEquals(0, test_person.getWorkItems().size());
+        // Act & Assert
+        test_person.removeWorkItem(testItem);
     }
 
     @Test
