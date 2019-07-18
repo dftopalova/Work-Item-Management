@@ -24,27 +24,5 @@ public class Main {
      EngineImpl engine = new EngineImpl();
 
      engine.start();
-
-//TODO first implement Assignable interface in BugImpl & FeedbackImpl and IT WORKS
-//        WorkItem testBug = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
-//        WorkItem testWorkItem = new FeedbackImpl("testFeedback", StatusType.FEEDBACK_SCHEDULED, "asd asd asd", 5);
-//        WorkItem testStory = new StoryImpl("testStory1", StatusType.STORY_INPROGRESS, "asd asd asd", PriorityType.HIGH, SizeType.MEDIUM);
-//
-//        Map<Integer, WorkItem> allmap = new HashMap();
-//        allmap.put(0, testBug);
-//        allmap.put(1, testWorkItem);
-//        allmap.put(2, testStory);
-//
-//        Map<Integer, WorkItem> tempMap = new HashMap();
-//
-//        allmap.entrySet()
-//                .stream()
-//                .filter(item -> Arrays.asList(item.getValue().getClass().getInterfaces()).contains(Assignable.class))
-//                .forEach(item -> tempMap.put(item.getKey(), item.getValue()));
-//
-//        System.out.println(tempMap.toString());
-
-
-
     }
 }

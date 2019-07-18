@@ -32,6 +32,12 @@ public class CommandConstants {
     public static final String FILTER_TYPE_MISSING = "! You must declare type of work items! /bug/story/feedback/";
     public static final String PERSON_DOESNT_EXIST = "! Person with that name doesn't exist!";
     public static final String INCOMPATIBLE_ITEM_TYPE_AND_SORT_CRITERIA = "! Item type is incompatible with entered sort criteria!";
+    public static final String INCORRECT_LENGTH_MESSAGE = "! Text length is incorrect.";
+    public static final String EXACT_SYMBOLS_LENGTH_MESSAGE = "! Text length cannot be less than %d symbols.";
+    public static final String NULL_OBJECT_MESSAGE = "! Object cannot be null.";
+    public static final String NEGATIVE_NUMBER_MESSAGE = "! Number cannot be negative";
+    public static final String EMPTY_STRING_MESSAGE = "! String cannot be empty.";
+    public static final String INCOMPATIBLE_STATUSTYPE_AND_WORKITEMTYPE = "! Entered status type is incompatible with current work item!";
 
     // TODO BUG, STORY AND FEEDBACK ERRORS
 
