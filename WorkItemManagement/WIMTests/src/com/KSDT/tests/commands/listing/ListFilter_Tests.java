@@ -14,25 +14,23 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ListFilter_Tests {
     private Command test_command;
     private WorkItemRepository repository;
-    private Map<Integer, WorkItem> notFilteredWorkItemMap;
-    private List<WorkItem> filteredWorkItemList;
     private List<String> parameters;
 
     private String itemType;
     private StatusType status;
     private String sortCriteria;
-    private boolean hasAssigneeFilter;
     private Person person1;
-    Feedback feedback;
-    Story story;
-    Bug bug;
+    private Feedback feedback1;
+    private Feedback feedback2;
+    private Story story1;
+    private Story story2;
+    private Bug bug1;
+    private Bug bug2;
 
     @Before
     public void before() {
@@ -41,14 +39,21 @@ public class ListFilter_Tests {
         parameters = new ArrayList<>();
         person1 = new PersonImpl("person1");
 
-        feedback = new FeedbackImpl("feedbackblabla", StatusType.FEEDBACK_SCHEDULED, "random_description", 10);
-        story = new StoryImpl("story123456", StatusType.STORY_DONE, "random description", PriorityType.MEDIUM, SizeType.SMALL);
-        bug = new BugImpl("test_bug123456", StatusType.BUG_ACTIVE, "bug description",
-                "step1/step2/step3", PriorityType.MEDIUM, SeverityType.CRITICAL);
+        feedback1 = new FeedbackImpl("feedbackblabla1", StatusType.FEEDBACK_SCHEDULED, "random_description", 10);
+        feedback2 = new FeedbackImpl("feedbackblabla2", StatusType.FEEDBACK_UNSCHEDULED, "random_description2", 15);
+        story1 = new StoryImpl("story123456", StatusType.STORY_DONE, "random description", PriorityType.MEDIUM, SizeType.SMALL);
+        story2 = new StoryImpl("story56478", StatusType.STORY_INPROGRESS, "random description2", PriorityType.HIGH, SizeType.LARGE);
+        bug1 = new BugImpl("atest_bug123456", StatusType.BUG_ACTIVE, "bug1 description",
+                "step1/step2/step3", PriorityType.MEDIUM, SeverityType.MINOR);
+        bug2 = new BugImpl("btest_bug5678", StatusType.BUG_FIXED, "bug2 description",
+                "step5/step6/step7", PriorityType.HIGH, SeverityType.CRITICAL);
 
-        repository.addFeedback(feedback);
-        repository.addStory(story);
-        repository.addBug(bug);
+        repository.addFeedback(feedback2);
+        repository.addFeedback(feedback1);
+        repository.addStory(story1);
+        repository.addStory(story2);
+        repository.addBug(bug2);
+        repository.addBug(bug1);
 
         FilterHelper.clearPredicates();
     }
@@ -89,7 +94,7 @@ public class ListFilter_Tests {
         //Arrange
         repository.addPerson("person1", person1);
         parameters.add("-type");
-        parameters.add("feedback");
+        parameters.add("feedback1");
         parameters.add("-assignee");
         parameters.add("person1");
 
@@ -146,21 +151,20 @@ public class ListFilter_Tests {
         parameters.add("-assignee");
         parameters.add("person1");
 
-        FilterHelper.clearPredicates();
         repository.addPerson("person1", person1);
 
-        person1.addWorkItem(bug);
-        bug.setAssignee(person1);
+        person1.addWorkItem(bug1);
+        bug1.setAssignee(person1);
 
         StringBuilder expected = new StringBuilder();
         expected.append("Bug info:" + System.lineSeparator() +
-                "Title: test_bug123456" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
                 "Status: Bug active" + System.lineSeparator() +
-                "Description: bug description" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
                 "Comments: " + System.lineSeparator() +
                 "History: " + System.lineSeparator() +
                 "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
-                "Severity: Critical" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
                 "Priority: Medium" + System.lineSeparator() +
                 "Assignee: person1" + System.lineSeparator() +
                 "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
@@ -179,13 +183,24 @@ public class ListFilter_Tests {
         parameters.add("bug");
         StringBuilder expected = new StringBuilder();
         expected.append("Bug info:" + System.lineSeparator() +
-                "Title: test_bug123456" + System.lineSeparator() +
+                "Title: btest_bug5678" + System.lineSeparator() +
+                "Status: Bug fixed" + System.lineSeparator() +
+                "Description: bug2 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step5, step6, step7]" + System.lineSeparator() +
+                "Severity: Critical" + System.lineSeparator() +
+                "Priority: High" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Bug info:" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
                 "Status: Bug active" + System.lineSeparator() +
-                "Description: bug description" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
                 "Comments: " + System.lineSeparator() +
                 "History: " + System.lineSeparator() +
                 "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
-                "Severity: Critical" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
                 "Priority: Medium" + System.lineSeparator() +
                 "Assignee: NO_NAME" + System.lineSeparator() +
                 "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
@@ -205,13 +220,13 @@ public class ListFilter_Tests {
         parameters.add("active");
         StringBuilder expected = new StringBuilder();
         expected.append("Bug info:" + System.lineSeparator() +
-                "Title: test_bug123456" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
                 "Status: Bug active" + System.lineSeparator() +
-                "Description: bug description" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
                 "Comments: " + System.lineSeparator() +
                 "History: " + System.lineSeparator() +
                 "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
-                "Severity: Critical" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
                 "Priority: Medium" + System.lineSeparator() +
                 "Assignee: NO_NAME" + System.lineSeparator() +
                 "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
@@ -221,5 +236,181 @@ public class ListFilter_Tests {
         Assert.assertEquals(expected.toString(), actual);
     }
 
+    @Test
+    public void execute_Should_BeSuccessfulWhenPassedTypeBugAndPrioritySortCriteria() {
+
+        //Arrange
+        parameters.add("-type");
+        parameters.add("bug");
+        parameters.add("-sort");
+        parameters.add("priority");
+        StringBuilder expected = new StringBuilder();
+        expected.append("Bug info:" + System.lineSeparator() +
+                "Title: btest_bug5678" + System.lineSeparator() +
+                "Status: Bug fixed" + System.lineSeparator() +
+                "Description: bug2 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step5, step6, step7]" + System.lineSeparator() +
+                "Severity: Critical" + System.lineSeparator() +
+                "Priority: High" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Bug info:" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
+                "Status: Bug active" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
+                "Priority: Medium" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
+
+        String actual = test_command.execute(parameters);
+        //Act, Assert
+        Assert.assertEquals(expected.toString(), actual);
+    }
+
+    @Test
+    public void execute_Should_BeSuccessfulWhenPassedTypeBugAndSeveritySortCriteria() {
+
+        //Arrange
+        parameters.add("-type");
+        parameters.add("bug");
+        parameters.add("-sort");
+        parameters.add("severity");
+        StringBuilder expected = new StringBuilder();
+        expected.append("Bug info:" + System.lineSeparator() +
+                "Title: btest_bug5678" + System.lineSeparator() +
+                "Status: Bug fixed" + System.lineSeparator() +
+                "Description: bug2 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step5, step6, step7]" + System.lineSeparator() +
+                "Severity: Critical" + System.lineSeparator() +
+                "Priority: High" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Bug info:" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
+                "Status: Bug active" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
+                "Priority: Medium" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
+
+        String actual = test_command.execute(parameters);
+        //Act, Assert
+        Assert.assertEquals(expected.toString(), actual);
+    }
+
+    @Test
+    public void execute_Should_BeSuccessfulWhenPassedTypeBugAndTitleSortCriteria() {
+
+        //Arrange
+        parameters.add("-type");
+        parameters.add("bug");
+        parameters.add("-sort");
+        parameters.add("title");
+        StringBuilder expected = new StringBuilder();
+        expected.append("Bug info:" + System.lineSeparator() +
+                "Title: atest_bug123456" + System.lineSeparator() +
+                "Status: Bug active" + System.lineSeparator() +
+                "Description: bug1 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step1, step2, step3]" + System.lineSeparator() +
+                "Severity: Minor" + System.lineSeparator() +
+                "Priority: Medium" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Bug info:" + System.lineSeparator() +
+                "Title: btest_bug5678" + System.lineSeparator() +
+                "Status: Bug fixed" + System.lineSeparator() +
+                "Description: bug2 description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Steps to reproduce: [step5, step6, step7]" + System.lineSeparator() +
+                "Severity: Critical" + System.lineSeparator() +
+                "Priority: High" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
+
+        String actual = test_command.execute(parameters);
+        //Act, Assert
+        Assert.assertEquals(expected.toString(), actual);
+    }
+
+    @Test
+    public void execute_Should_BeSuccessfulWhenPassedTypeFeedbackAndRatingSortCriteria() {
+
+        //Arrange
+        parameters.add("-type");
+        parameters.add("feedback");
+        parameters.add("-sort");
+        parameters.add("rating");
+        StringBuilder expected = new StringBuilder();
+        expected.append("Feedback info:" + System.lineSeparator() +
+                "Title: feedbackblabla1" + System.lineSeparator() +
+                "Status: Feedback scheduled" + System.lineSeparator() +
+                "Description: random_description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Rating: 10" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Feedback info:" + System.lineSeparator() +
+                "Title: feedbackblabla2" + System.lineSeparator() +
+                "Status: Feedback unscheduled" + System.lineSeparator() +
+                "Description: random_description2" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Rating: 15" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
+
+        String actual = test_command.execute(parameters);
+        //Act, Assert
+        Assert.assertEquals(expected.toString(), actual);
+    }
+
+    @Test
+    public void execute_Should_BeSuccessfulWhenPassedTypeStoryAndSizeSortCriteria() {
+
+    //Arrange
+        parameters.add("-type");
+        parameters.add("story");
+        parameters.add("-sort");
+        parameters.add("size");
+    StringBuilder expected = new StringBuilder();
+        expected.append("Story info:" + System.lineSeparator() +
+                "Title: story56478" + System.lineSeparator() +
+                "Status: Story inprogress" + System.lineSeparator() +
+                "Description: random description2" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Priority: High" + System.lineSeparator() +
+                "Size: Large" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator() +
+                "Story info:" + System.lineSeparator() +
+                "Title: story123456" + System.lineSeparator() +
+                "Status: Story done" + System.lineSeparator() +
+                "Description: random description" + System.lineSeparator() +
+                "Comments: " + System.lineSeparator() +
+                "History: " + System.lineSeparator() +
+                "Priority: Medium" + System.lineSeparator() +
+                "Size: Small" + System.lineSeparator() +
+                "Assignee: NO_NAME" + System.lineSeparator() +
+                "=*=*=*=*=*=*=*=*=*=*=*=*=*=*=" + System.lineSeparator());
+
+    String actual = test_command.execute(parameters);
+    //Act, Assert
+        Assert.assertEquals(expected.toString(), actual);
+}
 
 }
