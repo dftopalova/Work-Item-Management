@@ -1,7 +1,7 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.change;
 
-import com.KSDT.commands.change.ChangeBugSeverityCommand;
-import com.KSDT.commands.change.ChangeStorySizeCommand;
+import com.KSDT.commands.change.ChangePriorityCommand;
+import com.KSDT.commands.change.ChangeStatusCommand;
 import com.KSDT.commands.contracts.Command;
 import com.KSDT.core.WorkItemRepositoryImpl;
 import com.KSDT.core.contracts.WorkItemFactory;
@@ -13,10 +13,8 @@ import com.KSDT.models.TeamImpl;
 import com.KSDT.models.contracts.*;
 import com.KSDT.models.enums.PriorityType;
 import com.KSDT.models.enums.SeverityType;
-import com.KSDT.models.enums.SizeType;
 import com.KSDT.models.enums.StatusType;
 import com.KSDT.models.items.BugImpl;
-import com.KSDT.models.items.StoryImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,13 +22,13 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChangeStorySizeCommand_Tests {
+public class ChangeStatusCommand_Tests {
 
 
     private Command testCommand;
     private WorkItemRepository repository;
     private WorkItemFactory factory;
-    private Story testStory;
+    private WorkItem testWorkItem;
     private Team testTeam;
     private Team testTeam1;
     private Person testPerson;
@@ -38,18 +36,20 @@ public class ChangeStorySizeCommand_Tests {
     private Board testBoard;
     private Board testBoard1;
 
+
     @Before
     public void before() {
         repository = new WorkItemRepositoryImpl();
         factory = new WorkItemFactoryImpl();
-        testCommand = new ChangeStorySizeCommand(repository, factory);
+        testCommand = new ChangeStatusCommand(repository, factory);
         testTeam = new TeamImpl("testTeam");
         testTeam1 = new TeamImpl("testTeam1");
         testPerson = new PersonImpl("nameasd");
         testPerson1 = new PersonImpl("nameasd1");
         testBoard = new BoardImpl("testBoard", testTeam);
         testBoard1 = new BoardImpl("testBoard1", testTeam1);
-        testStory = new StoryImpl("testStory1", StatusType.STORY_INPROGRESS, "asd asd asd", PriorityType.HIGH, SizeType.MEDIUM);    }
+        testWorkItem = new BugImpl("testBug123", StatusType.BUG_ACTIVE, "asd asd asd", "asd/asd/asd/asd", PriorityType.HIGH, SeverityType.CRITICAL);
+    }
 
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenPassedLessArguments() {
@@ -80,18 +80,52 @@ public class ChangeStorySizeCommand_Tests {
 
 
     @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
+    public void execute_Should_ThrowExceptionWhenWorkItemNotInBoard() {
         //Arrange
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
+        testList.add("testBug123");
+        testList.add("fixed");
         testList.add("nameasd");
 
         //Act & Assert
         testCommand.execute(testList);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenStatusIsNotForWorkItemType() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("cat");
+        testList.add("nameasd");
+        repository.addBoard(testBoard);
+        testBoard.addWorkItem("testBug123", testWorkItem);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void execute_Should_ThrowExceptionWhenTeamDoesntExist() {
+        //Arrange
+        List<String> testList = new ArrayList<>();
+        testList.add("testTeam");
+        testList.add("testBoard");
+        testList.add("testBug123");
+        testList.add("fixed");
+        testList.add("nameasd");
+
+        repository.addBoard(testBoard);
+        testBoard.addWorkItem("testBug123", testWorkItem);
+
+        //Act & Assert
+        testCommand.execute(testList);
+    }
+
 
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenBoardDoesntExist() {
@@ -99,51 +133,18 @@ public class ChangeStorySizeCommand_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
+        testList.add("testBug123");
+        testList.add("fixed");
         testList.add("nameasd");
-        repository.addTeam("testTeam", testTeam);
-        testTeam.addBoard("testBoard", testBoard);
 
-        //Act & Assert
-        testCommand.execute(testList);
-    }
-
-
-    @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenBoardNotInTeam() {
-        //Arrange
-        List<String> testList = new ArrayList<>();
-        testList.add("testTeam");
-        testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
-        testList.add("nameasd");
         repository.addTeam("testTeam", testTeam);
         repository.addBoard(testBoard);
+        testBoard.addWorkItem("testBug123", testWorkItem);
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
-
-    @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenBoardDoesntContainWorkItem() {
-        //Arrange
-        List<String> testList = new ArrayList<>();
-        testList.add("testTeam");
-        testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
-        testList.add("nameasd");
-        repository.addTeam("testTeam", testTeam);
-        repository.addBoard(testBoard);
-        testTeam.addBoard("testBoard", testBoard);
-
-
-        //Act & Assert
-        testCommand.execute(testList);
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void execute_Should_ThrowExceptionWhenMemberNotInTeam() {
@@ -151,66 +152,62 @@ public class ChangeStorySizeCommand_Tests {
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
+        testList.add("testBug123");
+        testList.add("fixed");
         testList.add("nameasd");
+
         repository.addTeam("testTeam", testTeam);
         repository.addBoard(testBoard);
         testTeam.addBoard("testBoard", testBoard);
-        testBoard.addWorkItem("testFeedback", testStory);
-        repository.addBoard(testBoard);
-        testBoard.addWorkItem("testStory", testStory);
+        testBoard.addWorkItem("testBug123", testWorkItem);
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
-
     @Test(expected = IllegalArgumentException.class)
-    public void execute_Should_ThrowExceptionWhenSizeIsTheSame() {
+    public void execute_Should_ThrowExceptionWhenStatusIsTheSame() {
         //Arrange
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("medium");
+        testList.add("testBug123");
+        testList.add("active");
         testList.add("nameasd");
+
         repository.addTeam("testTeam", testTeam);
         repository.addBoard(testBoard);
         testTeam.addBoard("testBoard", testBoard);
         testTeam.addPerson("nameasd", testPerson);
-        testBoard.addWorkItem("testFeedback", testStory);
-        repository.addBoard(testBoard);
-        repository.addStory(testStory);
-        testBoard.addWorkItem("testStory", testStory);
+        testBoard.addWorkItem("testBug123", testWorkItem);
 
         //Act & Assert
         testCommand.execute(testList);
     }
 
-
     @Test
-    public void execute_Should_ChangeStorySizeWhenInputIsValid() {
-        // Arrange
+    public void execute_Should_ChangeStatusWhenInputIsValid() {
+        //Arrange
         List<String> testList = new ArrayList<>();
         testList.add("testTeam");
         testList.add("testBoard");
-        testList.add("testStory");
-        testList.add("large");
+        testList.add("testBug123");
+        testList.add("fixed");
         testList.add("nameasd");
+
         repository.addTeam("testTeam", testTeam);
         repository.addBoard(testBoard);
         testTeam.addBoard("testBoard", testBoard);
         testTeam.addPerson("nameasd", testPerson);
-        testBoard.addWorkItem("testFeedback", testStory);
-        repository.addBoard(testBoard);
-        repository.addStory(testStory);
-        testBoard.addWorkItem("testStory", testStory);
+        testBoard.addWorkItem("testBug123", testWorkItem);
 
         //Act
         testCommand.execute(testList);
 
         //Assert
-        Assert.assertEquals("large", testStory.getSize().toString().toLowerCase());
+        Assert.assertEquals("BUG_FIXED", testWorkItem.getStatus().name());
+
     }
+
+
 }

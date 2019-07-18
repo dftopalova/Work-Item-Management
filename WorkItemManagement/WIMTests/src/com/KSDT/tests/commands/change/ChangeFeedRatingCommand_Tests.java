@@ -1,4 +1,4 @@
-package com.KSDT.tests.commands;
+package com.KSDT.tests.commands.change;
 
 import com.KSDT.commands.change.ChangeFeedRatingCommand;
 import com.KSDT.commands.contracts.Command;
