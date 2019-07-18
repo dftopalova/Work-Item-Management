@@ -4,13 +4,9 @@ import com.KSDT.models.enums.StatusType;
 
 import java.util.List;
 
+import static com.KSDT.commands.CommandConstants.*;
+
 public class ValidationHelper {
-    private static final String INCORRECT_LENGTH_MESSAGE = "! Text length is incorrect.";
-    private static final String EXACT_SYMBOLS_LENGTH_MESSAGE = "! Text length cannot be less than %d symbols.";
-    private static final String NULL_OBJECT_MESSAGE = "! Object cannot be null.";
-    private static final String NEGATIVE_NUMBER_MESSAGE = "! Number cannot be negative";
-    private static final String EMPTY_STRING_MESSAGE = "! String cannot be empty.";
-    private static final String INCOMPATIBLE_STATUSTYPE_AND_WORKITEMTYPE = "! Entered status type is incompatible with current work item!";
 
     public static void statusTypeCheck(StatusType statusType, String workItemType) {
         String workItemStatusType = statusType.name().replaceAll("_.*","");
