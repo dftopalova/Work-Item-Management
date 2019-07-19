@@ -11,8 +11,6 @@ public interface WorkItemRepository {
 
     Map<String, Team> getTeams();
 
-//    List<WorkItem> getWorkItems();
-
     Map<Integer, Assignable> getAssignableItems();
 
     Map<Integer, Priorityable> getPrioritizableItems();
@@ -28,8 +26,6 @@ public interface WorkItemRepository {
     List<Board> getBoardsList();
 
     void addTeam(String name, Team team);
-
-//    void addWorkItem(WorkItem workItem);
 
     void addPerson(String name, Person person);
 

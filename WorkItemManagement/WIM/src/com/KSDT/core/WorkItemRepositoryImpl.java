@@ -8,7 +8,6 @@ import java.util.*;
 public class WorkItemRepositoryImpl implements WorkItemRepository {
     private Map<String, Team> teams;
     private Map<String, Person> persons;
-//    private List<WorkItem> workItems;
     private Map<Integer, Bug> bugMap;
     private Map<Integer, Feedback> feedbackMap;
     private Map<Integer, Story> storyMap;
@@ -18,7 +17,6 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
 
     public WorkItemRepositoryImpl() {
         this.teams = new HashMap<>();
-//        this.workItems = new ArrayList<>();
         this.bugMap = new HashMap<>();
         this.storyMap = new HashMap<>();
         this.feedbackMap = new HashMap<>();
@@ -46,11 +44,6 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
     public Map<Integer, Feedback> getFeedbackMap() {
         return new HashMap<>(feedbackMap);
     }
-
-//    @Override
-//    public List<WorkItem> getWorkItems() {
-//        return new ArrayList<>(workItems);
-//    }
 
     @Override
     public Map<String, Person> getPersons() {
@@ -139,8 +132,7 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
 
     public <K, V> K getWorkItemID(Map<K, V> map, V value) {
         return map.entrySet().stream()
-                .filter(item -> item
-                .getValue().equals(value))
+                .filter(item -> item.getValue().equals(value))
                 .map(Map.Entry::getKey)
                 .findFirst().get();
     }
@@ -175,10 +167,4 @@ public class WorkItemRepositoryImpl implements WorkItemRepository {
             cls = cls.getSuperclass();
         }
     }
-
-//    @Override
-//    public void addWorkItem(WorkItem workItem) {
-//        this.workItems.add(workItem);
-//    }
-
 }

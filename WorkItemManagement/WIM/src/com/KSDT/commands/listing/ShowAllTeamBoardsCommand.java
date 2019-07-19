@@ -27,7 +27,8 @@ public class ShowAllTeamBoardsCommand implements Command {
         validateParameters();
 
         Board[] boardsToPrint = repository.getTeams().get(teamName).getBoardsList().values().toArray(new Board[0]);
-        if (checkIsEmpty(boardsToPrint)) return String.format(NO_BOARDS_IN_TEAM_ERROR, teamName);
+        if (checkIsEmpty(boardsToPrint))
+            return String.format(NO_BOARDS_IN_TEAM_ERROR, teamName);
 
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(String.format("All Boards in team %s:", teamName)).append(System.lineSeparator());

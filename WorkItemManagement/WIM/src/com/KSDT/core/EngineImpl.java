@@ -13,9 +13,9 @@ import java.util.List;
 public class EngineImpl implements Engine {
     private static final String EMPTY_NULL_COMMAND_EXCEPTION = "Command cannot be null or empty.";
     private static final String TERMINATION_COMMAND = "Exit";
-    private static final String HELP_MENU_MESSAGE = "SHOW_OPTIONS";
+    private static final String HELP_MENU_MESSAGE = "HELP";
     private static final String WELCOME_MESSAGE = "    ~~~WELCOME TO WORK ITEM MANAGEMENT CONSOLE APPLICATION~~~";
-    private static final String CHECK_ALL_OPTIONS_MESSAGE = "   IF YOU NEED TO CHECK AGAIN ALL OPTIONS PLEASE ENTER \"SHOW_OPTIONS\"";
+    private static final String CHECK_ALL_OPTIONS_MESSAGE = "   IF YOU NEED TO CHECK AGAIN ALL OPTIONS PLEASE ENTER \"HELP\"";
 
     private WorkItemFactory workItemFactory;
     private WorkItemRepository workItemRepository;
@@ -38,6 +38,7 @@ public class EngineImpl implements Engine {
 
         writer.writeLine(WELCOME_MESSAGE + System.lineSeparator());
         writer.writeLine(showOptions());
+        writer.writeLine(CHECK_ALL_OPTIONS_MESSAGE);
 
         while (true) {
             try {
@@ -53,9 +54,13 @@ public class EngineImpl implements Engine {
 
                 processCommand(commandAsString);
 
-                writer.writeLine(CHECK_ALL_OPTIONS_MESSAGE + System.lineSeparator());
+            }
 
-            } catch (Exception exception) {
+            catch (Exception exception) {
+                if (exception.getMessage().contains("No enum constant com.KSDT.commands.enums.CommandType")) {
+                    writer.writeLine("! NO SUCH COMMAND !");
+                    continue;
+                }
                 writer.writeLine(exception.getMessage() != null && !exception.getMessage().isEmpty()
                         ? exception.getMessage() : exception.toString());
             }

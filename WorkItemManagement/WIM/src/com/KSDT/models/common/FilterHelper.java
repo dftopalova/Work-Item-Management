@@ -38,11 +38,10 @@ public class FilterHelper {
         FilterHelper.clearPredicates(); // to clear predicates for next invocation
 
         return filtered;
-
     }
 
     public static List<WorkItem> assigneeFilter(List<WorkItem> unfilteredList, Person assignee, WorkItemRepository repository) {
-        List<WorkItem> filtered = new ArrayList<>(); // ??????
+        List<WorkItem> filtered = new ArrayList<>();
         List<Assignable> assignableList = new ArrayList<>();
         Map<Integer, Assignable> assignableItemsMap = repository.getAssignableItems();
         Map<Integer, WorkItem> allItemsMap = repository.getAllItems();
@@ -62,7 +61,7 @@ public class FilterHelper {
         if (filtered.isEmpty())
             throw new IllegalArgumentException(PERSON_HAS_NO_ASSIGNED_ITEMS);
 
-        return filtered;  // ??????
+        return filtered;
     }
 
     public static List<Predicate<WorkItem>> getAllPredicates() {
