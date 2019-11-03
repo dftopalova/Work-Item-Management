@@ -11,5 +11,3 @@ Repository for **current**:
 |:----------------:	|:-------------:	|:---------------:	|
 | Deniza_Topalova  	| @dtopalova    	| Maintaner       	|
 | Krastan_Stoyanov 	| @kycenstein   	| Maintaner       	|
-| Nadya_Atanasova  	| @nadyaA       	| Reporter        	|
-| Petar_Raykov     	| @petar-raykov 	| Reporter        	|
